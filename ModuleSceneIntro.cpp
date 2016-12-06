@@ -148,23 +148,29 @@ void ModuleSceneIntro::CreateBales()
 	CreateBale(11.5, 0.5f, 44, 0, vec3{ 0,1,0 });
 
 	//5
-	for (int i = 0, j = 41; i <= 4; i++) {
+	for (int i = 0, j = 41; i <5; i++) {
 		CreateBale(11.5, 0.5f, j, 0, vec3{ 0,1,0 });
 		j -= 3;
 	}
 	//9
-	for (int i = 0, j = 44; i <= 5; i++) {
+	for (int i = 0, j = 44; i <6; i++) {
 		CreateBale(16.5, 0.5f, j, 0, vec3{ 0,1,0 });
 		j -= 3;
 	}
 	//8
-	for (int i = 0, j = 47; i <= 6; i++) {
+	for (int i = 0, j = 47; i <7; i++) {
 		CreateBale(25, 0.5f, j, 0, vec3{ 0,1,0 });
 		j -= 3;
 	}
 	//6
-	for (float i = 0, j = 15.5; i <= 1; i++) {
+	for (float i = 0, j = 15.5; i < 2; i++) {
 		CreateBale(j, 0.5f, 27, 90, vec3{ 0,1,0 });
+		j -= 3;
+	}
+
+	//7
+	for (float i = 0, j = 20; i < 5; i++) {
+		CreateBale(j, 0.5f, 19, 90, vec3{ 0,1,0 });
 		j -= 3;
 	}
 
@@ -175,7 +181,18 @@ void ModuleSceneIntro::CreateBales()
 	CreateBale(2.5, 0.5f, 71.5, 60, vec3{ 0,1,0 });
 	CreateBale(5, 0.5f, 72.5, 80, vec3{ 0,1,0 });
 
+	//10
+	for (float i = 0, j =9 ,w = 63; i < 8; i++) {
+		CreateBale(j, 0.5f,w , 90, vec3{ 0,1,0 });
+		j += 3;
+		w += 0.25;
+	}
 
+	//14
+	for (float i = 0, j = 7.5; i < 9; i++) {
+		CreateBale(j, 0.5f, 73, 90, vec3{ 0,1,0 });
+		j += 3;
+	}
 }
 
 void ModuleSceneIntro::CreateTree(const float x, const float y, const float z, const float tall, const float radious)
@@ -202,8 +219,10 @@ void ModuleSceneIntro::CreateTrees()
 {
 	CreateTree(-6, 0, 15, 15, 2);
 	CreateTree(-6, 0, 30, 15, 2);
-	CreateTree(-6, 0, 45, 15, 2);
+	CreateTree(-6, 0, 45, 12, 1.75);
 	CreateTree(-6, 0, 60, 15, 2);
+
 	CreateTree(15, 0, 42, 15, 2);
+	CreateTree(13, 0, 35, 20, 3);
 	CreateTree(13.5, 0, 29, 15, 2);
 }
