@@ -10,7 +10,8 @@ enum PrimitiveTypes
 	Primitive_Plane,
 	Primitive_Cube,
 	Primitive_Sphere,
-	Primitive_Cylinder
+	Primitive_Cylinder,
+	Primitive_treetop
 };
 
 class Primitive
@@ -43,6 +44,11 @@ public :
 	Cube();
 	Cube(float sizeX, float sizeY, float sizeZ);
 	void InnerRender() const;
+	void SetSize(const vec3 &s){
+		size.x = s.x;
+		size.y = s.y;	
+		size.z = s.z;
+	}
 public:
 	vec3 size;
 };
@@ -92,4 +98,16 @@ public:
 public:
 	vec3 normal;
 	float constant;
+};
+
+// ============================================
+class TreeTop : public Primitive
+{
+public:
+	TreeTop();
+	TreeTop(float radius, float height);
+	void InnerRender() const;
+public:
+	float radius;
+	float height;
 };

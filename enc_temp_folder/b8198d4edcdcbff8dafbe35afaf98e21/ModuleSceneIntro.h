@@ -55,6 +55,4 @@ public:
 
 	Cube* CreateBale(const float x, const float y, const  float z, const  float angle, const vec3&);
 	void CreateBales();
-
-	void CreateTrees();
 };

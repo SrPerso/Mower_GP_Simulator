@@ -95,12 +95,16 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 
 Cube* ModuleSceneIntro::CreateBale(const float x, const float y, const float z, const float angle, const vec3& rotationAxis)
 {
+
 	Cube* heno = new Cube(1, 1, 2.2f);
 
 	heno->SetPos(x, y, z);
 	heno->SetRotation(angle, rotationAxis);
-	heno->color = Yellow;	
+	heno->color = Yellow;
+	
+	
 	bales.add(heno);
+
 	return heno;
 }
 
@@ -155,8 +159,4 @@ void ModuleSceneIntro::CreateBales()
 	CreateBale(5, 0.5f, 72.5, 80, vec3{ 0,1,0 });
 
 
-}
-
-void ModuleSceneIntro::CreateTrees()
-{
 }
