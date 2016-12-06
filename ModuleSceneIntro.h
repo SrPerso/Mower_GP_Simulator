@@ -52,9 +52,12 @@ public:
 	PhysMotor3D* right_wheel;
 
 	p2List<Cube*> bales;
+	p2List<TreeTop*> trees_top;
+	p2List<Cylinder*> trees_trunk;
 
 	Cube* CreateBale(const float x, const float y, const  float z, const  float angle, const vec3&);
 	void CreateBales();
 
+	void CreateTree(const float x, const float y, const float z, const float tall , const float radious);
 	void CreateTrees();
 };
