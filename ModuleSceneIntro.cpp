@@ -28,6 +28,16 @@ bool ModuleSceneIntro::Start()
 	CreateBales();
 	CreateTrees();
 
+	CreateFance(36, 2, vec3(54, 1, 23), vec3(0, 1, 0), 0,1,0);
+	CreateFance(36, 2, vec3(54, 1, 78), vec3(0, 1, 0), 0,1,0);
+
+	CreateFance(42, 2, vec3(36, 1, 44), vec3(0, 1, 0), 90, 0, 1);
+	CreateFance(42, 2, vec3(72, 1, 57), vec3(0, 1, 0), 90, 0, 1);
+
+
+	CreateFance(6, 2, vec3(36, 1, 75), vec3(0, 1, 0), 90, 0, 1);
+	CreateFance(6, 2, vec3(72, 1, 26), vec3(0, 1, 0), 90, 0, 1);
+
 	return ret;
 }
 
@@ -44,7 +54,15 @@ bool ModuleSceneIntro::CleanUp()
 
 	for (int i = 0; i < trees_trunk.count(); i++)
 		delete trees_trunk[i];
+	
+	for (int i = 0; i < postes.count(); i++)
+		delete postes[i];
 
+	for (int i = 0; i < transversales.count(); i++)
+		delete transversales[i];
+
+
+	//f1->Clear();
 	return true;
 }
 
@@ -53,8 +71,27 @@ update_status ModuleSceneIntro::Update(float dt)
 {
 	
 
-	//--------------------tree
+	//--------------------
 
+	//-----------------------------
+	//--- Fances
+	//-----------------------------
+
+	p2List_item<Cube*>* iteratorTrans;
+	p2List_item<Cylinder*>* iteratorPostes;
+
+	iteratorTrans = transversales.getFirst();
+	
+
+	while (iteratorTrans != nullptr) {
+		iteratorTrans->data->Render();
+		iteratorTrans = iteratorTrans->next;		
+	}
+	iteratorPostes = postes.getFirst();
+	while (iteratorPostes != nullptr) {
+		iteratorPostes->data->Render();
+		iteratorPostes = iteratorPostes->next;
+	}
 
 	//-----------------------------
 	//--- render trees
@@ -89,9 +126,9 @@ update_status ModuleSceneIntro::Update(float dt)
 	//--------Plane-------
 
 
-	Plane p(0, 1, 0, 0);
-	p.color = Green;
-	p.axis = true;
+	Plane p(0, -1, 0, 200);
+	p.color = Green_Ground;
+	p.axis = false;
 	p.Render();
 	
 	//---------------------
@@ -102,7 +139,45 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
 }
 
-Cube* ModuleSceneIntro::CreateBale(const float x, const float y, const float z, const float angle, const vec3& rotationAxis)
+
+void ModuleSceneIntro::CreateFance(float distance, float tall, vec3 Position, vec3 rotationvec, float angle, int magicX, int magicZ)
+{
+
+
+
+	Cube* trans1 = new Cube(distance, 0.3f, 0.2f);
+
+	trans1->SetPos(Position.x, (Position.y + 0.1f*tall), Position.z);
+	trans1->SetRotation(angle, rotationvec);
+	trans1->color = Brown2;
+	transversales.add(trans1);
+
+	Cube* trans2 = new Cube(distance, 0.3f, 0.2f);
+
+	trans2->SetRotation(angle, rotationvec);	
+	trans2->SetPos(Position.x, Position.y + 0.5f*tall, Position.z);
+	trans2->color = Brown2;
+	transversales.add(trans2);
+
+	int Postes_num = 0, i = 0;
+	float Postes_distance = 0;
+
+	Postes_num = distance / 3;
+	Postes_distance = (float)distance / (float)Postes_num;
+	
+	do {
+		Cylinder* Poste = new Cylinder(0.15f, 1.2f*tall);
+		Poste->SetRotation(90, vec3(0, 0, 1));
+		//Poste->SetRotation(angle, rotationvec);
+		Poste->SetPos(Position.x + (Postes_distance*i - distance/2)*magicX, Position.y, Position.z + (Postes_distance*i - distance / 2)*magicZ);
+		Poste->color = Brown;
+
+		postes.add(Poste);
+		i++;
+	} while (Postes_num >= i);
+}
+
+void ModuleSceneIntro::CreateBale(const float x, const float y, const float z, const float angle, const vec3& rotationAxis)
 {
 	Cube* heno = new Cube(1, 1, 2.2f);
 
@@ -110,7 +185,7 @@ Cube* ModuleSceneIntro::CreateBale(const float x, const float y, const float z, 
 	heno->SetRotation(angle, rotationAxis);
 	heno->color = Yellow;	
 	bales.add(heno);
-	return heno;
+	
 }
 
 
@@ -157,11 +232,7 @@ void ModuleSceneIntro::CreateBales()
 		CreateBale(16.5, 0.5f, j, 0, vec3{ 0,1,0 });
 		j -= 3;
 	}
-	//8
-	for (int i = 0, j = 47; i <7; i++) {
-		CreateBale(25, 0.5f, j, 0, vec3{ 0,1,0 });
-		j -= 3;
-	}
+
 	//6
 	for (float i = 0, j = 15.5; i < 2; i++) {
 		CreateBale(j, 0.5f, 27, 90, vec3{ 0,1,0 });
@@ -169,11 +240,25 @@ void ModuleSceneIntro::CreateBales()
 	}
 
 	//7
-	for (float i = 0, j = 20; i < 5; i++) {
+	for (float i = 0, j = 19.5; i < 4; i++) {
 		CreateBale(j, 0.5f, 19, 90, vec3{ 0,1,0 });
 		j -= 3;
 	}
+	CreateBale(7.7, 0.5f, 19.5, 120, vec3{ 0,1,0 });
+	CreateBale(5.5, 0.5f, 21, 135, vec3{ 0,1,0 });
 
+	
+
+	//7-8
+
+	CreateBale(22.5, 0.5f, 19.5, 60, vec3{ 0,1,0 });
+	CreateBale(24.5, 0.5f, 21.5, 30, vec3{ 0,1,0 });
+
+	//8
+	for (int i = 0, j = 45; i <8; i++) {
+		CreateBale(25.5, 0.5f, j, 0, vec3{ 0,1,0 });
+		j -= 3;
+	}
 	//13
 	CreateBale(-1.5, 0.5f, 64, 0, vec3{ 0,1,0 });
 	CreateBale(-1, 0.5f, 67, 20, vec3{ 0,1,0 });
@@ -187,12 +272,31 @@ void ModuleSceneIntro::CreateBales()
 		j += 3;
 		w += 0.25;
 	}
+	
+	CreateBale(23.5, 0.5f, 50.5, 140, vec3{ 0,1,0 });
+	CreateBale(25, 0.5f, 48, 160, vec3{ 0,1,0 });
+
+	for (float i = 0, j = 21.5, w = 52.5; i < 4; i++) {
+		CreateBale(j, 0.5f, w, 135, vec3{ 0,1,0 });
+		j -= 2;
+		w += 2;
+	}
+	CreateBale(13.0, 0.5f, 60.5, 120, vec3{ 0,1,0 });
+	CreateBale(10.5, 0.5f, 61.5, 100, vec3{ 0,1,0 });
 
 	//14
 	for (float i = 0, j = 7.5; i < 9; i++) {
 		CreateBale(j, 0.5f, 73, 90, vec3{ 0,1,0 });
 		j += 3;
 	}
+
+	//11
+	CreateBale(10, 0.5f, 52.5, 100, vec3{ 0,1,0 });
+	CreateBale(12.5, 0.5f, 51.5, 120, vec3{ 0,1,0 });
+	CreateBale(14.5, 0.5f, 49.5, 140, vec3{ 0,1,0 });
+	CreateBale(16, 0.5f, 47, 160, vec3{ 0,1,0 });
+
+
 }
 
 void ModuleSceneIntro::CreateTree(const float x, const float y, const float z, const float tall, const float radious)
@@ -225,4 +329,9 @@ void ModuleSceneIntro::CreateTrees()
 	CreateTree(15, 0, 42, 15, 2);
 	CreateTree(13, 0, 35, 20, 3);
 	CreateTree(13.5, 0, 29, 15, 2);
+
+	CreateTree(25, 0, 75, 15, 2);
+
+	CreateTree(50, 0, 80, 15, 2);
+	CreateTree(56, 0, 80, 15, 2);
 }

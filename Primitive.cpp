@@ -221,6 +221,7 @@ void Cylinder::InnerRender() const
 	glEnd();
 }
 
+
 // LINE ==================================================
 Line::Line() : Primitive(), origin(0, 0, 0), destination(1, 1, 1)
 {
@@ -261,9 +262,9 @@ void Plane::InnerRender() const
 {
 	glLineWidth(1.0f);
 
+	//glBegin(GL_QUADS);
 	glBegin(GL_LINES);
-
-	float d = 200.0f;
+	float d = constant;
 
 	for(float i = -d; i <= d; i += 1.0f)
 	{
@@ -324,3 +325,4 @@ void TreeTop::InnerRender() const
 
 
 }
+

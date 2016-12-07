@@ -2,7 +2,7 @@
 #pragma once
 #include "glmath.h"
 #include "Color.h"
-
+#include "p2List.h"
 enum PrimitiveTypes
 {
 	Primitive_Point,
@@ -16,6 +16,7 @@ enum PrimitiveTypes
 
 class Primitive
 {
+	friend class Fance;
 public:
 
 	Primitive();
@@ -71,6 +72,7 @@ public:
 	Cylinder();
 	Cylinder(float radius, float height);
 	void InnerRender() const;
+
 public:
 	float radius;
 	float height;
@@ -111,3 +113,5 @@ public:
 	float radius;
 	float height;
 };
+
+// ============================================

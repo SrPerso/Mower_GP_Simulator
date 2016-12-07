@@ -55,7 +55,12 @@ public:
 	p2List<TreeTop*> trees_top;
 	p2List<Cylinder*> trees_trunk;
 
-	Cube* CreateBale(const float x, const float y, const  float z, const  float angle, const vec3&);
+	p2List<Cylinder*> postes;
+	p2List<Cube*> transversales;
+
+	void CreateFance(float distance, float tall, vec3 Position, vec3 rotationvec, float angle, int magicX, int magicZ);
+
+	void CreateBale(const float x, const float y, const  float z, const  float angle, const vec3&);
 	void CreateBales();
 
 	void CreateTree(const float x, const float y, const float z, const float tall , const float radious);
