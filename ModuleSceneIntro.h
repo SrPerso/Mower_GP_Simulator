@@ -30,7 +30,7 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
-public:
+private:
 	/*
 	PhysBody3D* pb_snake[MAX_SNAKE];
 	Sphere s_snake[MAX_SNAKE];
@@ -58,11 +58,26 @@ public:
 	p2List<Cylinder*> postes;
 	p2List<Cube*> transversales;
 
+	p2List<Plane*> Planos;
+
+	p2List<Cube*> Farm;
+	Cylinder* silo1;
+	Cylinder* silo2;
+public:
+
+	void CreateFarm();
+	void CreateCubeToFarm(const float x, const float y, const  float z, const  float angle, const vec3&, Color colorr, const float w, const float h, const float l);
+
 	void CreateFance(float distance, float tall, vec3 Position, vec3 rotationvec, float angle, int magicX, int magicZ);
+	void CreateFances();
 
 	void CreateBale(const float x, const float y, const  float z, const  float angle, const vec3&);
 	void CreateBales();
 
 	void CreateTree(const float x, const float y, const float z, const float tall , const float radious);
 	void CreateTrees();
+
+	void CreatePlane(const float x, const float y, const float z, const float width, const float height, Color colorr, const  float angle, const vec3& rotationAxis);
+	void CreatePlanes();
+
 };

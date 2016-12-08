@@ -24,7 +24,7 @@ struct Color
 		return (float*)this;
 	}
 };
-
+extern Color grey;
 extern Color Red;
 extern Color Green;
 extern Color Green_Ground;

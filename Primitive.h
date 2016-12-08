@@ -95,11 +95,11 @@ class Plane : public Primitive
 {
 public:
 	Plane();
-	Plane(float x, float y, float z, float d);
+	Plane(float x, float y, float z, const float width, const float height);
 	void InnerRender() const;
 public:
 	vec3 normal;
-	float constant;
+	float constant, height, width;
 };
 
 // ============================================

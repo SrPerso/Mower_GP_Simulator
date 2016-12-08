@@ -253,7 +253,7 @@ Plane::Plane() : Primitive(), normal(0, 1, 0), constant(1)
 	type = PrimitiveTypes::Primitive_Plane;
 }
 
-Plane::Plane(float x, float y, float z, float d) : Primitive(), normal(x, y, z), constant(d)
+Plane::Plane(float x, float y, float z, const float width, const float height) : Primitive(), normal(x, y, z), width(width), height(height)
 {
 	type = PrimitiveTypes::Primitive_Plane;
 }
@@ -262,17 +262,23 @@ void Plane::InnerRender() const
 {
 	glLineWidth(1.0f);
 
-	//glBegin(GL_QUADS);
-	glBegin(GL_LINES);
-	float d = constant;
+	glBegin(GL_QUADS);
+	//glBegin(GL_LINES);
+	//float d = constant;
 
-	for(float i = -d; i <= d; i += 1.0f)
-	{
-		glVertex3f(i, 0.0f, -d);
-		glVertex3f(i, 0.0f, d);
-		glVertex3f(-d, 0.0f, i);
-		glVertex3f(d, 0.0f, i);
-	}
+	//for(float i = -(width/2); i <= (width / 2); i += 1.0f)
+	//{
+	//	glVertex3f(i, normal.y, -height);
+	//	glVertex3f(i, normal.y, height);
+	//	glVertex3f(-width, normal.y, i);
+	//	glVertex3f(width, normal.y, i);
+
+	//}
+
+	glVertex3f(width, 0, 0);
+	glVertex3f(0, 0, 0);
+	glVertex3f(0, 0,height);
+	glVertex3f( width, 0,  height);
 
 	glEnd();
 }
@@ -322,7 +328,6 @@ void TreeTop::InnerRender() const
 		glVertex3f(-height*0.5f, radius * cos(a), radius * sin(a));
 	}
 	glEnd();
-
 
 }
 
