@@ -1,8 +1,12 @@
 #pragma once
+#ifndef _SCENE_INTRO_
+#define _SCENE_INTRO_
+       
 #include "Module.h"
 #include "p2DynArray.h"
 #include "Globals.h"
 #include "Primitive.h"
+#include "p2List.h"
 
 #define MAX_SNAKE 2
 
@@ -73,7 +77,10 @@ private:
 	p2List<PhysBody3D*> Farm_body;
 	p2List<Cube*> Farm;
 
-
+	p2List<Cube*> Cow_corps;
+	p2List<PhysBody3D*> CowCorps_body;
+	p2List<PhysBody3D*> CowLegs_body;
+	p2List<Cylinder*>Cow_legs;
 
 
 	Cylinder* silo1;
@@ -92,10 +99,14 @@ public:
 	void CreateBale(const float x, const float y, const  float z, const  float angle, const vec3&);
 	void CreateBales();
 
-	void CreateTree(const float x, const float y, const float z, const float tall , const float radious);
+	void CreateTree(const float x, const float y, const float z, const float tall, const float radious);
 	void CreateTrees();
 
 	void CreatePlane(const float x, const float y, const float z, const float width, const float height, Color colorr, const  float angle, const vec3& rotationAxis);
 	void CreatePlanes();
 
+	void CreateCow(const float x, const float y, const float z, const float angle, const vec3 RotationAxis);
+	void CreateCows();
 };
+
+#endif // _SCENE_INTRO_

@@ -3,6 +3,7 @@
 #include "ModuleSceneIntro.h"
 #include "Primitive.h"
 #include "PhysBody3D.h"
+#include "Time.h"
 #include "ModulePhysics3D.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -18,8 +19,8 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	App->camera->Move(vec3(-20.0f, 30.0f,-20.0f));
-	App->camera->LookAt(vec3(30,0, 30));
+	App->camera->Move(vec3(25, 3,3));
+	App->camera->LookAt(vec3(30,2, 10));
 	
 	//bales
 	
@@ -29,7 +30,7 @@ bool ModuleSceneIntro::Start()
 	CreateFances();
 	CreatePlanes();
 	CreateFarm();
-
+	CreateCows();
 
 
 	silo1 = new Cylinder(2, 35);
@@ -69,6 +70,13 @@ bool ModuleSceneIntro::CleanUp()
 	for (int i = 0; i < Farm.count(); i++)
 		delete Farm[i];
 
+	for (int i = 0; i < Cow_corps.count(); i++)
+		delete Cow_corps[i];
+
+	for (int i = 0; i < Cow_legs.count(); i++)
+		delete Cow_legs[i];
+
+
 	delete silo1;
 	delete silo2;
 
@@ -80,20 +88,23 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update(float dt)
 {
 	
-
 	//--------------------
 	silo2->Render();
 	silo1->Render();
 	//-----------------------------
 	//--- Farm
 	//-----------------------------
-
 	p2List_item<Cube*>* iteratorFarm;
+	p2List_item<PhysBody3D*>*iteratorFarm_body;
 	iteratorFarm = Farm.getFirst();
 
-	while (iteratorFarm != nullptr) {
+	iteratorFarm_body = Farm_body.getFirst();
+	while (iteratorFarm != nullptr) {	
+
+		//iteratorFarm_body->data->GetTransform(&(iteratorFarm->data->transform));
 		iteratorFarm->data->Render();
 
+		iteratorFarm_body = iteratorFarm_body->next;
 		iteratorFarm = iteratorFarm->next;
 	}
 
@@ -123,25 +134,29 @@ update_status ModuleSceneIntro::Update(float dt)
 	//-----------------------------
 
 	p2List_item<TreeTop*>* iteratorTop;
-	p2List_item<PhysBody3D*>*iteratorTop_body;
+	//p2List_item<PhysBody3D*>*iteratorTop_body;
 
 	p2List_item<Cylinder*>* iteratorTrunk;
 	p2List_item<PhysBody3D*>*iteratorTrunk_body;
 
 
 	iteratorTop = trees_top.getFirst();
-	iteratorTrunk_body = trees_top_body.getFirst();
+	//iteratorTop_body = trees_top_body.getFirst();
 
 	iteratorTrunk = trees_trunk.getFirst();
 	iteratorTrunk_body = trees_trunk_body.getFirst();
 
 	while (iteratorTop != nullptr) {
 
+		iteratorTrunk_body->data->GetTransform(&(iteratorTrunk->data->transform));
+
 		iteratorTop->data->Render();
 		iteratorTrunk->data->Render();
 
 		iteratorTop = iteratorTop->next;
+		//iteratorTop_body = iteratorTop_body->next;
 		iteratorTrunk = iteratorTrunk->next;
+		iteratorTrunk_body = iteratorTrunk_body->next;
 	}
 	//-----------------------------
 	//--- render bales
@@ -160,6 +175,37 @@ update_status ModuleSceneIntro::Update(float dt)
 		iteratorBale = iteratorBale->next;
 		iteratorBale_body = iteratorBale_body->next;
 	}
+	//-----------------------------
+	//--- render Cows
+	//-----------------------------
+
+	p2List_item<Cylinder*>* iteratorlegs;
+	p2List_item<Cube*>* iteratorbody;
+
+	p2List_item<PhysBody3D*>* iteratorcow_Legs_body;
+	p2List_item<PhysBody3D*>* iteratorcow_Corps_body;
+
+	iteratorlegs = Cow_legs.getFirst();
+	iteratorbody = Cow_corps.getFirst();
+
+	iteratorcow_Legs_body = CowLegs_body.getFirst();
+	iteratorcow_Corps_body = CowCorps_body.getFirst();
+
+		while (iteratorlegs != nullptr) {
+
+			iteratorcow_Legs_body->data->GetTransform(&(iteratorlegs->data->transform));
+			iteratorlegs->data->Render();
+
+			iteratorlegs = iteratorlegs->next;
+		}
+		while (iteratorbody != nullptr) {
+
+			iteratorcow_Corps_body->data->GetTransform(&(iteratorbody->data->transform));
+			iteratorbody->data->Render();
+
+			iteratorbody = iteratorbody->next;
+		}
+
 
 	//-----------------------------
 	//--- render Planes
@@ -190,6 +236,8 @@ void ModuleSceneIntro::CreateCubeToFarm(const float x, const float y, const floa
 	cube->SetRotation(angle, rotationAxis);
 	cube->color = colorr;
 	Farm.add(cube);
+
+	Farm_body.add(App->physics->AddBody(*cube,0));
 
 }
 
@@ -525,7 +573,8 @@ void ModuleSceneIntro::CreateTree(const float x, const float y, const float z, c
 
 	trees_top.add(ttop);
 	trees_trunk.add(ttrunk);
-	
+
+	trees_trunk_body.add(App->physics->AddBody((*ttrunk),0));
 }
 
 void ModuleSceneIntro::CreateTrees()
@@ -592,4 +641,121 @@ void ModuleSceneIntro::CreatePlanes()
 
 }
 
+void ModuleSceneIntro::CreateCow(const float x, const float y, const float z, const float angle, const vec3 RotationAxis) {
 
+	srand(time(NULL));
+
+	// -----------------------------------------------------------
+
+	Cube* cube = new Cube(2,1.3,1);
+
+	int nrandom;
+	nrandom = rand() % 5;
+
+	if (nrandom == 1 || nrandom == 0 || nrandom == 5)
+		cube->color = White;
+	else if (nrandom == 2) 
+		cube->color = Brown;
+	else
+		cube->color = Black;
+	
+	cube->SetPos(x, y+1.1, z);
+	cube->SetRotation(angle, { 0,1,0 });
+	Cow_corps.add(cube);
+
+	PhysBody3D* bod = App->physics->AddBody((*cube),400);
+	CowCorps_body.add(bod);
+
+	// -----------------------------------------------------------
+
+	Cylinder* leg1 = new Cylinder(0.25,0.75);
+
+	int nrandom2;
+	nrandom2 = rand() % 5;
+
+	if (nrandom2 == 1 || nrandom2 == 0 || nrandom2 == 5)
+		leg1->color = White;
+	else if (nrandom2 == 2)
+		leg1->color = Brown;
+	else
+		leg1->color = Black;
+
+	leg1->SetPos(x - 0.35f, y + 0.25f, z-0.35);
+	leg1->SetRotation(90, { 0,0,1 });
+
+	Cow_legs.add(leg1);
+	PhysBody3D* legg1 = App->physics->AddBody(*leg1, 200);
+	CowLegs_body.add(legg1);
+	App->physics->AddConstraintP2P(*bod,*legg1, {-0.35f,-0.5f,-0.35f }, { +0.5f,0,0 });
+
+	// -----------------------------------------------------------
+
+	Cylinder* leg2 = new Cylinder(0.25, 0.75);
+
+	int nrandom3;
+	nrandom3 = rand() % 5;
+
+	if (nrandom3 == 1 || nrandom3 == 0 || nrandom3 == 5)
+		leg2->color = White;
+	else if (nrandom3 == 2)
+		leg2->color = Brown;
+	else
+		leg2->color = Black;
+
+	leg2->SetPos(x+0.35f, y + 0.25f, z-0.35f);
+	leg2->SetRotation(90, { 0,0,1 });
+
+	Cow_legs.add(leg2);
+	PhysBody3D* legg2 = App->physics->AddBody(*leg2, 200);
+
+
+	CowLegs_body.add(legg2);
+	App->physics->AddConstraintP2P(*bod,*legg2, {+0.35f,-0.5f,-0.35f }, { 0.5f,0,0 });
+
+	// -----------------------------------------------------------
+
+	Cylinder* leg3 = new Cylinder(0.25, 0.75);
+
+	nrandom = rand() % 5;
+
+	if (nrandom == 1 || nrandom == 0 || nrandom == 5)
+		leg3->color = White;
+	else if (nrandom == 2)
+		leg3->color = Brown;
+	else
+		leg3->color = Black;
+
+	leg3->SetPos(x + 0.35f, y + 0.25f, z+0.35f);
+	leg3->SetRotation(90, { 0,0,1 });
+	Cow_legs.add(leg3);
+	PhysBody3D* legg3 = App->physics->AddBody(*leg3, 200);
+	CowLegs_body.add(legg3);
+
+	App->physics->AddConstraintP2P(*bod,*legg3, { +0.35f,-0.5f,+0.35f }, { 0.5,0,0 });
+
+	// -----------------------------------------------------------
+
+	Cylinder* leg4 = new Cylinder(0.25, 0.75);
+
+	nrandom = rand() % 4;
+
+	if (nrandom == 1 || nrandom == 0)
+		leg4->color = White;
+	else if (nrandom == 2)
+		leg4->color = Brown;
+	else
+		leg4->color = Black;
+	 
+	leg4->SetPos(x-0.35f, y + 0.25f, z + 0.35f);
+	leg4->SetRotation(90, { 0,0,1 });
+	PhysBody3D* legg4 = App->physics->AddBody(*leg4, 200);
+	Cow_legs.add(leg4);
+	CowLegs_body.add(legg4);
+	App->physics->AddConstraintP2P(*bod,*legg4, { -0.35f,-0.5f,+0.35f }, { 0.5,0,0 });
+
+}
+
+void ModuleSceneIntro::CreateCows()
+{
+	CreateCow(30, 0, 10, 0, { 0,0,1 });
+}
