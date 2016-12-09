@@ -3,6 +3,7 @@
 #include "ModuleSceneIntro.h"
 #include "Primitive.h"
 #include "PhysBody3D.h"
+#include "ModulePhysics3D.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -122,10 +123,17 @@ update_status ModuleSceneIntro::Update(float dt)
 	//-----------------------------
 
 	p2List_item<TreeTop*>* iteratorTop;
+	p2List_item<PhysBody3D*>*iteratorTop_body;
+
 	p2List_item<Cylinder*>* iteratorTrunk;
+	p2List_item<PhysBody3D*>*iteratorTrunk_body;
+
 
 	iteratorTop = trees_top.getFirst();
+	iteratorTrunk_body = trees_top_body.getFirst();
+
 	iteratorTrunk = trees_trunk.getFirst();
+	iteratorTrunk_body = trees_trunk_body.getFirst();
 
 	while (iteratorTop != nullptr) {
 
@@ -139,12 +147,18 @@ update_status ModuleSceneIntro::Update(float dt)
 	//--- render bales
 	//-----------------------------
 	p2List_item<Cube*>* iteratorBale;
+	p2List_item<PhysBody3D*>* iteratorBale_body;
+
 	iteratorBale = bales.getFirst();
+	iteratorBale_body = bales_body.getFirst();
 
 	while (iteratorBale != nullptr) {
+	
+		iteratorBale_body->data->GetTransform(&(iteratorBale->data->transform));
 		iteratorBale->data->Render();
-
+		
 		iteratorBale = iteratorBale->next;
+		iteratorBale_body = iteratorBale_body->next;
 	}
 
 	//-----------------------------
@@ -167,7 +181,6 @@ update_status ModuleSceneIntro::Update(float dt)
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
 }
-
 
 void ModuleSceneIntro::CreateCubeToFarm(const float x, const float y, const float z, const float angle, const vec3 & rotationAxis, Color colorr , const float w, const float h , const float l)
 {
@@ -377,6 +390,10 @@ void ModuleSceneIntro::CreateBale(const float x, const float y, const float z, c
 	heno->SetRotation(angle, rotationAxis);
 	heno->color = Yellow;	
 	bales.add(heno);
+
+	bales_body.add(App->physics->AddBody(*heno, 1500));
+
+
 	
 }
 
@@ -508,6 +525,7 @@ void ModuleSceneIntro::CreateTree(const float x, const float y, const float z, c
 
 	trees_top.add(ttop);
 	trees_trunk.add(ttrunk);
+	
 }
 
 void ModuleSceneIntro::CreateTrees()
@@ -536,6 +554,7 @@ void ModuleSceneIntro::CreatePlane(const float x, const float y, const float z, 
 	plane->color = colorr;
 	Planos.add(plane);
 }
+
 void ModuleSceneIntro::CreatePlanes()
 {
 	//CreatePlane(0, 0, 0,100,50,Green_Ground,0, vec3(0, 1, 0));

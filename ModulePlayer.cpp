@@ -23,7 +23,7 @@ bool ModulePlayer::Start()
 	// Car properties ----------------------------------------
 	car.chassis_size.Set(1.0f,0.4f, 2);
 	car.chassis_offset.Set(0, 0.4, 0);
-	car.mass = 100.0f;
+	car.mass = 400.0f;
 	car.suspensionStiffness = 15.88f;
 	car.suspensionCompression = 0.83f;
 	car.suspensionDamping = 0.88f;
@@ -134,7 +134,7 @@ update_status ModulePlayer::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
-		brake = BRAKE_POWER;
+		acceleration = -MAX_ACCELERATION;
 	}
 
 	vehicle->ApplyEngineForce(acceleration);

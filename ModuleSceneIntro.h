@@ -51,18 +51,36 @@ private:
 	PhysMotor3D* left_wheel;
 	PhysMotor3D* right_wheel;
 
+
+
+	p2List<PhysBody3D*> bales_body;
 	p2List<Cube*> bales;
+
+	p2List<PhysBody3D*> trees_top_body;
 	p2List<TreeTop*> trees_top;
+
+	p2List<PhysBody3D*> trees_trunk_body;
 	p2List<Cylinder*> trees_trunk;
 
+	p2List<PhysBody3D*> postes_body_body;
 	p2List<Cylinder*> postes;
+
+	p2List<PhysBody3D*> transversales_body;
 	p2List<Cube*> transversales;
 
 	p2List<Plane*> Planos;
 
+	p2List<PhysBody3D*> Farm_body;
 	p2List<Cube*> Farm;
+
+
+
+
 	Cylinder* silo1;
 	Cylinder* silo2;
+
+
+	//pb_snake[i]->GetTransform(&(s_snake[i].transform));
 public:
 
 	void CreateFarm();
