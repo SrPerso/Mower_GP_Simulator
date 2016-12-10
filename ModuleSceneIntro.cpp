@@ -19,9 +19,8 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	App->camera->Move(vec3(25, 3,3));
-	App->camera->LookAt(vec3(30,2, 10));
-	
+	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
+	App->camera->LookAt(vec3(0, 0, 0));
 	//bales
 	
 
@@ -108,7 +107,6 @@ update_status ModuleSceneIntro::Update(float dt)
 		iteratorFarm = iteratorFarm->next;
 	}
 
-
 	//-----------------------------
 	//--- Fances
 	//-----------------------------
@@ -118,7 +116,6 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	iteratorTrans = transversales.getFirst();
 	
-
 	while (iteratorTrans != nullptr) {
 		iteratorTrans->data->Render();
 		iteratorTrans = iteratorTrans->next;		
@@ -195,7 +192,8 @@ update_status ModuleSceneIntro::Update(float dt)
 
 			iteratorcow_Legs_body->data->GetTransform(&(iteratorlegs->data->transform));
 			iteratorlegs->data->Render();
-
+			
+			iteratorcow_Legs_body = iteratorcow_Legs_body->next;
 			iteratorlegs = iteratorlegs->next;
 		}
 		while (iteratorbody != nullptr) {
@@ -203,6 +201,7 @@ update_status ModuleSceneIntro::Update(float dt)
 			iteratorcow_Corps_body->data->GetTransform(&(iteratorbody->data->transform));
 			iteratorbody->data->Render();
 
+			iteratorcow_Corps_body = iteratorcow_Corps_body->next;
 			iteratorbody = iteratorbody->next;
 		}
 
@@ -224,10 +223,13 @@ update_status ModuleSceneIntro::Update(float dt)
 	return UPDATE_CONTINUE;
 }
 
+//colision
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
 }
 
+
+//creators
 void ModuleSceneIntro::CreateCubeToFarm(const float x, const float y, const float z, const float angle, const vec3 & rotationAxis, Color colorr , const float w, const float h , const float l)
 {
 
@@ -650,9 +652,9 @@ void ModuleSceneIntro::CreateCow(const float x, const float y, const float z, co
 	Cube* cube = new Cube(2,1.3,1);
 
 	int nrandom;
-	nrandom = rand() % 5;
+	nrandom = rand() % 6;
 
-	if (nrandom == 1 || nrandom == 0 || nrandom == 5)
+	if (nrandom == 1 || nrandom == 0 || nrandom == 5 || nrandom == 4)
 		cube->color = White;
 	else if (nrandom == 2) 
 		cube->color = Brown;
@@ -757,5 +759,6 @@ void ModuleSceneIntro::CreateCow(const float x, const float y, const float z, co
 
 void ModuleSceneIntro::CreateCows()
 {
-	CreateCow(30, 0, 10, 0, { 0,0,1 });
+	CreateCow(60, 0, 60, 0, { 0,0,1 });
+	CreateCow(64, 0, 68, 90, { 0,0,1 });
 }

@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "PhysBody3D.h"
 #include "ModuleCamera3D.h"
+#include "PhysVehicle3D.h"
 
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -13,6 +14,11 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(ap
 
 	Position = vec3(0.0f, 0.0f, 5.0f);
 	Reference = vec3(0.0f, 0.0f, 0.0f);
+
+	CameraPos = vec3(0.0f, 0.0f, 0.0f);
+	ViewDirection = vec3(0.0f, 0.0f, 0.0f);
+	Target = nullptr;
+
 }
 
 ModuleCamera3D::~ModuleCamera3D()
@@ -23,6 +29,11 @@ bool ModuleCamera3D::Start()
 {
 	LOG("Setting up the camera");
 	bool ret = true;
+
+	CameraPos = vec3(0.0f, 6.0f, 0.0f);
+	ViewDirection = vec3(0.0f, 5.0f, 0.0f);
+	Target = App->player->vehicle;
+
 
 	return ret;
 }
@@ -61,7 +72,7 @@ update_status ModuleCamera3D::Update(float dt)
 
 	// Mouse motion ----------------
 
-	if(App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
 		int dx = -App->input->GetMouseXMotion();
 		int dy = -App->input->GetMouseYMotion();
@@ -70,7 +81,7 @@ update_status ModuleCamera3D::Update(float dt)
 
 		Position -= Reference;
 
-		if(dx != 0)
+		if (dx != 0)
 		{
 			float DeltaX = (float)dx * Sensitivity;
 
@@ -79,14 +90,14 @@ update_status ModuleCamera3D::Update(float dt)
 			Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f));
 		}
 
-		if(dy != 0)
+		if (dy != 0)
 		{
 			float DeltaY = (float)dy * Sensitivity;
 
 			Y = rotate(Y, DeltaY, X);
 			Z = rotate(Z, DeltaY, X);
 
-			if(Y.y < 0.0f)
+			if (Y.y < 0.0f)
 			{
 				Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
 				Y = cross(Z, X);
@@ -94,6 +105,21 @@ update_status ModuleCamera3D::Update(float dt)
 		}
 
 		Position = Reference + Z * length(Position);
+	}
+
+	else
+	{
+		mat4x4 vehicle_trans;
+		Target->GetTransform(&vehicle_trans);
+
+		//Vehicle Axis
+		X = vec3(vehicle_trans[0], vehicle_trans[1], vehicle_trans[2]);
+		Y = vec3(vehicle_trans[4], vehicle_trans[5], vehicle_trans[6]);
+		Z = vec3(vehicle_trans[8], vehicle_trans[9], vehicle_trans[10]);
+
+		//Vehicle pos and camera look to it
+		VehiclePos = vehicle_trans.translation();
+		App->camera->Look((VehiclePos + CameraPos) - Z * 10, ViewDirection + VehiclePos, true);
 	}
 
 	// Recalculate matrix -------------

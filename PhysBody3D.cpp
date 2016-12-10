@@ -1,7 +1,7 @@
 #include "PhysBody3D.h"
 #include "glmath.h"
 #include "Bullet/include/btBulletDynamicsCommon.h"
-#include "Primitive.h"
+
 // =================================================
 PhysBody3D::PhysBody3D(btRigidBody* body) : body(body)
 {}
@@ -21,16 +21,24 @@ void PhysBody3D::Push(float x, float y, float z)
 // ---------------------------------------------------------
 void PhysBody3D::GetTransform(float* matrix) const
 {
-	if(body != NULL && matrix != NULL)
-	{
+	if (body != NULL && matrix != NULL)
 		body->getWorldTransform().getOpenGLMatrix(matrix);
+	
+}
+
+// ---------------------------------------------------------
+btTransform* PhysBody3D::GetBTTransform() const
+{
+	if (body != NULL)
+	{
+		return &body->getWorldTransform();
 	}
 }
 
 // ---------------------------------------------------------
 void PhysBody3D::SetTransform(const float* matrix) const
 {
-	if(body != NULL && matrix != NULL)
+	if (body != NULL && matrix != NULL)
 	{
 		btTransform t;
 		t.setFromOpenGLMatrix(matrix);
@@ -44,4 +52,12 @@ void PhysBody3D::SetPos(float x, float y, float z)
 	btTransform t = body->getWorldTransform();
 	t.setOrigin(btVector3(x, y, z));
 	body->setWorldTransform(t);
+
+	vehicle_position.x = x;
+	vehicle_position.y = y;
+	vehicle_position.z = z;
+}
+
+const vec3 PhysBody3D::GetPos() const {
+	return vehicle_position;
 }

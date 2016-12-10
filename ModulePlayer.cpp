@@ -33,8 +33,8 @@ bool ModulePlayer::Start()
 
 	// Wheel properties ---------------------------------------
 	float connection_height = 1.2f;
-	float wheel_radius = 0.1f;
-	float wheel_width = 0.1f;
+	float wheel_radius = 0.3f;
+	float wheel_width = 0.3f;
 	float suspensionRestLength = 1.2f;
 
 	// Don't change anything below this line ------------------
@@ -97,8 +97,7 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(3, 0.5f, 0);
-	
+	vehicle->SetPos(0, 0, -20);
 	return true;
 }
 
@@ -135,6 +134,14 @@ update_status ModulePlayer::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
 		acceleration = -MAX_ACCELERATION;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+	{
+		vehicle->SetPos(0, 0, -20);
+	}
+	if (vehicle->GetPos().x >= 200 || vehicle->GetPos().x <= -200 || vehicle->GetPos().z > 200 || vehicle->GetPos().z < -200) {
+		vehicle->SetPos(0, 0, -20);
 	}
 
 	vehicle->ApplyEngineForce(acceleration);
