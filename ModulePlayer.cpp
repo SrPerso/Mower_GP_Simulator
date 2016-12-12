@@ -140,6 +140,18 @@ update_status ModulePlayer::Update(float dt)
 	{
 		vehicle->SetPos(0, 0, -20);
 	}
+	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+	{
+		if (MowerON == true) {
+			
+			MowerON = false;
+
+		}
+		else {
+			MowerON = true;
+		}
+	
+	}
 	if (vehicle->GetPos().x >= 200 || vehicle->GetPos().x <= -200 || vehicle->GetPos().z > 200 || vehicle->GetPos().z < -200) {
 		vehicle->SetPos(0, 0, -20);
 	}

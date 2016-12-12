@@ -19,8 +19,8 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
-	App->camera->LookAt(vec3(0, 0, 0));
+	App->camera->Move(vec3(0, +0, 0.0));
+	App->camera->LookAt(vec3(60, 1.5f, 60));
 	//bales
 	
 
@@ -32,16 +32,7 @@ bool ModuleSceneIntro::Start()
 	CreateCows();
 
 
-	silo1 = new Cylinder(2, 35);
-	silo1->SetPos(-12, 0, -5);
-	silo1->SetRotation(90, vec3(0, 0, 1));
-	silo1->color = White;
-
-
-	silo2 = new Cylinder(2, 35);
-	silo2->SetPos(-12, 0, 0);
-	silo2->SetRotation(90, vec3(0, 0, 1));
-	silo2->color = White;
+	
 
 	return ret;
 }
@@ -245,6 +236,17 @@ void ModuleSceneIntro::CreateCubeToFarm(const float x, const float y, const floa
 
 void ModuleSceneIntro::CreateFarm()
 {
+	silo1 = new Cylinder(2, 35);
+	silo1->SetPos(-12, 0, -5);
+	silo1->SetRotation(90, vec3(0, 0, 1));
+	silo1->color = White;
+
+
+	silo2 = new Cylinder(2, 35);
+	silo2->SetPos(-12, 0, 0);
+	silo2->SetRotation(90, vec3(0, 0, 1));
+	silo2->color = White;
+
 
 	CreateCubeToFarm(0, 15.5, 0, +45, vec3(0, 0, 1), White, 0.5, 0.5, 21); //roof1
 	CreateCubeToFarm(-2, 15, 0, +15, vec3(0, 0, 1), grey, 5, 0.25f, 20); //roof1
@@ -649,26 +651,42 @@ void ModuleSceneIntro::CreateCow(const float x, const float y, const float z, co
 
 	// -----------------------------------------------------------
 
-	Cube* cube = new Cube(2,1.3,1);
+	Cube* cube = new Cube(2, 1.3, 1);
 
 	int nrandom;
 	nrandom = rand() % 6;
 
 	if (nrandom == 1 || nrandom == 0 || nrandom == 5 || nrandom == 4)
 		cube->color = White;
-	else if (nrandom == 2) 
+	else if (nrandom == 2)
 		cube->color = Brown;
 	else
 		cube->color = Black;
-	
-	cube->SetPos(x, y+1.1, z);
+
+	cube->SetPos(x, y + 1.1, z);
 	cube->SetRotation(angle, { 0,1,0 });
 	Cow_corps.add(cube);
 
-	PhysBody3D* bod = App->physics->AddBody((*cube),400);
+	PhysBody3D* bod = App->physics->AddBody((*cube),200);
 	CowCorps_body.add(bod);
 
 	// -----------------------------------------------------------
+
+	Cube* head = new Cube(1, 1, 1);
+
+	head->color = White;
+
+	head->SetPos(x+1, y+1.6, z);
+	head->SetRotation(angle, { 0,1,0 });
+	Cow_corps.add(head);
+
+	PhysBody3D* headb = App->physics->AddBody((*cube), 1);
+	CowCorps_body.add(headb);
+
+	App->physics->AddConstraintP2P(*bod, *headb, { 1.0f,0,0.25f }, { -0.45f,-0.5f,0 });
+
+	// -----------------------------------------------------------
+
 
 	Cylinder* leg1 = new Cylinder(0.25,0.75);
 
@@ -686,9 +704,9 @@ void ModuleSceneIntro::CreateCow(const float x, const float y, const float z, co
 	leg1->SetRotation(90, { 0,0,1 });
 
 	Cow_legs.add(leg1);
-	PhysBody3D* legg1 = App->physics->AddBody(*leg1, 200);
+	PhysBody3D* legg1 = App->physics->AddBody(*leg1, 100);
 	CowLegs_body.add(legg1);
-	App->physics->AddConstraintP2P(*bod,*legg1, {-0.35f,-0.5f,-0.35f }, { +0.5f,0,0 });
+	App->physics->AddConstraintP2P(*bod,*legg1, {-0.35f,-0.5f,-0.35f }, { +0.7f,0,0 });
 
 	// -----------------------------------------------------------
 
@@ -708,11 +726,11 @@ void ModuleSceneIntro::CreateCow(const float x, const float y, const float z, co
 	leg2->SetRotation(90, { 0,0,1 });
 
 	Cow_legs.add(leg2);
-	PhysBody3D* legg2 = App->physics->AddBody(*leg2, 200);
+	PhysBody3D* legg2 = App->physics->AddBody(*leg2, 100);
 
 
 	CowLegs_body.add(legg2);
-	App->physics->AddConstraintP2P(*bod,*legg2, {+0.35f,-0.5f,-0.35f }, { 0.5f,0,0 });
+	App->physics->AddConstraintP2P(*bod,*legg2, {+0.35f,-0.5f,-0.35f }, { 0.7f,0,0 });
 
 	// -----------------------------------------------------------
 
@@ -730,10 +748,10 @@ void ModuleSceneIntro::CreateCow(const float x, const float y, const float z, co
 	leg3->SetPos(x + 0.35f, y + 0.25f, z+0.35f);
 	leg3->SetRotation(90, { 0,0,1 });
 	Cow_legs.add(leg3);
-	PhysBody3D* legg3 = App->physics->AddBody(*leg3, 200);
+	PhysBody3D* legg3 = App->physics->AddBody(*leg3, 100);
 	CowLegs_body.add(legg3);
 
-	App->physics->AddConstraintP2P(*bod,*legg3, { +0.35f,-0.5f,+0.35f }, { 0.5,0,0 });
+	App->physics->AddConstraintP2P(*bod,*legg3, { +0.35f,-0.5f,+0.35f }, { 0.7f,0,0 });
 
 	// -----------------------------------------------------------
 
@@ -750,15 +768,21 @@ void ModuleSceneIntro::CreateCow(const float x, const float y, const float z, co
 	 
 	leg4->SetPos(x-0.35f, y + 0.25f, z + 0.35f);
 	leg4->SetRotation(90, { 0,0,1 });
-	PhysBody3D* legg4 = App->physics->AddBody(*leg4, 200);
+	PhysBody3D* legg4 = App->physics->AddBody(*leg4, 100);
 	Cow_legs.add(leg4);
 	CowLegs_body.add(legg4);
-	App->physics->AddConstraintP2P(*bod,*legg4, { -0.35f,-0.5f,+0.35f }, { 0.5,0,0 });
+	App->physics->AddConstraintP2P(*bod,*legg4, { -0.35f,-0.5f,+0.35f }, { 0.7f,0,0 });
 
 }
 
 void ModuleSceneIntro::CreateCows()
 {
 	CreateCow(60, 0, 60, 0, { 0,0,1 });
-	CreateCow(64, 0, 68, 90, { 0,0,1 });
+	CreateCow(64, 0, 68, 60, { 0,0,1 });
+
+	CreateCow(40, 0, 30, 112, { 0,0,1 });
+	CreateCow(40, 0, 60, 45, { 0,0,1 });
+
+	CreateCow(60, 0, 50, 170, { 0,0,1 });
+	CreateCow(50, 0, 49, 50, { 0,0,1 });
 }
