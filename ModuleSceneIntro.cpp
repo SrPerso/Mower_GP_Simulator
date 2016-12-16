@@ -22,16 +22,16 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(0, +0, 0.0));
 	App->camera->LookAt(vec3(60, 1.5f, 60));
 	//bales
-	
+
+
+	srand(time(NULL));
 
 	CreateBales();
 	CreateTrees();
-	CreateFances();
+	CreateFences();
 	CreatePlanes();
 	CreateFarm();
 	CreateCows();
-
-
 	
 
 	return ret;
@@ -51,12 +51,13 @@ bool ModuleSceneIntro::CleanUp()
 	for (int i = 0; i < trees_trunk.count(); i++)
 		delete trees_trunk[i];
 	
+	//fences
 	for (int i = 0; i < postes.count(); i++)
 		delete postes[i];
 
 	for (int i = 0; i < transversales.count(); i++)
 		delete transversales[i];
-
+	//
 	for (int i = 0; i < Farm.count(); i++)
 		delete Farm[i];
 
@@ -94,7 +95,7 @@ update_status ModuleSceneIntro::Update(float dt)
 		//iteratorFarm_body->data->GetTransform(&(iteratorFarm->data->transform));
 		iteratorFarm->data->Render();
 
-		iteratorFarm_body = iteratorFarm_body->next;
+		//iteratorFarm_body = iteratorFarm_body->next;
 		iteratorFarm = iteratorFarm->next;
 	}
 
@@ -221,7 +222,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 
 
 //creators
-void ModuleSceneIntro::CreateCubeToFarm(const float x, const float y, const float z, const float angle, const vec3 & rotationAxis, Color colorr , const float w, const float h , const float l)
+void ModuleSceneIntro::CreateCubeToFarm(const float x, const float y, const float z, const float angle, const vec3 & rotationAxis, Color colorr , const float w, const float h , const float l, bool physics)
 {
 
 	Cube* cube = new Cube(w, h, l);
@@ -229,7 +230,7 @@ void ModuleSceneIntro::CreateCubeToFarm(const float x, const float y, const floa
 	cube->SetRotation(angle, rotationAxis);
 	cube->color = colorr;
 	Farm.add(cube);
-
+	if(physics==true)
 	Farm_body.add(App->physics->AddBody(*cube,0));
 
 }
@@ -384,9 +385,12 @@ void ModuleSceneIntro::CreateFarm()
  //---------------- w4
 
 
+
+
+
 }
 
-void ModuleSceneIntro::CreateFance(float distance, float tall, vec3 Position, vec3 rotationvec, float angle, int magicX, int magicZ)
+void ModuleSceneIntro::CreateFence(float distance, float tall, vec3 Position, vec3 rotationvec, float angle, int magicX, int magicZ)
 {
 	Cube* trans1 = new Cube(distance, 0.3f, 0.2f);
 
@@ -420,17 +424,17 @@ void ModuleSceneIntro::CreateFance(float distance, float tall, vec3 Position, ve
 	} while (Postes_num >= i);
 }
 
-void ModuleSceneIntro::CreateFances()
+void ModuleSceneIntro::CreateFences()
 {
-	CreateFance(36, 2, vec3(54, 1, 23), vec3(0, 1, 0), 0, 1, 0);
-	CreateFance(36, 2, vec3(54, 1, 78), vec3(0, 1, 0), 0, 1, 0);
+	CreateFence(36, 2, vec3(54, 1, 23), vec3(0, 1, 0), 0, 1, 0);
+	CreateFence(36, 2, vec3(54, 1, 78), vec3(0, 1, 0), 0, 1, 0);
 
-	CreateFance(42, 2, vec3(36, 1, 44), vec3(0, 1, 0), 90, 0, 1);
-	CreateFance(42, 2, vec3(72, 1, 57), vec3(0, 1, 0), 90, 0, 1);
+	CreateFence(42, 2, vec3(36, 1, 44), vec3(0, 1, 0), 90, 0, 1);
+	CreateFence(42, 2, vec3(72, 1, 57), vec3(0, 1, 0), 90, 0, 1);
 
 
-	CreateFance(6, 2, vec3(36, 1, 75), vec3(0, 1, 0), 90, 0, 1);
-	CreateFance(6, 2, vec3(72, 1, 26), vec3(0, 1, 0), 90, 0, 1);
+	CreateFence(6, 2, vec3(36, 1, 75), vec3(0, 1, 0), 90, 0, 1);
+	CreateFence(6, 2, vec3(72, 1, 26), vec3(0, 1, 0), 90, 0, 1);
 
 }
 
@@ -556,12 +560,15 @@ void ModuleSceneIntro::CreateBales()
 	CreateBale(14.5, 0.5f, 49.5, 140, vec3{ 0,1,0 });
 	CreateBale(16, 0.5f, 47, 160, vec3{ 0,1,0 });
 
+	//marc
+	//12
+
+	CreateBale(10, 0.5f, 52.5, 100, vec3{ 0,1,0 });
 
 }
 
 void ModuleSceneIntro::CreateTree(const float x, const float y, const float z, const float tall, const float radious)
 {
-
 
 	TreeTop* ttop = new TreeTop(radious, (tall / 4)*3);
 
@@ -647,8 +654,7 @@ void ModuleSceneIntro::CreatePlanes()
 
 void ModuleSceneIntro::CreateCow(const float x, const float y, const float z, const float angle, const vec3 RotationAxis) {
 
-	srand(time(NULL));
-
+	
 	// -----------------------------------------------------------
 
 	Cube* cube = new Cube(2, 1.3, 1);
@@ -704,7 +710,7 @@ void ModuleSceneIntro::CreateCow(const float x, const float y, const float z, co
 	leg1->SetRotation(90, { 0,0,1 });
 
 	Cow_legs.add(leg1);
-	PhysBody3D* legg1 = App->physics->AddBody(*leg1, 100);
+	PhysBody3D* legg1 = App->physics->AddBody(*leg1, 200);
 	CowLegs_body.add(legg1);
 	App->physics->AddConstraintP2P(*bod,*legg1, {-0.35f,-0.5f,-0.35f }, { +0.7f,0,0 });
 
@@ -726,7 +732,7 @@ void ModuleSceneIntro::CreateCow(const float x, const float y, const float z, co
 	leg2->SetRotation(90, { 0,0,1 });
 
 	Cow_legs.add(leg2);
-	PhysBody3D* legg2 = App->physics->AddBody(*leg2, 100);
+	PhysBody3D* legg2 = App->physics->AddBody(*leg2, 200);
 
 
 	CowLegs_body.add(legg2);
@@ -748,7 +754,7 @@ void ModuleSceneIntro::CreateCow(const float x, const float y, const float z, co
 	leg3->SetPos(x + 0.35f, y + 0.25f, z+0.35f);
 	leg3->SetRotation(90, { 0,0,1 });
 	Cow_legs.add(leg3);
-	PhysBody3D* legg3 = App->physics->AddBody(*leg3, 100);
+	PhysBody3D* legg3 = App->physics->AddBody(*leg3, 200);
 	CowLegs_body.add(legg3);
 
 	App->physics->AddConstraintP2P(*bod,*legg3, { +0.35f,-0.5f,+0.35f }, { 0.7f,0,0 });
@@ -768,7 +774,7 @@ void ModuleSceneIntro::CreateCow(const float x, const float y, const float z, co
 	 
 	leg4->SetPos(x-0.35f, y + 0.25f, z + 0.35f);
 	leg4->SetRotation(90, { 0,0,1 });
-	PhysBody3D* legg4 = App->physics->AddBody(*leg4, 100);
+	PhysBody3D* legg4 = App->physics->AddBody(*leg4, 200);
 	Cow_legs.add(leg4);
 	CowLegs_body.add(legg4);
 	App->physics->AddConstraintP2P(*bod,*legg4, { -0.35f,-0.5f,+0.35f }, { 0.7f,0,0 });
@@ -777,6 +783,8 @@ void ModuleSceneIntro::CreateCow(const float x, const float y, const float z, co
 
 void ModuleSceneIntro::CreateCows()
 {
+	
+
 	CreateCow(60, 0, 60, 0, { 0,0,1 });
 	CreateCow(64, 0, 68, 60, { 0,0,1 });
 

@@ -18,11 +18,23 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 
+	App->audio->Init();
+	fxTurnOff = App->audio->LoadFx("TurnOff.wav");
+	fxTurnOn =  App->audio->LoadFx("TurnOn.wav");
+	fxMiddle = App->audio->LoadFx("middle.wav");
+
+
 	VehicleInfo car;
 
 	// Car properties ----------------------------------------
-	car.chassis_size.Set(1.0f,0.4f, 2);
+	car.chassis_size.Set(1.0f,0.3f, 2.2f);
+	
 	car.chassis_offset.Set(0, 0.4, 0);
+	car.Motor_offset.Set(0, 0.8f, 0.485f);
+	car.Sit_offset.Set(0, 0.9f, -1.0f);
+	car.Sit2_offset.Set(0, 0.7f, -.60f);
+	car.bin_offset.Set(0, 0.8f, -1.70f);
+
 	car.mass = 400.0f;
 	car.suspensionStiffness = 15.88f;
 	car.suspensionCompression = 0.83f;
@@ -133,7 +145,7 @@ update_status ModulePlayer::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
-		acceleration = -MAX_ACCELERATION;
+		acceleration = MAX_DESACCELERATION;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
@@ -142,19 +154,27 @@ update_status ModulePlayer::Update(float dt)
 	}
 	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
 	{
-		if (MowerON == true) {
-			
+		if (MowerON == true) {			
 			MowerON = false;
-
+			App->audio->PlayFx(fxTurnOff);
 		}
 		else {
 			MowerON = true;
+			App->audio->PlayFx(fxTurnOn);
+			
 		}
 	
 	}
 	if (vehicle->GetPos().x >= 200 || vehicle->GetPos().x <= -200 || vehicle->GetPos().z > 200 || vehicle->GetPos().z < -200) {
 		vehicle->SetPos(0, 0, -20);
 	}
+
+	if (MowerON==true) {
+		
+	//	App->audio->PlayFx(fxMiddle);
+
+	}
+
 
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);

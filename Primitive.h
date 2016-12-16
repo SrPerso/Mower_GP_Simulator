@@ -27,6 +27,7 @@ public:
 	void			SetRotation(float angle, const vec3 &u);
 	void			Scale(float x, float y, float z);
 	PrimitiveTypes	GetType() const;
+	vec3 GetPos();
 
 public:
 	
@@ -50,6 +51,7 @@ public :
 		size.y = s.y;	
 		size.z = s.z;
 	}
+
 public:
 	vec3 size;
 };

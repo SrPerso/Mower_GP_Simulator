@@ -120,6 +120,8 @@ update_status ModuleCamera3D::Update(float dt)
 		//Vehicle pos and camera look to it
 		VehiclePos = vehicle_trans.translation();
 		App->camera->Look((VehiclePos + CameraPos) - Z * 10, ViewDirection + VehiclePos, true);
+
+
 	}
 
 	// Recalculate matrix -------------

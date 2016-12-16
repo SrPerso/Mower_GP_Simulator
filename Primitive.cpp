@@ -17,6 +17,12 @@ PrimitiveTypes Primitive::GetType() const
 	return type;
 }
 
+vec3 Primitive::GetPos()
+{
+
+	return vec3();
+}
+
 // ------------------------------------------------------------
 void Primitive::Render() const
 {

@@ -91,10 +91,10 @@ private:
 public:
 
 	void CreateFarm();
-	void CreateCubeToFarm(const float x, const float y, const  float z, const  float angle, const vec3&, Color colorr, const float w, const float h, const float l);
+	void CreateCubeToFarm(const float x, const float y, const  float z, const  float angle, const vec3&, Color colorr, const float w, const float h, const float l, bool physics=false);
 
-	void CreateFance(float distance, float tall, vec3 Position, vec3 rotationvec, float angle, int magicX, int magicZ);
-	void CreateFances();
+	void CreateFence(float distance, float tall, vec3 Position, vec3 rotationvec, float angle, int magicX, int magicZ);
+	void CreateFences();
 
 	void CreateBale(const float x, const float y, const  float z, const  float angle, const vec3&);
 	void CreateBales();
