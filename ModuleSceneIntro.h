@@ -60,6 +60,9 @@ private:
 	p2List<PhysBody3D*> bales_body;
 	p2List<Cube*> bales;
 
+	p2List<PhysBody3D*> rocks_body;
+	p2List<Cylinder*> rocks;
+
 	p2List<PhysBody3D*> trees_top_body;
 	p2List<TreeTop*> trees_top;
 
@@ -98,6 +101,10 @@ public:
 
 	void CreateBale(const float x, const float y, const  float z, const  float angle, const vec3&);
 	void CreateBales();
+
+	void CreateRock(const float x, const float y, const float z, const float angle, const vec3& rotationAxis);
+	void CreateRocks();
+
 
 	void CreateTree(const float x, const float y, const float z, const float tall, const float radious);
 	void CreateTrees();

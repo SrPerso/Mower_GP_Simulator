@@ -20,7 +20,7 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 
 	App->camera->Move(vec3(0, +0, 0.0));
-	App->camera->LookAt(vec3(60, 1.5f, 60));
+	App->camera->LookAt(vec3(120, 1.5f, 60));
 	//bales
 
 
@@ -32,6 +32,7 @@ bool ModuleSceneIntro::Start()
 	CreatePlanes();
 	CreateFarm();
 	CreateCows();
+	CreateRocks();
 	
 
 	return ret;
@@ -164,6 +165,23 @@ update_status ModuleSceneIntro::Update(float dt)
 		iteratorBale = iteratorBale->next;
 		iteratorBale_body = iteratorBale_body->next;
 	}
+
+	p2List_item<Cylinder*>* iteratorRock;
+	p2List_item<PhysBody3D*>* iteratorRock_body;
+
+	iteratorRock = rocks.getFirst();
+	iteratorRock_body = rocks_body.getFirst();
+
+	while (iteratorRock != nullptr) {
+
+		iteratorRock_body->data->GetTransform(&(iteratorRock->data->transform));
+		iteratorRock->data->Render();
+
+		iteratorRock = iteratorRock->next;
+		iteratorRock_body = iteratorRock_body->next;
+	}
+
+
 	//-----------------------------
 	//--- render Cows
 	//-----------------------------
@@ -436,6 +454,26 @@ void ModuleSceneIntro::CreateFences()
 	CreateFence(6, 2, vec3(36, 1, 75), vec3(0, 1, 0), 90, 0, 1);
 	CreateFence(6, 2, vec3(72, 1, 26), vec3(0, 1, 0), 90, 0, 1);
 
+	//RECT2
+	for (float j = 94.5; j < 112; j++) {
+		CreateFence(6, 2, vec3(j, 1, 72.5), vec3(0, 1,0), 0, 1, 0);
+		j += 2;
+	}
+	//INTERIOR
+	for (float j = 87.5; j < 112; j++) {
+		CreateFence(6, 2, vec3(j, 1, 83), vec3(0, 1, 0), 0, 1, 0);
+		j += 2;
+	}
+	//RECT3
+	for (float j = 134; j < 156; j++) {
+		CreateFence(6, 2, vec3(j, 1, 72.5), vec3(0, 1, 0), 0, 1, 0);		
+		j += 2;
+	}
+	//INTERIOR
+	for (float j = 133; j < 150; j++) {
+		CreateFence(6, 2, vec3(j, 1, 83), vec3(0, 1, 0), 0, 1, 0);
+		j += 2;
+	}
 }
 
 void ModuleSceneIntro::CreateBale(const float x, const float y, const float z, const float angle, const vec3& rotationAxis)
@@ -563,9 +601,140 @@ void ModuleSceneIntro::CreateBales()
 	//marc
 	//12
 
-	CreateBale(10, 0.5f, 52.5, 100, vec3{ 0,1,0 });
+	//13 L
+	//CURVE1
+	CreateBale(75, 0.5f, 29, 90, vec3{ 0,1,0 });
+	CreateBale(78, 0.5f, 29.5f,70, vec3{ 0,1,0 });
+	CreateBale(81, 0.5f, 31, 50, vec3{ 0,1,0 });
+	CreateBale(82.5, 0.5f, 33.5, 20, vec3{ 0,1,0 });
+	CreateBale(83, 0.5f, 36.5, 0, vec3{ 0,1,0 });
+	//RECT1
+	for (float  j = 39.5; j < 68; j++) {
+		CreateBale(83, 0.5f, j, 0, vec3{ 0,1,0 });
+		j += 2;
+	}
+	//CURV2
+	CreateBale(84, 0.5f, 69.5, 40, vec3{ 0,1,0 });
+	CreateBale(86.5, 0.5f, 71.5, 60, vec3{ 0,1,0 });
+	CreateBale(89.5, 0.5f, 72.5, 90, vec3{ 0,1,0 });
+	//INTERIOR
+	CreateBale(74, 0.5f, 79.5, 50, vec3{ 0,1,0 });
+	CreateBale(76.5, 0.5f, 81.5, 70, vec3{ 0,1,0 });
+	CreateBale(79.5, 0.5f, 82.5, 80, vec3{ 0,1,0 });
+	CreateBale(82.5, 0.5f, 83, 90, vec3{ 0,1,0 });
+
+	
+	//BRIDGE
+
+	
+
+	//CURV3
+	//CreateBale(158, 0.5f, 73, 70, vec3{ 0,1,0 });
+	CreateBale(160.5, 0.5f, 74.5, 50, vec3{ 0,1,0 });
+	CreateBale(162, 0.5f, 77, 20, vec3{ 0,1,0 });
+	CreateBale(163, 0.5f, 80, 15, vec3{ 0,1,0 });
+	CreateBale(163.5, 0.5f, 83, 10, vec3{ 0,1,0 });
+	CreateBale(164, 0.5f, 86, 5, vec3{ 0,1,0 });
+	CreateBale(164, 0.5f, 89, 0, vec3{ 0,1,0 });
+	//INTERIOR
+	CreateBale(150, 0.5f, 84, 20, vec3{ 0,1,0 });
+	CreateBale(150, 0.5f, 87, -10, vec3{ 0,1,0 });
+	CreateBale(148, 0.5f, 89, -70, vec3{ 0,1,0 });
+	CreateBale(145, 0.5f, 89, -100, vec3{ 0,1,0 });
+	CreateBale(142, 0.5f, 88, -120, vec3{ 0,1,0 });
+	CreateBale(139, 0.5f, 86, -120, vec3{ 0,1,0 });
+	
+
+	//CURV4
+	CreateBale(164, 0.5f, 92, -5, vec3{ 0,1,0 });
+	CreateBale(163.5, 0.5f, 95, -20, vec3{ 0,1,0 });
+	CreateBale(162, 0.5f, 97.5, -40, vec3{ 0,1,0 });
+	CreateBale(160, 0.5f, 99.5, -50, vec3{ 0,1,0 });
+	CreateBale(157.5, 0.5f, 101, -70, vec3{ 0,1,0 });
+	CreateBale(154.5, 0.5f, 101.5, -90, vec3{ 0,1,0 });
+	//SMALLRECT4
+	for (float j = 151.5; j > 134.5; j--) {
+		CreateBale(j, 0.5f, 101.5, -90, vec3{ 0,1,0 });
+		j -= 2;
+	}
+	//CURV5
+	CreateBale(132.5, 0.5f, 100.5, -110, vec3{ 0,1,0 });
+	CreateBale(130, 0.5f, 98.5, -130, vec3{ 0,1,0 });
+	CreateBale(128, 0.5f, 96, -140, vec3{ 0,1,0 });
+	
+	
+	
 
 }
+
+void ModuleSceneIntro::CreateRock(const float x, const float y, const float z, const float angle, const vec3& rotationAxis)
+{
+	Cylinder* material = new Cylinder(1,1);
+
+	material->SetPos(x, y, z);
+	material->SetRotation(angle, rotationAxis);
+	material->color = grey;	
+	rocks.add(material);
+
+	rocks_body.add(App->physics->AddBody(*material, 10000));
+}
+
+void ModuleSceneIntro::CreateRocks() {
+
+	CreateRock(126, 0.5f, 93.5, 90, vec3{ 0,0,1 });
+	CreateRock(124, 0.5f, 90.5, 90, vec3{ 0,0,1 });
+	CreateRock(122.5, 0.5f, 88.5,90, vec3{ 0,0,1 });
+	CreateRock(121.5, 0.5f, 86,90, vec3{ 0,0,1 });
+	CreateRock(120.5, 0.5f, 83.5, 90, vec3{ 0,0,1 });
+	CreateRock(119.5, 0.5f, 81, 90, vec3{ 0,0,1 });
+	CreateRock(119, 0.5f, 78.5, 90, vec3{ 0,0,1 });
+	CreateRock(118.5, 0.5f, 76, 90, vec3{ 0,0,1 });
+
+	//RECT5
+	for (float j = 73.5; j > 50; j--) {
+		CreateRock(118.5, 0.5f, j, 90, vec3{ 0,0,1 });
+		j -= 1.5;
+	}
+	//OBSTACLES
+	CreateRock(121, 0.5f, 70, 90, vec3{ 0,0,1 });
+	CreateRock(125, 0.5f,60 , 90, vec3{ 0,0,1 });
+	
+	//CURVE
+	CreateRock(119, 0.5f, 48.5, 90, vec3{ 0,0,1 });
+	CreateRock(119.5, 0.5f, 46, 90, vec3{ 0,0,1 });
+	CreateRock(120.5, 0.5f, 44, 90, vec3{ 0,0,1 });
+	CreateRock(121.5, 0.5f, 42, 90, vec3{ 0,0,1 });
+	CreateRock(122.5, 0.5f, 40, 90, vec3{ 0,0,1 });
+	CreateRock(123.5, 0.5f, 38, 90, vec3{ 0,0,1 });
+	CreateRock(123.5, 0.5f, 36, 90, vec3{ 0,0,1 });
+	//RECT2
+	for (float j = 34; j >50; j--) {
+	CreateRock(130, 0.5f, j, 90, vec3{ 0,0,1 });
+	j -= 1.5;
+}
+
+	//RECTA INTERIOR
+	for (float j = 34; j >20; j--) {
+		CreateRock(123, 0.5f, j, 90, vec3{ 0,0,1 });
+		j -= 1.5;
+	}
+	//CURVE INTERN
+	CreateRock(130, 0.5f, 50, 90, vec3{ 0,0,1 });
+	CreateRock(131, 0.5f, 47.5, 90, vec3{ 0,0,1 });
+	CreateRock(132, 0.5f, 45.5, 90, vec3{ 0,0,1 });
+	CreateRock(133, 0.5f, 43.5, 90, vec3{ 0,0,1 });
+	CreateRock(134, 0.5f, 41, 90, vec3{ 0,0,1 });
+	CreateRock(135, 0.5f, 39, 90, vec3{ 0,0,1 });
+	CreateRock(135, 0.5f, 36, 90, vec3{ 0,0,1 });
+	//RECT2 INT
+	for (float j = 34; j >20; j--) {
+		CreateRock(135, 0.5f, j, 90, vec3{ 0,0,1 });
+		j -= 1.5;
+	}
+
+
+}
+
 
 void ModuleSceneIntro::CreateTree(const float x, const float y, const float z, const float tall, const float radious)
 {
