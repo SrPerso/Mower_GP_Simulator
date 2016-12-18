@@ -29,8 +29,7 @@ public:
 	float acceleration;
 	float brake;
 
-	unsigned int fxTurnOn;
-	unsigned int fxMiddle;
-	unsigned int fxTurnOff;
-
+	AudioFX fxTurnOn;
+	AudioFX fxTurnOff;
+	AudioMusic fxMiddle;
 };

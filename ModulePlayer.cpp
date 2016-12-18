@@ -19,9 +19,12 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 
 	App->audio->Init();
-	fxTurnOff = App->audio->LoadFx("TurnOff.wav");
-	fxTurnOn =  App->audio->LoadFx("TurnOn.wav");
-	fxMiddle = App->audio->LoadFx("middle.wav");
+
+
+
+	fxTurnOff = App->audio->LoadAudioFX("Sounds/FX/TurnOff_Tractor_Sound.wav");
+	fxTurnOn =  App->audio->LoadAudioFX("Sounds/FX/TurnOn_Tractor_Sound.wav");
+	fxMiddle = App->audio->LoadAudioMusic("Sounds/FX/Middle_Tractor_Sound.ogg");
 
 
 	VehicleInfo car;
@@ -156,12 +159,14 @@ update_status ModulePlayer::Update(float dt)
 	{
 		if (MowerON == true) {			
 			MowerON = false;
-			App->audio->PlayFx(fxTurnOff);
+			fxTurnOff.play();
+			fxMiddle.stop();
+
 		}
 		else {
 			MowerON = true;
-			App->audio->PlayFx(fxTurnOn);
-			
+			fxTurnOn.play();
+			fxMiddle.play(0);
 		}
 	
 	}

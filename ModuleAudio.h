@@ -3,32 +3,57 @@
 
 #include "Module.h"
 #include "SDL_mixer\include\SDL_mixer.h"
+#include <map> 
+
 
 #define DEFAULT_MUSIC_FADE_TIME 2.0f
 
-class ModuleAudio : public Module
-{
+//------------------------
+class AudioFX {
+	friend class ModuleAudioEngine;
 public:
+	void play(int nLoops = 0);//default will play once
 
-	ModuleAudio(Application* app, bool start_enabled = true);
-	~ModuleAudio();
+public:
+	Mix_Chunk* m_chunk = nullptr;
+};
+//------------------------
+
+//------------------------
+class AudioMusic {
+	friend class ModuleAudioEngine;
+public:
+	bool play(int nLoops = -1, float fade_time = DEFAULT_MUSIC_FADE_TIME);//default will play once
+	static void pause();
+	static void stop();
+	static void resume();
+
+
+private:
+	Mix_Music* m_music = nullptr;
+};
+//------------------------
+
+//------------------------
+class ModuleAudioEngine : public Module {
+public:
+	ModuleAudioEngine(Application* app, bool start_enabled = true);
+	~ModuleAudioEngine();
 
 	bool Init();
 	bool CleanUp();
-
-	// Play a music file
-	bool PlayMusic(const char* path, float fade_time = DEFAULT_MUSIC_FADE_TIME);
-
-	// Load a WAV in memory
-	unsigned int LoadFx(const char* path);
-
-	// Play a previously loaded WAV
-	bool PlayFx(unsigned int fx, int repeat = 0);
-
 public:
+	AudioFX LoadAudioFX(const std::string&filePath);
+	AudioMusic LoadAudioMusic(const std::string&filePath);
 
-	Mix_Music*			music;
-	p2List<Mix_Chunk*>	fx;
+private:
+
+	std::map<std::string, Mix_Chunk*> m_effectMap;
+	std::map<std::string, Mix_Music*> m_musicMap;
+
+	bool m_isInitialized = false;
 };
+//------------------------
+
 
 #endif // __ModuleAudio_H__
