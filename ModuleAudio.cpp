@@ -13,7 +13,7 @@ void AudioFX::play(int loops/*==0*/)
 }
 bool AudioMusic::play(int loops/*==-1*/, float fade_time)
 {//loop -1 == loop 4ever, 0== play 0 times, 1== play 1 times, 2== play 2 times...
-
+	Mix_VolumeMusic(50);
 	Mix_FadeInMusic(m_music, -1, (fade_time * 1000.0f));
 
 	LOG("Successfully playing");
@@ -90,6 +90,11 @@ bool ModuleAudioEngine::CleanUp()
 
 	return true;
 
+}
+
+void ModuleAudioEngine::setMusicVolume(int vol)
+{
+	Mix_VolumeMusic(vol);
 }
 
 AudioFX ModuleAudioEngine::LoadAudioFX(const std::string & filePath)

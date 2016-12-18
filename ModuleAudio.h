@@ -42,6 +42,9 @@ public:
 
 	bool Init();
 	bool CleanUp();
+
+	void setMusicVolume(int);
+
 public:
 	AudioFX LoadAudioFX(const std::string&filePath);
 	AudioMusic LoadAudioMusic(const std::string&filePath);

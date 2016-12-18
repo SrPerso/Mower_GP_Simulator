@@ -19,10 +19,17 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	App->camera->Move(vec3(0, +0, 0.0));
-	App->camera->LookAt(vec3(120, 1.5f, 60));
-	//bales
+	//--- Audio
+	App->audio->Init();
+	App->audio->setMusicVolume(80);
 
+
+	fxTurnOff = App->audio->LoadAudioFX("Sounds/FX/TurnOff_Tractor_Sound.wav");
+	fxTurnOn = App->audio->LoadAudioFX("Sounds/FX/TurnOn_Tractor_Sound.wav");
+	fxMiddle = App->audio->LoadAudioMusic("Sounds/BSO/Game_Music1.ogg");	
+	BSO = App->audio->LoadAudioMusic("Sounds/BSO/Intro_Music.ogg");
+	BSO.play();
+	//--- Audio
 
 	srand(time(NULL));
 
@@ -35,6 +42,18 @@ bool ModuleSceneIntro::Start()
 	CreateRocks();
 	
 
+
+	if (App->player->debugCameramode == true) {
+		App->camera->Move(vec3(0, +0, 0.0));
+		App->camera->LookAt(vec3(120, 1.5f, 60));
+	
+	}
+	else if(App->player->debugCameramode==false){
+		App->camera->Move(vec3(130,70, -160));
+		App->camera->LookAt(vec3(90, 2.6f, -70));
+	}
+
+	//bales
 	return ret;
 }
 
@@ -80,6 +99,32 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update(float dt)
 {
 	
+	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+	{
+		if (App->player->MowerON == true) {
+			App->player->MowerON = false;
+			fxTurnOff.play();
+			fxMiddle.stop();
+
+		}
+		else {
+			App->audio->setMusicVolume(60);
+			App->player->MowerON = true;
+			fxTurnOn.play();
+			fxMiddle.play(0);
+		}
+
+	}
+
+
+
+
+
+
+
+
+
+
 	//--------------------
 	silo2->Render();
 	silo1->Render();

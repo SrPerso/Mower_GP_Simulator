@@ -18,15 +18,6 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 
-	App->audio->Init();
-
-
-
-	fxTurnOff = App->audio->LoadAudioFX("Sounds/FX/TurnOff_Tractor_Sound.wav");
-	fxTurnOn =  App->audio->LoadAudioFX("Sounds/FX/TurnOn_Tractor_Sound.wav");
-	fxMiddle = App->audio->LoadAudioMusic("Sounds/FX/Middle_Tractor_Sound.ogg");
-
-
 	VehicleInfo car;
 
 	// Car properties ----------------------------------------
@@ -155,31 +146,10 @@ update_status ModulePlayer::Update(float dt)
 	{
 		vehicle->SetPos(0, 0, -20);
 	}
-	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
-	{
-		if (MowerON == true) {			
-			MowerON = false;
-			fxTurnOff.play();
-			fxMiddle.stop();
 
-		}
-		else {
-			MowerON = true;
-			fxTurnOn.play();
-			fxMiddle.play(0);
-		}
-	
-	}
 	if (vehicle->GetPos().x >= 200 || vehicle->GetPos().x <= -200 || vehicle->GetPos().z > 200 || vehicle->GetPos().z < -200) {
 		vehicle->SetPos(0, 0, -20);
 	}
-
-	if (MowerON==true) {
-		
-	//	App->audio->PlayFx(fxMiddle);
-
-	}
-
 
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);

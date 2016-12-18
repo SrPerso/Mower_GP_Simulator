@@ -35,14 +35,15 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
 private:
-	/*
-	PhysBody3D* pb_snake[MAX_SNAKE];
-	Sphere s_snake[MAX_SNAKE];
+	// --- Audio
+	AudioMusic BSO;
+	AudioFX fxTurnOn;
+	AudioFX fxTurnOff;
+	AudioMusic fxMiddle;
+	// --- Audio
 
-	PhysBody3D* pb_snake2[MAX_SNAKE];
-	Sphere s_snake2[MAX_SNAKE];
-	*/
 
+	// --- car
 	PhysBody3D* pb_chassis;
 	Cube p_chassis;
 
@@ -54,7 +55,7 @@ private:
 
 	PhysMotor3D* left_wheel;
 	PhysMotor3D* right_wheel;
-
+	// --- car
 
 
 	p2List<PhysBody3D*> bales_body;

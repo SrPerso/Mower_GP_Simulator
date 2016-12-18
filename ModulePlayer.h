@@ -19,9 +19,7 @@ public:
 	bool Start();
 	update_status Update(float dt);
 	bool CleanUp();
-
-
-
+	
 public:
 	bool MowerON = false;
 	PhysVehicle3D* vehicle;
@@ -29,7 +27,7 @@ public:
 	float acceleration;
 	float brake;
 
-	AudioFX fxTurnOn;
-	AudioFX fxTurnOff;
-	AudioMusic fxMiddle;
+
+	bool debugCameramode = false;
+
 };
