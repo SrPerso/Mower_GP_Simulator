@@ -23,12 +23,14 @@ bool ModuleSceneIntro::Start()
 	App->audio->Init();
 	App->audio->setMusicVolume(80);
 
-
+	fxWoodImpact = App->audio->LoadAudioFX("Sounds/FX/wood_impact_fx.wav");
+	fxbaleImpact = App->audio->LoadAudioFX("Sounds/FX/bale_impact_fx.wav");
 	fxTurnOff = App->audio->LoadAudioFX("Sounds/FX/TurnOff_Tractor_Sound.wav");
 	fxTurnOn = App->audio->LoadAudioFX("Sounds/FX/TurnOn_Tractor_Sound.wav");
 	fxMiddle = App->audio->LoadAudioMusic("Sounds/BSO/Game_Music1.ogg");	
 	BSO = App->audio->LoadAudioMusic("Sounds/BSO/Intro_Music.ogg");
 	BSO.play();
+
 	//--- Audio
 
 	srand(time(NULL));
@@ -40,18 +42,20 @@ bool ModuleSceneIntro::Start()
 	CreateFarm();
 	CreateCows();
 	CreateRocks();
-	
+	CreateInvisibleWalls();
 
 
-	if (App->player->debugCameramode == true) {
+
+
+	//if (App->player->debugCameramode == true) {
 		App->camera->Move(vec3(0, +0, 0.0));
 		App->camera->LookAt(vec3(120, 1.5f, 60));
 	
-	}
-	else if(App->player->debugCameramode==false){
+//	}
+	/*else if(App->player->debugCameramode==false){
 		App->camera->Move(vec3(130,70, -160));
 		App->camera->LookAt(vec3(90, 2.6f, -70));
-	}
+	}*/
 
 	//bales
 	return ret;
@@ -98,6 +102,8 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
+	WorldUpdate();
+
 	
 	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
 	{
@@ -114,17 +120,33 @@ update_status ModuleSceneIntro::Update(float dt)
 			fxMiddle.play(0);
 		}
 
+	}	
+
+
+	//---------------------
+	return UPDATE_CONTINUE;
+}
+
+void ModuleSceneIntro::WorldUpdate() {
+
+	
+	//-----------------------------
+	//--- invisible walls
+	//-----------------------------
+	p2List_item<noCube*>* iteratorinv;
+	p2List_item<PhysBody3D*>* iteratorinv_body;
+
+	iteratorinv = invisibles.getFirst();
+	iteratorinv_body = invisible_bodies.getFirst();
+
+	while (iteratorinv_body != nullptr) {
+
+		iteratorinv_body->data->GetTransform(&(iteratorinv->data->transform));
+		iteratorinv->data->Render();
+
+		iteratorinv = iteratorinv->next;
+		iteratorinv_body = iteratorinv_body->next;
 	}
-
-
-
-
-
-
-
-
-
-
 	//--------------------
 	silo2->Render();
 	silo1->Render();
@@ -136,7 +158,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	iteratorFarm = Farm.getFirst();
 
 	iteratorFarm_body = Farm_body.getFirst();
-	while (iteratorFarm != nullptr) {	
+	while (iteratorFarm != nullptr) {
 
 		//iteratorFarm_body->data->GetTransform(&(iteratorFarm->data->transform));
 		iteratorFarm->data->Render();
@@ -153,10 +175,10 @@ update_status ModuleSceneIntro::Update(float dt)
 	p2List_item<Cylinder*>* iteratorPostes;
 
 	iteratorTrans = transversales.getFirst();
-	
+
 	while (iteratorTrans != nullptr) {
 		iteratorTrans->data->Render();
-		iteratorTrans = iteratorTrans->next;		
+		iteratorTrans = iteratorTrans->next;
 	}
 	iteratorPostes = postes.getFirst();
 	while (iteratorPostes != nullptr) {
@@ -203,13 +225,17 @@ update_status ModuleSceneIntro::Update(float dt)
 	iteratorBale_body = bales_body.getFirst();
 
 	while (iteratorBale != nullptr) {
-	
+
 		iteratorBale_body->data->GetTransform(&(iteratorBale->data->transform));
 		iteratorBale->data->Render();
-		
+
 		iteratorBale = iteratorBale->next;
 		iteratorBale_body = iteratorBale_body->next;
 	}
+
+	//-----------------------------
+	//--- render ROCKS
+	//-----------------------------
 
 	p2List_item<Cylinder*>* iteratorRock;
 	p2List_item<PhysBody3D*>* iteratorRock_body;
@@ -243,22 +269,22 @@ update_status ModuleSceneIntro::Update(float dt)
 	iteratorcow_Legs_body = CowLegs_body.getFirst();
 	iteratorcow_Corps_body = CowCorps_body.getFirst();
 
-		while (iteratorlegs != nullptr) {
+	while (iteratorlegs != nullptr) {
 
-			iteratorcow_Legs_body->data->GetTransform(&(iteratorlegs->data->transform));
-			iteratorlegs->data->Render();
-			
-			iteratorcow_Legs_body = iteratorcow_Legs_body->next;
-			iteratorlegs = iteratorlegs->next;
-		}
-		while (iteratorbody != nullptr) {
+		iteratorcow_Legs_body->data->GetTransform(&(iteratorlegs->data->transform));
+		iteratorlegs->data->Render();
 
-			iteratorcow_Corps_body->data->GetTransform(&(iteratorbody->data->transform));
-			iteratorbody->data->Render();
+		iteratorcow_Legs_body = iteratorcow_Legs_body->next;
+		iteratorlegs = iteratorlegs->next;
+	}
+	while (iteratorbody != nullptr) {
 
-			iteratorcow_Corps_body = iteratorcow_Corps_body->next;
-			iteratorbody = iteratorbody->next;
-		}
+		iteratorcow_Corps_body->data->GetTransform(&(iteratorbody->data->transform));
+		iteratorbody->data->Render();
+
+		iteratorcow_Corps_body = iteratorcow_Corps_body->next;
+		iteratorbody = iteratorbody->next;
+	}
 
 
 	//-----------------------------
@@ -274,17 +300,18 @@ update_status ModuleSceneIntro::Update(float dt)
 		iteratorPlane = iteratorPlane->next;
 	}
 
-	//---------------------
-	return UPDATE_CONTINUE;
 }
 
 //colision
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
+
 }
 
 
-//creators
+//=========================================================================================================
+//creators  =========================================================================================================
+//=========================================================================================================
 void ModuleSceneIntro::CreateCubeToFarm(const float x, const float y, const float z, const float angle, const vec3 & rotationAxis, Color colorr , const float w, const float h , const float l, bool physics)
 {
 
@@ -452,7 +479,7 @@ void ModuleSceneIntro::CreateFarm()
 
 
 }
-
+//================
 void ModuleSceneIntro::CreateFence(float distance, float tall, vec3 Position, vec3 rotationvec, float angle, int magicX, int magicZ)
 {
 	Cube* trans1 = new Cube(distance, 0.3f, 0.2f);
@@ -520,7 +547,7 @@ void ModuleSceneIntro::CreateFences()
 		j += 2;
 	}
 }
-
+//================
 void ModuleSceneIntro::CreateBale(const float x, const float y, const float z, const float angle, const vec3& rotationAxis)
 {
 	Cube* heno = new Cube(1, 1, 2.2f);
@@ -711,7 +738,7 @@ void ModuleSceneIntro::CreateBales()
 	
 
 }
-
+//================
 void ModuleSceneIntro::CreateRock(const float x, const float y, const float z, const float angle, const vec3& rotationAxis)
 {
 	Cylinder* material = new Cylinder(1,1);
@@ -779,8 +806,7 @@ void ModuleSceneIntro::CreateRocks() {
 
 
 }
-
-
+//================
 void ModuleSceneIntro::CreateTree(const float x, const float y, const float z, const float tall, const float radious)
 {
 
@@ -818,7 +844,7 @@ void ModuleSceneIntro::CreateTrees()
 	CreateTree(50, 0, 80, 15, 2);
 	CreateTree(56, 0, 80, 15, 2);
 }
-
+//================
 void ModuleSceneIntro::CreatePlane(const float x, const float y, const float z, const float width, const float height, Color colorr,const float angle, const vec3& rotationAxis)
 {
 	Plane* plane = new Plane(x,y,z,width,height);
@@ -865,7 +891,7 @@ void ModuleSceneIntro::CreatePlanes()
 
 
 }
-
+//================
 void ModuleSceneIntro::CreateCow(const float x, const float y, const float z, const float angle, const vec3 RotationAxis) {
 
 	
@@ -1007,4 +1033,31 @@ void ModuleSceneIntro::CreateCows()
 
 	CreateCow(60, 0, 50, 170, { 0,0,1 });
 	CreateCow(50, 0, 49, 50, { 0,0,1 });
+}
+
+//================
+
+void ModuleSceneIntro::CreateInvisibleWall(const float x, const float y, const float z, const vec3 box , const float angle, const vec3 RotationAxis) {
+
+	noCube* inv = new noCube(box.x, box.y, box.z);
+	inv->SetPos(x, y, z);
+	inv->SetRotation(angle, RotationAxis);
+
+
+	invisibles.add(inv);
+	invisible_bodies.add(App->physics->AddBody(*inv));
+	
+}
+
+void ModuleSceneIntro::CreateInvisibleWalls()
+{
+	//farm
+	CreateInvisibleWall(6,0, 9, vec3{5,15,0.5f} , 0, vec3{ 1,0,0 });
+	CreateInvisibleWall(-6, 0, 9, vec3{ 5,15,0.5f }, 0, vec3{ 1,0,0 });
+	CreateInvisibleWall(6, 0, -9, vec3{ 5,15,0.5f }, 0, vec3{ 1,0,0 });
+	CreateInvisibleWall(-6, 0,-9, vec3{ 5,15,0.5f }, 0, vec3{ 1,0,0 });
+
+	CreateInvisibleWall(-8.5, 0, 0, vec3{ 18,15,0.5f }, 90, vec3{ 0,1,0 });
+	CreateInvisibleWall(8.5, 0, 0, vec3{ 18,15,0.5f }, 90, vec3{ 0,1,0 });
+
 }

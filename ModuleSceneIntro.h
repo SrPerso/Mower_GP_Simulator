@@ -33,12 +33,16 @@ public:
 	bool CleanUp();
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
+	void WorldUpdate();
+
 
 private:
 	// --- Audio
 	AudioMusic BSO;
 	AudioFX fxTurnOn;
 	AudioFX fxTurnOff;
+	AudioFX fxWoodImpact;
+	AudioFX fxbaleImpact;
 	AudioMusic fxMiddle;
 	// --- Audio
 
@@ -86,6 +90,8 @@ private:
 	p2List<PhysBody3D*> CowLegs_body;
 	p2List<Cylinder*>Cow_legs;
 
+	p2List<noCube*> invisibles;
+	p2List<PhysBody3D*> invisible_bodies;
 
 	Cylinder* silo1;
 	Cylinder* silo2;
@@ -115,6 +121,9 @@ public:
 
 	void CreateCow(const float x, const float y, const float z, const float angle, const vec3 RotationAxis);
 	void CreateCows();
+
+	void CreateInvisibleWall(const float x, const float y, const float z, const vec3 box, const float angle, const vec3 RotationAxis);
+	void CreateInvisibleWalls();
 };
 
 #endif // _SCENE_INTRO_

@@ -28,6 +28,6 @@ public:
 	float brake;
 
 
-	bool debugCameramode = false;
+	bool debugCameramode = true;
 
 };

@@ -56,7 +56,7 @@ update_status ModuleCamera3D::Update(float dt)
 
 
 
-	if (App->player->debugCameramode == true) {
+//	if (App->player->debugCameramode == true) {
 		float speed = 3.0f * dt;
 		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 			speed = 8.0f * dt;
@@ -73,7 +73,7 @@ update_status ModuleCamera3D::Update(float dt)
 
 		Position += newPos;
 		Reference += newPos;
-	}
+	//}
 	// Mouse motion ----------------
 
 
@@ -82,10 +82,10 @@ update_status ModuleCamera3D::Update(float dt)
 		int dx = 0;
 		int dy = 0;
 		
-		if (App->player->debugCameramode == true) {
+	//	if (App->player->debugCameramode == true) {
 			 dx = -App->input->GetMouseXMotion();
 			 dy = -App->input->GetMouseYMotion();
-		}
+		//}
 		float Sensitivity = 0.25f;
 
 		Position -= Reference;

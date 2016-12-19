@@ -9,6 +9,7 @@ enum PrimitiveTypes
 	Primitive_Line,
 	Primitive_Plane,
 	Primitive_Cube,
+	Primitive_noCube,
 	Primitive_Sphere,
 	Primitive_Cylinder,
 	Primitive_treetop
@@ -49,6 +50,22 @@ public :
 	void SetSize(const vec3 &s){
 		size.x = s.x;
 		size.y = s.y;	
+		size.z = s.z;
+	}
+
+public:
+	vec3 size;
+};
+// ============================================
+class noCube : public Primitive
+{
+public:
+	noCube();
+	noCube(float sizeX, float sizeY, float sizeZ);
+	void InnerRender() const;
+	void SetSize(const vec3 &s) {
+		size.x = s.x;
+		size.y = s.y;
 		size.z = s.z;
 	}
 
