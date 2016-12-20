@@ -228,8 +228,8 @@ void ModuleSceneIntro::WorldUpdate() {
 			iteratorDoor_body = iteratorDoor_body->next;
 		}
 	}
-	if (kicked == true) {
-		invDoor_body->SetPos(55 + 0.25f, 4 + 0, -60);
+	if (kicked == false) {
+		invDoor_body->SetPos(60 + 0.25f, 4 + 0, -69);
 	}
 
 	//-----------------------------
@@ -512,17 +512,17 @@ void ModuleSceneIntro::CreateBulding(float x, float y, float z)
 	//-----------------DOORs----------------
 
 	//door1
-	Cube* door1 = new Cube(7.75f, 0.25f, 4.5F);
+	Cube* door1 = new Cube(0.25f,  7.75f, 4.5F);
 	door1->SetPos(x, y + 4.0f, z + 2.35f);
 
-	door1->SetRotation(ORTHOGONAL, vec3(PUTVERTICALxy));	door1->color = Brown2;	Doors.add(door1);		//door1
+	door1->SetRotation(0, vec3(PUTVERTICALxy));	door1->color = Brown2;	Doors.add(door1);		//door1
 																											//
 
 																											//wall1
-	Cube* wall1 = new Cube(8, 0.25f, BULDINGHEIGHT);
+	Cube* wall1 = new Cube(0.25f, 8, BULDINGHEIGHT);
 	wall1->SetPos(x, (8 * 0.5f) + y, z + 5 + (BULDINGHEIGHT *0.5f));
 
-	wall1->SetRotation(ORTHOGONAL, vec3(PUTVERTICALxy)); wall1->color = White;	Doors.add(wall1);		//wall1
+	wall1->SetRotation(0, vec3(PUTVERTICALxy)); wall1->color = White;	Doors.add(wall1);		//wall1
 																										//
 
 	PhysBody3D* bodyA = App->physics->AddBody(*door1, 200);
@@ -530,7 +530,7 @@ void ModuleSceneIntro::CreateBulding(float x, float y, float z)
 	PhysBody3D* bodyB = App->physics->AddBody(*wall1, 0);
 	Doors_body.add(bodyB);
 
-	App->physics->AddConstraintHinge(*bodyA, *bodyB, vec3{ x, y, z + 2.4f }, vec3{ x,y, z - 0.25f - (BULDINGHEIGHT *0.5f) }, vec3(PUTVERTICALzy), vec3(PUTVERTICALzy), false);
+	App->physics->AddConstraintHinge(*bodyA, *bodyB, vec3{ 0, 0, 0 + 2.4f }, vec3{ 0,0, 0 - 0.25f - (BULDINGHEIGHT *0.5f) }, vec3(PUTHORIZONALxz), vec3(PUTHORIZONALxz), false);
 
 
 	//door2
@@ -551,7 +551,7 @@ void ModuleSceneIntro::CreateBulding(float x, float y, float z)
 	PhysBody3D* bodyD = App->physics->AddBody(*wall2, 0);
 	Doors_body.add(bodyD);
 
-	App->physics->AddConstraintHinge(*bodyC, *bodyD, vec3{ x, y, z - 2.4f }, vec3{ x,y, z + 0.25f + (BULDINGHEIGHT *0.5f) }, vec3(PUTVERTICALzy), vec3(PUTVERTICALzy), false);
+	App->physics->AddConstraintHinge(*bodyC, *bodyD, vec3{ 0, 0, 0 - 2.4f }, vec3{ 0,0, 0 + 0.25f + (BULDINGHEIGHT *0.5f) }, vec3(PUTVERTICALzy), vec3(PUTVERTICALzy), false);
 
 
 	//	void AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anchorA, const vec3& anchorB, const vec3& axisS, const vec3& axisB, bool disable_collision = false);

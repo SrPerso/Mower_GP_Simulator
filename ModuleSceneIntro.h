@@ -110,7 +110,7 @@ private:
 	p2List<PhysBody3D*> Doors_body;
 	noCube* invDoor;
 	PhysBody3D* invDoor_body;
-	bool kicked = false;
+	bool kicked = true;
 
 
 	//pb_snake[i]->GetTransform(&(s_snake[i].transform));
