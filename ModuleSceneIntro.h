@@ -108,8 +108,13 @@ private:
 
 	p2List<Cube*> Doors;
 	p2List<PhysBody3D*> Doors_body;
+	
+	Cube* redFence1;
+	Cube* redFence2;
 	noCube* invDoor;
 	PhysBody3D* invDoor_body;
+
+
 	bool kicked = true;
 
 
@@ -121,6 +126,7 @@ public:
 	void CreateCubeToBuldings(const float x, const float y, const  float z, const  float angle, const vec3&, Color colorr, const float w, const float h, const float l);
 	void CreateBulding(float x, float y, float z);
 	void CreateFarm();
+	void CreateBridge(float x, float y, float z);
 
 	void CreateFence(float distance, float tall, vec3 Position, vec3 rotationvec, float angle, int magicX, int magicZ);
 	void CreateFences();

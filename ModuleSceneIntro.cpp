@@ -53,7 +53,7 @@ bool ModuleSceneIntro::Start()
 	CreateGreenBales();
 	CreateBulding(60, 0, -69);
 	
-
+	CreateBridge(115, 0 ,77.5f);
 
 	//if (App->player->debugCameramode == true) {
 		App->camera->Move(vec3(0, +0, 0.0));
@@ -228,8 +228,10 @@ void ModuleSceneIntro::WorldUpdate() {
 			iteratorDoor_body = iteratorDoor_body->next;
 		}
 	}
-	if (kicked == false) {
+	if (kicked == true) {
 		invDoor_body->SetPos(60 + 0.25f, 4 + 0, -69);
+		redFence1->Render();
+		redFence2->Render();
 	}
 
 	//-----------------------------
@@ -441,7 +443,6 @@ void ModuleSceneIntro::CreateCylinderToBuldings(const float x, const float y, co
 	BuldingsCy.add(cylinder);
 }
 
-
 void ModuleSceneIntro::CreateBulding(float x, float y, float z)
 {
 
@@ -486,9 +487,7 @@ void ModuleSceneIntro::CreateBulding(float x, float y, float z)
 	CreateCubeToBuldings(x - BUIDINGWIDTH, (BULDINGHEIGHT*0.5f *0.5f) + y - 1.5f, z - 3.75f, ORTHOGONAL, vec3(PUTVERTICALzy), Red, 0.5f, 0.5f, 6); //retoc  gates
 	CreateCubeToBuldings(x - BUIDINGWIDTH, (BULDINGHEIGHT*0.5f) + y - 3, z, 0, vec3(PUTVERTICALzy), Red, 0.5f, 0.5f, 8.5); //retoc  gates
 
-
-																														   //physics
-
+	//physics
 
 	CreateInvisibleWall(x - BUIDINGWIDTH, (BULDINGHEIGHT *0.5f) + y, z + BUIDINGLONG *0.5f, vec3{ 1, 1, BULDINGHEIGHT }, ORTHOGONAL, vec3(PUTVERTICALzy)); //	retoc
 	CreateInvisibleWall(x - BUIDINGWIDTH, (BULDINGHEIGHT *0.5f) + y, z - BUIDINGLONG *0.5f, vec3{ 1, 1, BULDINGHEIGHT }, ORTHOGONAL, vec3(PUTVERTICALzy)); //retoc
@@ -553,9 +552,19 @@ void ModuleSceneIntro::CreateBulding(float x, float y, float z)
 
 	App->physics->AddConstraintHinge(*bodyC, *bodyD, vec3{ 0, 0, 0 - 2.4f }, vec3{ 0,0, 0 + 0.25f + (BULDINGHEIGHT *0.5f) }, vec3(PUTVERTICALzy), vec3(PUTVERTICALzy), false);
 
-
 	//	void AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anchorA, const vec3& anchorB, const vec3& axisS, const vec3& axisB, bool disable_collision = false);
 	//--------------------------------------
+
+	redFence1 = new Cube(0.25, 0.75, 3);
+	redFence1->SetPos(x+0.25, y + 2.0f, z );
+	redFence1->SetRotation(0, vec3(PUTVERTICALzy));
+	redFence1->color = Red;
+
+	redFence2 = new Cube(0.25, 0.75, 3);
+	redFence2->SetPos(x+0.25, y +6.0f, z);
+	redFence2->SetRotation(0, vec3(PUTVERTICALzy));
+	redFence2->color = Red;
+
 
 }
 
@@ -711,6 +720,31 @@ void ModuleSceneIntro::CreateFarm()
 
 
 
+
+}
+void ModuleSceneIntro::CreateBridge(float x, float y, float z)
+{
+
+	CreateCubeToBuldings(x, y+1.5 , z, 20, vec3(PUTVERTICALxy), grey, 8, 0.25f, 10); //roof5
+	CreateInvisibleWall(x, y +1.5, z, vec3{ 8, 0.25f, 10 }, 20, vec3(PUTVERTICALxy));
+
+
+	CreateCubeToBuldings(x+20, y + 1.5, z, -20, vec3(PUTVERTICALxy), grey, 8, 0.25f, 10); //roof5
+	CreateInvisibleWall(x+20, y + 1.5, z, vec3{ 8, 0.25f, 10 }, -20, vec3(PUTVERTICALxy));
+
+	CreateCubeToBuldings(x + 10, y + 2.95, z + 5, 0, vec3(PUTVERTICALxy), grey, 12.5f, 0.25f, 0.5f); //roof5
+	CreateCubeToBuldings(x + 10, y + 2.95, z + 4, 0, vec3(PUTVERTICALxy), grey, 12.5f, 0.25f, 0.5f); //roof5
+	CreateCubeToBuldings(x + 10, y + 2.95, z + 3, 0, vec3(PUTVERTICALxy), grey, 12.5f, 0.25f, 0.5f); //roof5
+	CreateCubeToBuldings(x + 10, y + 2.95, z + 2, 0, vec3(PUTVERTICALxy), grey, 12.5f, 0.25f, 0.5f); //roof5
+	CreateCubeToBuldings(x + 10, y + 2.95, z + 1, 0, vec3(PUTVERTICALxy), grey, 12.5f, 0.25f, 0.5f); //roof5
+	CreateCubeToBuldings(x + 10, y + 2.95, z + 0, 0, vec3(PUTVERTICALxy), grey, 12.5f, 0.25f, 0.5f); //roof5
+	CreateCubeToBuldings(x + 10, y + 2.95, z - 5, 0, vec3(PUTVERTICALxy), grey, 12.5f, 0.25f, 0.5f); //roof5
+	CreateCubeToBuldings(x + 10, y + 2.95, z - 4, 0, vec3(PUTVERTICALxy), grey, 12.5f, 0.25f, 0.5f); //roof5
+	CreateCubeToBuldings(x + 10, y + 2.95, z - 3, 0, vec3(PUTVERTICALxy), grey, 12.5f, 0.25f, 0.5f); //roof5
+	CreateCubeToBuldings(x + 10, y + 2.95, z - 2, 0, vec3(PUTVERTICALxy), grey, 12.5f, 0.25f, 0.5f); //roof5
+	CreateCubeToBuldings(x + 10, y + 2.95, z - 1, 0, vec3(PUTVERTICALxy), grey, 12.5f, 0.25f, 0.5f); //roof5
+
+	CreateInvisibleWall(x + 10, y + 2.90, z, vec3{ 12, 0.25f, 10 }, 0, vec3(PUTVERTICALxy));
 
 }
 //================
@@ -1442,7 +1476,6 @@ void ModuleSceneIntro::CreateCows()
 	CreateCow(50, 0, 49, 50, { 0,0,1 });
 }
 //================
-
 void ModuleSceneIntro::CreateInvisibleWall(const float x, const float y, const float z, const vec3 box , const float angle, const vec3 RotationAxis) {
 
 	noCube* inv = new noCube(box.x, box.y, box.z);
