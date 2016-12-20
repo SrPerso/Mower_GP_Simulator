@@ -104,9 +104,19 @@ private:
 	Cylinder* silo2;
 
 
+	p2List<Cylinder*> BuldingsCy;
+
+	p2List<Cube*> Doors;
+	p2List<PhysBody3D*> Doors_body;
+	noCube* invDoor;
+	PhysBody3D* invDoor_body;
+	bool kicked = false;
+
+
 	//pb_snake[i]->GetTransform(&(s_snake[i].transform));
 public:
 
+	void CreateCylinderToBuldings(const float x, const float y, const  float z, const  float angle, const vec3&, Color colorr, const float r, const float h);
 
 	void CreateCubeToBuldings(const float x, const float y, const  float z, const  float angle, const vec3&, Color colorr, const float w, const float h, const float l);
 	void CreateBulding(float x, float y, float z);

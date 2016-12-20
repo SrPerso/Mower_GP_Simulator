@@ -118,6 +118,15 @@ bool ModuleSceneIntro::CleanUp()
 			delete rocks[i];
 	}
 
+	if (BuldingsCy.getFirst() != nullptr) {
+		for (int i = 0; i < BuldingsCy.count(); i++)
+			delete BuldingsCy[i];
+	}
+	if (Doors.getFirst() != nullptr) {
+		for (int i = 0; i < Doors.count(); i++)
+			delete Doors[i];
+	}
+
 	//delete silo1;
 	//delete silo2;
 
@@ -183,6 +192,45 @@ void ModuleSceneIntro::WorldUpdate() {
 //	silo2->Render();
 
 	//silo1->Render();
+
+
+
+	//-----------------------------
+	//--- buldings cylinder
+	//-----------------------------
+	if (BuldingsCy.getFirst() != nullptr) {
+
+		p2List_item<Cylinder*>* iteratorBuldingsCy;
+		iteratorBuldingsCy = BuldingsCy.getFirst();
+
+
+		while (iteratorBuldingsCy != nullptr) {
+
+			iteratorBuldingsCy->data->Render();
+			iteratorBuldingsCy = iteratorBuldingsCy->next;
+		}
+	}
+
+	if (Doors.getFirst() != nullptr) {
+
+		p2List_item<Cube*>* iteratorDoors;
+		p2List_item<PhysBody3D*>* iteratorDoor_body;
+
+		iteratorDoors = Doors.getFirst();
+		iteratorDoor_body = Doors_body.getFirst();
+
+		while (iteratorDoors != nullptr) {
+
+			iteratorDoor_body->data->GetTransform(&(iteratorDoors->data->transform));
+			iteratorDoors->data->Render();
+
+			iteratorDoors = iteratorDoors->next;
+			iteratorDoor_body = iteratorDoor_body->next;
+		}
+	}
+	if (kicked == true) {
+		invDoor_body->SetPos(55 + 0.25f, 4 + 0, -60);
+	}
 
 	//-----------------------------
 	//--- buldings
@@ -384,25 +432,130 @@ void ModuleSceneIntro::CreateCubeToBuldings(const float x, const float y, const 
 	Buldings.add(cube);
 }
 
+void ModuleSceneIntro::CreateCylinderToBuldings(const float x, const float y, const float z, const float angle, const vec3 & rotationAxis, Color colorr, const float radio, const float h)
+{
+	Cylinder* cylinder = new Cylinder(radio, h);
+	cylinder->SetPos(x, y, z);
+	cylinder->SetRotation(angle, rotationAxis);
+	cylinder->color = colorr;
+	BuldingsCy.add(cylinder);
+}
+
+
 void ModuleSceneIntro::CreateBulding(float x, float y, float z)
 {
+
 #define BUIDINGWIDTH 20
+#define BUIDINGLONG 46
+#define BULDINGHEIGHT 18
+#define ORTHOGONAL 90
 
-	CreateCubeToBuldings(x ,	(8 / 2) + y , z + 5 + (18 / 2), 90, vec3(0, 0, 1), White, 8, 0.25f, 18); //wall1
-	CreateCubeToBuldings(x ,	(8 / 2) + y, z - 5 - (18 / 2), 90, vec3(0, 0,1), White, 8, 0.25f, 18); //wall1	
-	CreateCubeToBuldings(x, (10 / 2) + y + 8, z + 0, 90, vec3(0, 0, 1), White, 10, 0.25f, 46); //wall1	
+#define PUTVERTICALzy 1,0,0
+#define PUTVERTICALxy 0,0,1
+#define PUTHORIZONALxz 0,1,0
 
-	CreateCubeToBuldings((x- (BUIDINGWIDTH /2)),( (18 / 2) + y + 0),(z+ 23), 90, vec3(1, 0, 0), White, BUIDINGWIDTH, 0.25f, 18); //wall2
 
-	CreateCubeToBuldings((x - (BUIDINGWIDTH / 2)), ((18 / 2) + y + 0), (z - 23), 90, vec3(1, 0, 0), White, BUIDINGWIDTH, 0.25f, 18); //wall3
-	
-	CreateCubeToBuldings((x+4),(y + 10), (z), 0, vec3(0, 0, 1), White, 8, 1, 16); //wall5
+	CreateCubeToBuldings(x, (10 * 0.5f) + y + 8, z + 0, ORTHOGONAL, vec3(PUTVERTICALxy), White, 10, 0.25f, 46); //wall1	
 
-	CreateCubeToBuldings(x - BUIDINGWIDTH, (6 / 2) + y,			z + 3 + (21 / 2),	90, vec3(0, 0, 1), White, 6, 0.25f, 20); //wall4
-	CreateCubeToBuldings(x - BUIDINGWIDTH, (6 / 2) + y,			z - 3 - (21 / 2),	90, vec3(0, 0, 1), White, 6, 0.25f, 20); //wall4	
-	CreateCubeToBuldings(x - BUIDINGWIDTH, (12 / 2) + y + 6,	z + 0,				90, vec3(0, 0, 1), White, 12, 0.25f, 46); //wall4	
-	
 
+	CreateCubeToBuldings((x - (BUIDINGWIDTH *0.5f)), ((BULDINGHEIGHT *0.5f) + y + 0), (z + 23), ORTHOGONAL, vec3(PUTVERTICALzy), White, BUIDINGWIDTH, 0.25f, BULDINGHEIGHT); //wall2
+	CreateCubeToBuldings((x - (BUIDINGWIDTH *0.5f)), ((BULDINGHEIGHT *0.5f) + y + 0), (z - 23), ORTHOGONAL, vec3(PUTVERTICALzy), White, BUIDINGWIDTH, 0.25f, BULDINGHEIGHT); //wall3
+
+	CreateCubeToBuldings((x + 4), (y + 10), (z), 0, vec3(PUTVERTICALxy), White, 8, 1, 16); //wall5
+
+	CreateCubeToBuldings(x - BUIDINGWIDTH, (6 * 0.5f) + y, z + 3 + (21 * 0.5f), ORTHOGONAL, vec3(PUTVERTICALxy), White, 6, 0.25f, 19); //wall4
+	CreateCubeToBuldings(x - BUIDINGWIDTH, (6 * 0.5f) + y, z - 3 - (21 * 0.5f), ORTHOGONAL, vec3(PUTVERTICALxy), White, 6, 0.25f, 19); //wall4	
+	CreateCubeToBuldings(x - BUIDINGWIDTH, (12 * 0.5f) + y + 6, z + 0, ORTHOGONAL, vec3(PUTVERTICALxy), White, 12, 0.25f, BUIDINGLONG); //wall4	
+
+
+	CreateCubeToBuldings(x - BUIDINGWIDTH, (BULDINGHEIGHT *0.5f) + y, z + BUIDINGLONG *0.5f, ORTHOGONAL, vec3(PUTVERTICALzy), Red, 1, 1, BULDINGHEIGHT); //	retoc
+	CreateCubeToBuldings(x - BUIDINGWIDTH, (BULDINGHEIGHT *0.5f) + y, z - BUIDINGLONG *0.5f, ORTHOGONAL, vec3(PUTVERTICALzy), Red, 1, 1, BULDINGHEIGHT); //retoc
+	CreateCubeToBuldings(x, (BULDINGHEIGHT *0.5f) + y, z + BUIDINGLONG *0.5f, ORTHOGONAL, vec3(PUTVERTICALzy), Red, 1, 1, BULDINGHEIGHT); //retoc
+	CreateCubeToBuldings(x, (BULDINGHEIGHT *0.5f) + y, z - BUIDINGLONG *0.5f, ORTHOGONAL, vec3(PUTVERTICALzy), Red, 1, 1, BULDINGHEIGHT); //retoc
+
+
+	CreateCubeToBuldings(x, (BULDINGHEIGHT*0.5f *0.5f) + y - 1, z + 5, ORTHOGONAL, vec3(PUTVERTICALzy), Red, 0.5f, 0.5f, BULDINGHEIGHT*0.5f); //retoc  gates
+	CreateCubeToBuldings(x, (BULDINGHEIGHT*0.5f *0.5f) + y - 1, z - 5, ORTHOGONAL, vec3(PUTVERTICALzy), Red, 0.5f, 0.5f, BULDINGHEIGHT*0.5f); //retoc  gates
+	CreateCubeToBuldings(x, (BULDINGHEIGHT*0.5f) + y - 1, z, 0, vec3(PUTVERTICALzy), Red, 0.5f, 0.5f, 12); //retoc  gates
+
+	CreateCylinderToBuldings(x + 6, y + (BULDINGHEIGHT *0.5f *0.5f) + 1, z + 6, ORTHOGONAL, vec3(PUTVERTICALxy), Red, 0.5f, (BULDINGHEIGHT / 2) + 1);//retoc
+	CreateCylinderToBuldings(x + 6, y + (BULDINGHEIGHT *0.5f *0.5f) + 1, z - 6, ORTHOGONAL, vec3(PUTVERTICALxy), Red, 0.5f, (BULDINGHEIGHT / 2) + 1);//retoc
+
+
+	CreateCubeToBuldings(x - BUIDINGWIDTH, (BULDINGHEIGHT*0.5f *0.5f) + y - 1.5f, z + 3.75f, ORTHOGONAL, vec3(PUTVERTICALzy), Red, 0.5f, 0.5f, 6); //retoc  gates
+	CreateCubeToBuldings(x - BUIDINGWIDTH, (BULDINGHEIGHT*0.5f *0.5f) + y - 1.5f, z - 3.75f, ORTHOGONAL, vec3(PUTVERTICALzy), Red, 0.5f, 0.5f, 6); //retoc  gates
+	CreateCubeToBuldings(x - BUIDINGWIDTH, (BULDINGHEIGHT*0.5f) + y - 3, z, 0, vec3(PUTVERTICALzy), Red, 0.5f, 0.5f, 8.5); //retoc  gates
+
+
+																														   //physics
+
+
+	CreateInvisibleWall(x - BUIDINGWIDTH, (BULDINGHEIGHT *0.5f) + y, z + BUIDINGLONG *0.5f, vec3{ 1, 1, BULDINGHEIGHT }, ORTHOGONAL, vec3(PUTVERTICALzy)); //	retoc
+	CreateInvisibleWall(x - BUIDINGWIDTH, (BULDINGHEIGHT *0.5f) + y, z - BUIDINGLONG *0.5f, vec3{ 1, 1, BULDINGHEIGHT }, ORTHOGONAL, vec3(PUTVERTICALzy)); //retoc
+	CreateInvisibleWall(x, (BULDINGHEIGHT *0.5f) + y, z + BUIDINGLONG *0.5f, vec3{ 1, 1, BULDINGHEIGHT }, ORTHOGONAL, vec3(PUTVERTICALzy)); //retoc
+	CreateInvisibleWall(x, (BULDINGHEIGHT *0.5f) + y, z - BUIDINGLONG *0.5f, vec3{ 1, 1, BULDINGHEIGHT }, ORTHOGONAL, vec3(PUTVERTICALzy)); //retoc
+
+	CreateInvisibleWall((x - (BUIDINGWIDTH *0.5f)), ((BULDINGHEIGHT *0.5f) + y + 0), (z + 23), vec3{ BUIDINGWIDTH, 0.25f, BULDINGHEIGHT }, ORTHOGONAL, vec3(PUTVERTICALzy)); //wall2
+	CreateInvisibleWall((x - (BUIDINGWIDTH *0.5f)), ((BULDINGHEIGHT *0.5f) + y + 0), (z - 23), vec3{ BUIDINGWIDTH, 0.25f, BULDINGHEIGHT }, ORTHOGONAL, vec3(PUTVERTICALzy)); //wall3
+
+	CreateInvisibleWall(x - BUIDINGWIDTH, (6 * 0.5f) + y, z + 3 + (21 * 0.5f), vec3{ 6, 0.25f, 20 }, ORTHOGONAL, vec3(PUTVERTICALxy)); //wall4
+	CreateInvisibleWall(x - BUIDINGWIDTH, (6 * 0.5f) + y, z - 3 - (21 * 0.5f), vec3{ 6, 0.25f, 20 }, ORTHOGONAL, vec3(PUTVERTICALxy)); //wall4	
+
+	noCube* inv = new noCube(8, 0.15f, 10);
+	inv->SetPos(x + 200, 4 + y, z + 300);
+	inv->SetRotation(ORTHOGONAL, vec3(PUTVERTICALxy));
+	invDoor = inv;
+	invDoor_body = App->physics->AddBody(*invDoor);
+
+
+
+	//-----------------DOORs----------------
+
+	//door1
+	Cube* door1 = new Cube(7.75f, 0.25f, 4.5F);
+	door1->SetPos(x, y + 4.0f, z + 2.35f);
+
+	door1->SetRotation(ORTHOGONAL, vec3(PUTVERTICALxy));	door1->color = Brown2;	Doors.add(door1);		//door1
+																											//
+
+																											//wall1
+	Cube* wall1 = new Cube(8, 0.25f, BULDINGHEIGHT);
+	wall1->SetPos(x, (8 * 0.5f) + y, z + 5 + (BULDINGHEIGHT *0.5f));
+
+	wall1->SetRotation(ORTHOGONAL, vec3(PUTVERTICALxy)); wall1->color = White;	Doors.add(wall1);		//wall1
+																										//
+
+	PhysBody3D* bodyA = App->physics->AddBody(*door1, 200);
+	Doors_body.add(bodyA);
+	PhysBody3D* bodyB = App->physics->AddBody(*wall1, 0);
+	Doors_body.add(bodyB);
+
+	App->physics->AddConstraintHinge(*bodyA, *bodyB, vec3{ x, y, z + 2.4f }, vec3{ x,y, z - 0.25f - (BULDINGHEIGHT *0.5f) }, vec3(PUTVERTICALzy), vec3(PUTVERTICALzy), false);
+
+
+	//door2
+	Cube* door2 = new Cube(7.75f, 0.25f, 4.5F);
+	door2->SetPos(x, y + 4.0f, z - 2.35f);
+
+	door2->SetRotation(ORTHOGONAL, vec3(PUTVERTICALxy));	door2->color = Brown2;	Doors.add(door2);	//door2
+																										//
+																										//wall2
+	Cube* wall2 = new Cube(8, 0.25f, BULDINGHEIGHT);
+	wall2->SetPos(x, (8 * 0.5f) + y, z - 5 - (BULDINGHEIGHT *0.5f));
+
+	wall2->SetRotation(ORTHOGONAL, vec3(PUTVERTICALxy));	wall2->color = White;	Doors.add(wall2);	//wall2o
+																										//
+																										//-----------------constrains----------------
+	PhysBody3D* bodyC = App->physics->AddBody(*door2, 200);
+	Doors_body.add(bodyC);
+	PhysBody3D* bodyD = App->physics->AddBody(*wall2, 0);
+	Doors_body.add(bodyD);
+
+	App->physics->AddConstraintHinge(*bodyC, *bodyD, vec3{ x, y, z - 2.4f }, vec3{ x,y, z + 0.25f + (BULDINGHEIGHT *0.5f) }, vec3(PUTVERTICALzy), vec3(PUTVERTICALzy), false);
+
+
+	//	void AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anchorA, const vec3& anchorB, const vec3& axisS, const vec3& axisB, bool disable_collision = false);
+	//--------------------------------------
 
 }
 
