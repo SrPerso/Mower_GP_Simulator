@@ -32,6 +32,13 @@ bool ModuleSceneIntro::Start()
 	BSO.play();
 
 	//--- Audio
+	//SENSORS
+	s.size = vec3(5, 3, 1);
+	s.SetPos(0, 0, 20);
+
+	sensor = App->physics->AddBody(s, 0.0f);
+	sensor->SetAsSensor(true);
+	sensor->collision_listeners.add(this);
 
 	srand(time(NULL));
 
@@ -122,9 +129,12 @@ update_status ModuleSceneIntro::Update(float dt)
 {
 	WorldUpdate();
 
-	
+	sensor->GetTransform(&s.transform);
+	s.Render();
+
 	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
 	{
+		playerTime.Start();
 		if (App->player->MowerON == true) {
 			App->player->MowerON = false;
 			fxTurnOff.play();
@@ -358,7 +368,7 @@ void ModuleSceneIntro::WorldUpdate() {
 //colision
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-
+	LOG("Hit!");
 }
 
 //=========================================================================================================

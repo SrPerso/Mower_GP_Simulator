@@ -61,3 +61,21 @@ void PhysBody3D::SetPos(float x, float y, float z)
 const vec3 PhysBody3D::GetPos() const {
 	return vehicle_position;
 }
+
+void PhysBody3D::SetAsSensor(bool is_sensor)
+{
+	if (this->is_sensor != is_sensor)
+	{
+		this->is_sensor = is_sensor;
+		if (is_sensor == true)
+			body->setCollisionFlags(body->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+		else
+			body->setCollisionFlags(body->getCollisionFlags() &~btCollisionObject::CF_NO_CONTACT_RESPONSE);
+	}
+}
+
+// ---------------------------------------------------------
+bool PhysBody3D::IsSensor() const
+{
+	return is_sensor;
+}

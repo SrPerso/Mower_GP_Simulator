@@ -35,7 +35,11 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	void WorldUpdate();
 
+	Timer playerTime;
 
+	//SENSORS
+	Cube s;
+	PhysBody3D* sensor;
 private:
 	// --- Audio
 	AudioMusic BSO;
