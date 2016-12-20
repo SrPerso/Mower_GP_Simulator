@@ -82,8 +82,8 @@ private:
 
 	p2List<Plane*> Planos;
 
-	p2List<PhysBody3D*> Farm_body;
-	p2List<Cube*> Farm;
+	
+	p2List<Cube*> Buldings;
 
 	p2List<Cube*> Cow_corps;
 	p2List<PhysBody3D*> CowCorps_body;
@@ -100,8 +100,10 @@ private:
 	//pb_snake[i]->GetTransform(&(s_snake[i].transform));
 public:
 
+
+	void CreateCubeToBuldings(const float x, const float y, const  float z, const  float angle, const vec3&, Color colorr, const float w, const float h, const float l);
+	void CreateBulding(float x, float y, float z);
 	void CreateFarm();
-	void CreateCubeToFarm(const float x, const float y, const  float z, const  float angle, const vec3&, Color colorr, const float w, const float h, const float l, bool physics=false);
 
 	void CreateFence(float distance, float tall, vec3 Position, vec3 rotationvec, float angle, int magicX, int magicZ);
 	void CreateFences();
@@ -124,6 +126,8 @@ public:
 
 	void CreateInvisibleWall(const float x, const float y, const float z, const vec3 box, const float angle, const vec3 RotationAxis);
 	void CreateInvisibleWalls();
+
+
 };
 
 #endif // _SCENE_INTRO_

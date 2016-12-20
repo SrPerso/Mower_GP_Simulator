@@ -44,6 +44,7 @@ bool ModuleSceneIntro::Start()
 	CreateRocks();
 	CreateInvisibleWalls();
 
+	CreateBulding(45, 0, -50);
 
 
 
@@ -65,37 +66,54 @@ bool ModuleSceneIntro::Start()
 bool ModuleSceneIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
+	if (bales.getFirst() != nullptr) {
+		for (int i = 0; i < bales.count(); i++)
+			delete bales[i];
+	}
 
-	for (int i = 0; i < bales.count(); i++)
-		delete bales[i];
+	if (trees_top.getFirst() != nullptr) {
+		for (int i = 0; i < trees_top.count(); i++)
+			delete trees_top[i];
+	}
 
-	for (int i = 0; i < trees_top.count(); i++)
-		delete trees_top[i];
+	if (trees_trunk.getFirst() != nullptr) {
+		for (int i = 0; i < trees_trunk.count(); i++)
+			delete trees_trunk[i];
+	}
 
-	for (int i = 0; i < trees_trunk.count(); i++)
-		delete trees_trunk[i];
-	
-	//fences
-	for (int i = 0; i < postes.count(); i++)
-		delete postes[i];
+	if (postes.getFirst() != nullptr) {
+		for (int i = 0; i < postes.count(); i++)
+			delete postes[i];
+	}
 
-	for (int i = 0; i < transversales.count(); i++)
-		delete transversales[i];
-	//
-	for (int i = 0; i < Farm.count(); i++)
-		delete Farm[i];
+	if (transversales.getFirst() != nullptr) {
+		for (int i = 0; i < transversales.count(); i++)
+			delete transversales[i];
+	}
 
-	for (int i = 0; i < Cow_corps.count(); i++)
-		delete Cow_corps[i];
+	if (Buldings.getFirst() != nullptr) {
+		for (int i = 0; i < Buldings.count(); i++)
+			delete Buldings[i];
+	}
 
-	for (int i = 0; i < Cow_legs.count(); i++)
-		delete Cow_legs[i];
+	if (Cow_corps.getFirst() != nullptr) {
+		for (int i = 0; i < Cow_corps.count(); i++)
+			delete Cow_corps[i];
+	}
 
+	if (Cow_legs.getFirst() != nullptr) {
+		for (int i = 0; i < Cow_legs.count(); i++)
+			delete Cow_legs[i];
+	}
 
-	delete silo1;
-	delete silo2;
+	if (rocks.getFirst() != nullptr) {
+		for (int i = 0; i < rocks.count(); i++)
+			delete rocks[i];
+	}
 
-	//f1->Clear();
+	//delete silo1;
+	//delete silo2;
+
 	return true;
 }
 
@@ -129,162 +147,181 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::WorldUpdate() {
 
-	
+
 	//-----------------------------
 	//--- invisible walls
 	//-----------------------------
-	p2List_item<noCube*>* iteratorinv;
-	p2List_item<PhysBody3D*>* iteratorinv_body;
+	if (invisibles.getFirst() != nullptr) {
 
-	iteratorinv = invisibles.getFirst();
-	iteratorinv_body = invisible_bodies.getFirst();
+		p2List_item<noCube*>* iteratorinv;
+		p2List_item<PhysBody3D*>* iteratorinv_body;
 
-	while (iteratorinv_body != nullptr) {
+		iteratorinv = invisibles.getFirst();
+		iteratorinv_body = invisible_bodies.getFirst();
 
-		iteratorinv_body->data->GetTransform(&(iteratorinv->data->transform));
-		iteratorinv->data->Render();
+		while (iteratorinv_body != nullptr) {
 
-		iteratorinv = iteratorinv->next;
-		iteratorinv_body = iteratorinv_body->next;
+			iteratorinv_body->data->GetTransform(&(iteratorinv->data->transform));
+			iteratorinv->data->Render();
+
+			iteratorinv = iteratorinv->next;
+			iteratorinv_body = iteratorinv_body->next;
+		}
 	}
 	//--------------------
-	silo2->Render();
-	silo1->Render();
+
+//	silo2->Render();
+
+	//silo1->Render();
+
 	//-----------------------------
-	//--- Farm
+	//--- buldings
 	//-----------------------------
-	p2List_item<Cube*>* iteratorFarm;
-	p2List_item<PhysBody3D*>*iteratorFarm_body;
-	iteratorFarm = Farm.getFirst();
+	if (Buldings.getFirst() != nullptr) {
 
-	iteratorFarm_body = Farm_body.getFirst();
-	while (iteratorFarm != nullptr) {
+		p2List_item<Cube*>* iteratorBuldings;
+		iteratorBuldings = Buldings.getFirst();
 
-		//iteratorFarm_body->data->GetTransform(&(iteratorFarm->data->transform));
-		iteratorFarm->data->Render();
 
-		//iteratorFarm_body = iteratorFarm_body->next;
-		iteratorFarm = iteratorFarm->next;
+		while (iteratorBuldings != nullptr) {
+
+			iteratorBuldings->data->Render();
+			iteratorBuldings = iteratorBuldings->next;
+		}
 	}
 
 	//-----------------------------
 	//--- Fances
 	//-----------------------------
+	if (transversales.getFirst() != nullptr) {
 
-	p2List_item<Cube*>* iteratorTrans;
-	p2List_item<Cylinder*>* iteratorPostes;
 
-	iteratorTrans = transversales.getFirst();
+		p2List_item<Cube*>* iteratorTrans;
+		p2List_item<Cylinder*>* iteratorPostes;
 
-	while (iteratorTrans != nullptr) {
-		iteratorTrans->data->Render();
-		iteratorTrans = iteratorTrans->next;
+		iteratorTrans = transversales.getFirst();
+
+		while (iteratorTrans != nullptr) {
+			iteratorTrans->data->Render();
+			iteratorTrans = iteratorTrans->next;
+		}
+		iteratorPostes = postes.getFirst();
+		while (iteratorPostes != nullptr) {
+			iteratorPostes->data->Render();
+			iteratorPostes = iteratorPostes->next;
+		}
 	}
-	iteratorPostes = postes.getFirst();
-	while (iteratorPostes != nullptr) {
-		iteratorPostes->data->Render();
-		iteratorPostes = iteratorPostes->next;
-	}
-
 	//-----------------------------
 	//--- render trees
 	//-----------------------------
+	if (trees_top.getFirst() != nullptr|| trees_trunk.getFirst() != nullptr) {
 
-	p2List_item<TreeTop*>* iteratorTop;
-	//p2List_item<PhysBody3D*>*iteratorTop_body;
+		p2List_item<TreeTop*>* iteratorTop;
+		//p2List_item<PhysBody3D*>*iteratorTop_body;
 
-	p2List_item<Cylinder*>* iteratorTrunk;
-	p2List_item<PhysBody3D*>*iteratorTrunk_body;
+		p2List_item<Cylinder*>* iteratorTrunk;
+		p2List_item<PhysBody3D*>*iteratorTrunk_body;
 
 
-	iteratorTop = trees_top.getFirst();
-	//iteratorTop_body = trees_top_body.getFirst();
+		iteratorTop = trees_top.getFirst();
+		//iteratorTop_body = trees_top_body.getFirst();
 
-	iteratorTrunk = trees_trunk.getFirst();
-	iteratorTrunk_body = trees_trunk_body.getFirst();
+		iteratorTrunk = trees_trunk.getFirst();
+		iteratorTrunk_body = trees_trunk_body.getFirst();
 
-	while (iteratorTop != nullptr) {
+		while (iteratorTop != nullptr) {
 
-		iteratorTrunk_body->data->GetTransform(&(iteratorTrunk->data->transform));
+			iteratorTrunk_body->data->GetTransform(&(iteratorTrunk->data->transform));
 
-		iteratorTop->data->Render();
-		iteratorTrunk->data->Render();
+			iteratorTop->data->Render();
+			iteratorTrunk->data->Render();
 
-		iteratorTop = iteratorTop->next;
-		//iteratorTop_body = iteratorTop_body->next;
-		iteratorTrunk = iteratorTrunk->next;
-		iteratorTrunk_body = iteratorTrunk_body->next;
+			iteratorTop = iteratorTop->next;
+			//iteratorTop_body = iteratorTop_body->next;
+			iteratorTrunk = iteratorTrunk->next;
+			iteratorTrunk_body = iteratorTrunk_body->next;
+		}
 	}
 	//-----------------------------
 	//--- render bales
 	//-----------------------------
-	p2List_item<Cube*>* iteratorBale;
-	p2List_item<PhysBody3D*>* iteratorBale_body;
+	if (bales.getFirst() != nullptr) {
 
-	iteratorBale = bales.getFirst();
-	iteratorBale_body = bales_body.getFirst();
+		p2List_item<Cube*>* iteratorBale;
+		p2List_item<PhysBody3D*>* iteratorBale_body;
 
-	while (iteratorBale != nullptr) {
+		iteratorBale = bales.getFirst();
+		iteratorBale_body = bales_body.getFirst();
 
-		iteratorBale_body->data->GetTransform(&(iteratorBale->data->transform));
-		iteratorBale->data->Render();
+		while (iteratorBale != nullptr) {
 
-		iteratorBale = iteratorBale->next;
-		iteratorBale_body = iteratorBale_body->next;
+			iteratorBale_body->data->GetTransform(&(iteratorBale->data->transform));
+			iteratorBale->data->Render();
+
+			iteratorBale = iteratorBale->next;
+			iteratorBale_body = iteratorBale_body->next;
+		}
 	}
 
 	//-----------------------------
 	//--- render ROCKS
 	//-----------------------------
+	if (rocks.getFirst() != nullptr) {
 
-	p2List_item<Cylinder*>* iteratorRock;
-	p2List_item<PhysBody3D*>* iteratorRock_body;
+		p2List_item<Cylinder*>* iteratorRock;
+		p2List_item<PhysBody3D*>* iteratorRock_body;
 
-	iteratorRock = rocks.getFirst();
-	iteratorRock_body = rocks_body.getFirst();
+		iteratorRock = rocks.getFirst();
+		iteratorRock_body = rocks_body.getFirst();
 
-	while (iteratorRock != nullptr) {
+		while (iteratorRock != nullptr) {
 
-		iteratorRock_body->data->GetTransform(&(iteratorRock->data->transform));
-		iteratorRock->data->Render();
+			iteratorRock_body->data->GetTransform(&(iteratorRock->data->transform));
+			iteratorRock->data->Render();
 
-		iteratorRock = iteratorRock->next;
-		iteratorRock_body = iteratorRock_body->next;
+			iteratorRock = iteratorRock->next;
+			iteratorRock_body = iteratorRock_body->next;
+		}
 	}
-
 
 	//-----------------------------
 	//--- render Cows
 	//-----------------------------
+	if (Cow_legs.getFirst() != nullptr)
+	{
+		p2List_item<Cylinder*>* iteratorlegs;
+		p2List_item<PhysBody3D*>* iteratorcow_Legs_body;
+		iteratorlegs = Cow_legs.getFirst();
+		iteratorcow_Legs_body = CowLegs_body.getFirst();
 
-	p2List_item<Cylinder*>* iteratorlegs;
-	p2List_item<Cube*>* iteratorbody;
+		while (iteratorlegs != nullptr) {
 
-	p2List_item<PhysBody3D*>* iteratorcow_Legs_body;
-	p2List_item<PhysBody3D*>* iteratorcow_Corps_body;
+			iteratorcow_Legs_body->data->GetTransform(&(iteratorlegs->data->transform));
+			iteratorlegs->data->Render();
 
-	iteratorlegs = Cow_legs.getFirst();
-	iteratorbody = Cow_corps.getFirst();
-
-	iteratorcow_Legs_body = CowLegs_body.getFirst();
-	iteratorcow_Corps_body = CowCorps_body.getFirst();
-
-	while (iteratorlegs != nullptr) {
-
-		iteratorcow_Legs_body->data->GetTransform(&(iteratorlegs->data->transform));
-		iteratorlegs->data->Render();
-
-		iteratorcow_Legs_body = iteratorcow_Legs_body->next;
-		iteratorlegs = iteratorlegs->next;
+			iteratorcow_Legs_body = iteratorcow_Legs_body->next;
+			iteratorlegs = iteratorlegs->next;
+		}
 	}
-	while (iteratorbody != nullptr) {
+	if (Cow_corps.getFirst() != nullptr)
+	{
 
-		iteratorcow_Corps_body->data->GetTransform(&(iteratorbody->data->transform));
-		iteratorbody->data->Render();
+		p2List_item<Cube*>* iteratorbody;
+		p2List_item<PhysBody3D*>* iteratorcow_Corps_body;
+		iteratorbody = Cow_corps.getFirst();
+		iteratorcow_Corps_body = CowCorps_body.getFirst();
 
-		iteratorcow_Corps_body = iteratorcow_Corps_body->next;
-		iteratorbody = iteratorbody->next;
+		while (iteratorbody != nullptr) {
+			iteratorcow_Corps_body->data->GetTransform(&(iteratorbody->data->transform));
+			iteratorbody->data->Render();
+
+			iteratorcow_Corps_body = iteratorcow_Corps_body->next;
+			iteratorbody = iteratorbody->next;
+		}
+	
 	}
+
+
 
 
 	//-----------------------------
@@ -308,20 +345,38 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 
 }
 
-
 //=========================================================================================================
 //creators  =========================================================================================================
 //=========================================================================================================
-void ModuleSceneIntro::CreateCubeToFarm(const float x, const float y, const float z, const float angle, const vec3 & rotationAxis, Color colorr , const float w, const float h , const float l, bool physics)
-{
 
+void ModuleSceneIntro::CreateCubeToBuldings(const float x, const float y, const float z, const float angle, const vec3 & rotationAxis, Color colorr , const float w, const float h , const float l)
+{
 	Cube* cube = new Cube(w, h, l);
 	cube->SetPos(x, y, z);
 	cube->SetRotation(angle, rotationAxis);
 	cube->color = colorr;
-	Farm.add(cube);
-	if(physics==true)
-	Farm_body.add(App->physics->AddBody(*cube,0));
+	Buldings.add(cube);
+}
+
+void ModuleSceneIntro::CreateBulding(float x, float y, float z)
+{
+#define BUIDINGWIDTH 20
+
+	CreateCubeToBuldings(x ,	(8 / 2) + y , z + 5 + (18 / 2), 90, vec3(0, 0, 1), White, 8, 0.25f, 18); //wall1
+	CreateCubeToBuldings(x ,	(8 / 2) + y, z - 5 - (18 / 2), 90, vec3(0, 0,1), White, 8, 0.25f, 18); //wall1	
+	CreateCubeToBuldings(x, (10 / 2) + y + 8, z + 0, 90, vec3(0, 0, 1), White, 10, 0.25f, 46); //wall1	
+
+	CreateCubeToBuldings((x- (BUIDINGWIDTH /2)),( (18 / 2) + y + 0),(z+ 23), 90, vec3(1, 0, 0), White, BUIDINGWIDTH, 0.25f, 18); //wall2
+
+	CreateCubeToBuldings((x - (BUIDINGWIDTH / 2)), ((18 / 2) + y + 0), (z - 23), 90, vec3(1, 0, 0), White, BUIDINGWIDTH, 0.25f, 18); //wall3
+	
+	CreateCubeToBuldings((x+4),(y + 10), (z), 0, vec3(0, 0, 1), White, 8, 1, 16); //wall5
+
+	CreateCubeToBuldings(x - BUIDINGWIDTH, (6 / 2) + y,			z + 3 + (21 / 2),	90, vec3(0, 0, 1), White, 6, 0.25f, 20); //wall4
+	CreateCubeToBuldings(x - BUIDINGWIDTH, (6 / 2) + y,			z - 3 - (21 / 2),	90, vec3(0, 0, 1), White, 6, 0.25f, 20); //wall4	
+	CreateCubeToBuldings(x - BUIDINGWIDTH, (12 / 2) + y + 6,	z + 0,				90, vec3(0, 0, 1), White, 12, 0.25f, 46); //wall4	
+	
+
 
 }
 
@@ -339,99 +394,99 @@ void ModuleSceneIntro::CreateFarm()
 	silo2->color = White;
 
 
-	CreateCubeToFarm(0, 15.5, 0, +45, vec3(0, 0, 1), White, 0.5, 0.5, 21); //roof1
-	CreateCubeToFarm(-2, 15, 0, +15, vec3(0, 0, 1), grey, 5, 0.25f, 20); //roof1
-	CreateCubeToFarm(+2, 15, 0, -15, vec3(0, 0, 1), grey, 5, 0.25f, 20); //roof2
-	CreateCubeToFarm(-6, 13, 0, +30, vec3(0, 0, 1), grey, 5, 0.25f, 20); //roof3
-	CreateCubeToFarm(+6, 13, 0, -30, vec3(0, 0, 1), grey, 5, 0.25f, 20); //roof4
+	CreateCubeToBuldings(0, 15.5, 0, +45, vec3(0, 0, 1), White, 0.5, 0.5, 21); //roof1
+	CreateCubeToBuldings(-2, 15, 0, +15, vec3(0, 0, 1), grey, 5, 0.25f, 20); //roof1
+	CreateCubeToBuldings(+2, 15, 0, -15, vec3(0, 0, 1), grey, 5, 0.25f, 20); //roof2
+	CreateCubeToBuldings(-6, 13, 0, +30, vec3(0, 0, 1), grey, 5, 0.25f, 20); //roof3
+	CreateCubeToBuldings(+6, 13, 0, -30, vec3(0, 0, 1), grey, 5, 0.25f, 20); //roof4
 
-	CreateCubeToFarm(-8.3, 10.8, 0, +60, vec3(0, 0, 1), grey, 3, 0.25f, 20); //roof5
-	CreateCubeToFarm(+8.3, 10.8, 0, -60, vec3(0, 0, 1), grey, 3, 0.25f, 20); //roof6
+	CreateCubeToBuldings(-8.3, 10.8, 0, +60, vec3(0, 0, 1), grey, 3, 0.25f, 20); //roof5
+	CreateCubeToBuldings(+8.3, 10.8, 0, -60, vec3(0, 0, 1), grey, 3, 0.25f, 20); //roof6
 
 	//---------------- w1
 
-	CreateCubeToFarm(+8.3, 5, -8.5, 90, vec3(0, 0, 1), White, 11, 0.25f, 0.5); //wall1
+	CreateCubeToBuldings(+8.3, 5, -8.5, 90, vec3(0, 0, 1), White, 11, 0.25f, 0.5); //wall1
 	
 	float j = -7.7;
 
 	for (int i = 0; i < 15; i++) {
 
-		CreateCubeToFarm(+8.3, 5, j , 90, vec3(0, 0, 1), Red, 11, 0.25f, 1); //wall1
+		CreateCubeToBuldings(+8.3, 5, j , 90, vec3(0, 0, 1), Red, 11, 0.25f, 1); //wall1
 		j += 1.1;
 	}
-	CreateCubeToFarm(+8.4, 5, +0, 90, vec3(0, 0, 1), White, 10.5, 0.7, 0.5); //wall1
-	CreateCubeToFarm(+8.3, 5, +8.5, 90, vec3(0, 0, 1), White, 11, 0.25f, 0.5);
+	CreateCubeToBuldings(+8.4, 5, +0, 90, vec3(0, 0, 1), White, 10.5, 0.7, 0.5); //wall1
+	CreateCubeToBuldings(+8.3, 5, +8.5, 90, vec3(0, 0, 1), White, 11, 0.25f, 0.5);
 	//---------------- w1
 	//---------------- w2
-	CreateCubeToFarm(-8.3, 5, -8.5, 90, vec3(0, 0, 1), White, 11, 0.25f, 0.5); //wall2
+	CreateCubeToBuldings(-8.3, 5, -8.5, 90, vec3(0, 0, 1), White, 11, 0.25f, 0.5); //wall2
 
 	j = -7.7;
 
 	for (int i = 0; i < 15; i++) {
 
-		CreateCubeToFarm(-8.3, 5, j, 90, vec3(0, 0, 1), Red, 11, 0.25f, 1); //wall2
+		CreateCubeToBuldings(-8.3, 5, j, 90, vec3(0, 0, 1), Red, 11, 0.25f, 1); //wall2
 		j += 1.1;
 	}
-	CreateCubeToFarm(-8.4, 5, +0, 90, vec3(0, 0, 1), White, 10.5, 0.7, 0.5); //wall2
-	CreateCubeToFarm(-8.3, 5, +8.5, 90, vec3(0, 0, 1), White, 11, 0.25f, 0.5);
+	CreateCubeToBuldings(-8.4, 5, +0, 90, vec3(0, 0, 1), White, 10.5, 0.7, 0.5); //wall2
+	CreateCubeToBuldings(-8.3, 5, +8.5, 90, vec3(0, 0, 1), White, 11, 0.25f, 0.5);
 	//---------------- w2
 	//---------------- w3
-	CreateCubeToFarm(+8.5, 5, -9, 90, vec3(1, 0, 0), White, 0.5, 0.25f, 10.5); //wall3
+	CreateCubeToBuldings(+8.5, 5, -9, 90, vec3(1, 0, 0), White, 0.5, 0.25f, 10.5); //wall3
 
-	CreateCubeToFarm(+7.4, 5.5, -9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 13); //wall3
-	CreateCubeToFarm(+6.3, 6, -9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 13.25); //wall3
-	CreateCubeToFarm(+5.2, 6.35, -9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 13.75); //wall3
-	CreateCubeToFarm(+4.1, 6.75, -9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 14.75); //wall3
+	CreateCubeToBuldings(+7.4, 5.5, -9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 13); //wall3
+	CreateCubeToBuldings(+6.3, 6, -9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 13.25); //wall3
+	CreateCubeToBuldings(+5.2, 6.35, -9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 13.75); //wall3
+	CreateCubeToBuldings(+4.1, 6.75, -9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 14.75); //wall3
 
 	j = +3;
 	float w = 5,u= 12;
 	for (int i = 0; i < 7; i++) {
 
 		if (i < 3) {
-			CreateCubeToFarm(j, u, -9, 90, vec3(1, 0, 0), Red, 1, 0.25f, w); //wall3
+			CreateCubeToBuldings(j, u, -9, 90, vec3(1, 0, 0), Red, 1, 0.25f, w); //wall3
 			w += 0.25;	u += 0.125;
 		}
 		
 		if (i >= 3 && i < 6) {
-			CreateCubeToFarm(j, u, -9, 90, vec3(1, 0, 0), Red, 1, 0.25f, w); //wall3	
+			CreateCubeToBuldings(j, u, -9, 90, vec3(1, 0, 0), Red, 1, 0.25f, w); //wall3	
 			w -= 0.25;	u -= 0.125;
 		}		
 		else 
-			CreateCubeToFarm(j+0.25, 12, -9, 90, vec3(1, 0, 0), Red, 0.6, 0.25f, 5); //wall3			
+			CreateCubeToBuldings(j+0.25, 12, -9, 90, vec3(1, 0, 0), Red, 0.6, 0.25f, 5); //wall3			
 	j-= 1.1;
 	}
 
-	CreateCubeToFarm(-7.5, 5.5, -9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 13); //wall3
-	CreateCubeToFarm(-6.4, 6, -9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 13.25); //wall3
-	CreateCubeToFarm(-5.3, 6.30, -9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 13.75); //wall3
-	CreateCubeToFarm(-4.2, 6.75, -9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 14.25); //wall3
+	CreateCubeToBuldings(-7.5, 5.5, -9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 13); //wall3
+	CreateCubeToBuldings(-6.4, 6, -9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 13.25); //wall3
+	CreateCubeToBuldings(-5.3, 6.30, -9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 13.75); //wall3
+	CreateCubeToBuldings(-4.2, 6.75, -9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 14.25); //wall3
 
-	CreateCubeToFarm(-8.5, 5, -9, 90, vec3(1, 0, 0), White, 0.5, 0.25f, 10.5); //wall3
+	CreateCubeToBuldings(-8.5, 5, -9, 90, vec3(1, 0, 0), White, 0.5, 0.25f, 10.5); //wall3
 
 //---------------- w3
 
-	CreateCubeToFarm(0, 9.6, -9, +0, vec3(0, 0, 1), White, 12, 0.40, 0.40); //roof1
-	CreateCubeToFarm(-3.5, 4.75, -9.1, +90, vec3(0, 0, 1), White, 9.5, 0.30, 0.30); //roof1
-	CreateCubeToFarm(3.5, 4.75, -9.1, +90, vec3(0, 0, 1), White, 9.5, 0.30, 0.30); //roof1
+	CreateCubeToBuldings(0, 9.6, -9, +0, vec3(0, 0, 1), White, 12, 0.40, 0.40); //roof1
+	CreateCubeToBuldings(-3.5, 4.75, -9.1, +90, vec3(0, 0, 1), White, 9.5, 0.30, 0.30); //roof1
+	CreateCubeToBuldings(3.5, 4.75, -9.1, +90, vec3(0, 0, 1), White, 9.5, 0.30, 0.30); //roof1
 //---------------- w3
-	CreateCubeToFarm(-2, 14.8, -9.1, +15, vec3(0, 0, 1), White, 4.75, 0.25f, 0.5); //roof1
-	CreateCubeToFarm(+2, 14.8, -9.1, -15, vec3(0, 0, 1), White, 4.75, 0.25f, 0.5); //roof2
-	CreateCubeToFarm(-6, 12.8, -9.1, +30, vec3(0, 0, 1), White, 5, 0.25f, 0.5); //roof3
-	CreateCubeToFarm(+6, 12.8, -9.1, -30, vec3(0, 0, 1), White, 5, 0.25f, 0.5); //roof4
+	CreateCubeToBuldings(-2, 14.8, -9.1, +15, vec3(0, 0, 1), White, 4.75, 0.25f, 0.5); //roof1
+	CreateCubeToBuldings(+2, 14.8, -9.1, -15, vec3(0, 0, 1), White, 4.75, 0.25f, 0.5); //roof2
+	CreateCubeToBuldings(-6, 12.8, -9.1, +30, vec3(0, 0, 1), White, 5, 0.25f, 0.5); //roof3
+	CreateCubeToBuldings(+6, 12.8, -9.1, -30, vec3(0, 0, 1), White, 5, 0.25f, 0.5); //roof4
 
-	CreateCubeToFarm(-8.3, 10.6, -9.1, +60, vec3(0, 0, 1), White, 3, 0.25f, 0.5); //roof5
-	CreateCubeToFarm(+8.3, 10.6, -9.1, -60, vec3(0, 0, 1), White, 3, 0.25f, 0.5); //roof6
+	CreateCubeToBuldings(-8.3, 10.6, -9.1, +60, vec3(0, 0, 1), White, 3, 0.25f, 0.5); //roof5
+	CreateCubeToBuldings(+8.3, 10.6, -9.1, -60, vec3(0, 0, 1), White, 3, 0.25f, 0.5); //roof6
 //---------------- w3
 
 
 
 //---------------- w4
-	CreateCubeToFarm(+8.5, 5, +9, 90, vec3(1, 0, 0), White, 0.5, 0.25f, 10.5); //wall4
+	CreateCubeToBuldings(+8.5, 5, +9, 90, vec3(1, 0, 0), White, 0.5, 0.25f, 10.5); //wall4
 
-	CreateCubeToFarm(+7.4, 5.5, +9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 13); //wall4
-	CreateCubeToFarm(+6.3, 6, +9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 13.25); //wall4
-	CreateCubeToFarm(+5.2, 6.35, +9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 13.75); //wall4
-	CreateCubeToFarm(+4.1, 6.75, +9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 14.75); //wall4
+	CreateCubeToBuldings(+7.4, 5.5, +9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 13); //wall4
+	CreateCubeToBuldings(+6.3, 6, +9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 13.25); //wall4
+	CreateCubeToBuldings(+5.2, 6.35, +9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 13.75); //wall4
+	CreateCubeToBuldings(+4.1, 6.75, +9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 14.75); //wall4
 
 	j = +3;
 	w = 5;
@@ -439,39 +494,39 @@ void ModuleSceneIntro::CreateFarm()
 	for (int i = 0; i < 7; i++) {
 
 		if (i < 3) {
-			CreateCubeToFarm(j, u, +9, 90, vec3(1, 0, 0), Red, 1, 0.25f, w); //wall4
+			CreateCubeToBuldings(j, u, +9, 90, vec3(1, 0, 0), Red, 1, 0.25f, w); //wall4
 			w += 0.25;	u += 0.125;
 		}
 
 		if (i >= 3 && i < 6) {
-			CreateCubeToFarm(j, u, +9, 90, vec3(1, 0, 0), Red, 1, 0.25f, w); //wall4
+			CreateCubeToBuldings(j, u, +9, 90, vec3(1, 0, 0), Red, 1, 0.25f, w); //wall4
 			w -= 0.25;	u -= 0.125;
 		}
 		else
-			CreateCubeToFarm(j + 0.25, 12, +9, 90, vec3(1, 0, 0), Red, 0.6, 0.25f, 5); //wall4	
+			CreateCubeToBuldings(j + 0.25, 12, +9, 90, vec3(1, 0, 0), Red, 0.6, 0.25f, 5); //wall4	
 		j -= 1.1;
 	}
 
-	CreateCubeToFarm(-7.5, 5.5, +9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 13); //wall4
-	CreateCubeToFarm(-6.4, 6, +9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 13.25); //wall4
-	CreateCubeToFarm(-5.3, 6.30, +9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 13.75); //wall4
-	CreateCubeToFarm(-4.2, 6.75, +9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 14.25); //wall3
+	CreateCubeToBuldings(-7.5, 5.5, +9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 13); //wall4
+	CreateCubeToBuldings(-6.4, 6, +9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 13.25); //wall4
+	CreateCubeToBuldings(-5.3, 6.30, +9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 13.75); //wall4
+	CreateCubeToBuldings(-4.2, 6.75, +9, 90, vec3(1, 0, 0), Red, 1, 0.25f, 14.25); //wall3
 
-	CreateCubeToFarm(-8.5, 5, +9, 90, vec3(1, 0, 0), White, 0.5, 0.25f, 10.5); //wall4
+	CreateCubeToBuldings(-8.5, 5, +9, 90, vec3(1, 0, 0), White, 0.5, 0.25f, 10.5); //wall4
 
 //---------------- w4
 
-	CreateCubeToFarm(0, 9.6, +9, +0, vec3(0, 0, 1), White, 12, 0.40, 0.40); //roof1
-	CreateCubeToFarm(-3.5, 4.75, +9.1, +90, vec3(0, 0, 1), White, 9.5, 0.30, 0.30); //roof1
-	CreateCubeToFarm(3.5, 4.75, +9.1, +90, vec3(0, 0, 1), White, 9.5, 0.30, 0.30); //roof1
+	CreateCubeToBuldings(0, 9.6, +9, +0, vec3(0, 0, 1), White, 12, 0.40, 0.40); //roof1
+	CreateCubeToBuldings(-3.5, 4.75, +9.1, +90, vec3(0, 0, 1), White, 9.5, 0.30, 0.30); //roof1
+	CreateCubeToBuldings(3.5, 4.75, +9.1, +90, vec3(0, 0, 1), White, 9.5, 0.30, 0.30); //roof1
  //---------------- w4
-	CreateCubeToFarm(-2, 14.8, +9.1, +15, vec3(0, 0, 1), White, 4.75, 0.25f, 0.5); //roof1
-	CreateCubeToFarm(+2, 14.8, +9.1, -15, vec3(0, 0, 1), White, 4.75, 0.25f, 0.5); //roof2
-	CreateCubeToFarm(-6, 12.8, +9.1, +30, vec3(0, 0, 1), White, 5, 0.25f, 0.5); //roof3
-	CreateCubeToFarm(+6, 12.8, +9.1, -30, vec3(0, 0, 1), White, 5, 0.25f, 0.5); //roof4
+	CreateCubeToBuldings(-2, 14.8, +9.1, +15, vec3(0, 0, 1), White, 4.75, 0.25f, 0.5); //roof1
+	CreateCubeToBuldings(+2, 14.8, +9.1, -15, vec3(0, 0, 1), White, 4.75, 0.25f, 0.5); //roof2
+	CreateCubeToBuldings(-6, 12.8, +9.1, +30, vec3(0, 0, 1), White, 5, 0.25f, 0.5); //roof3
+	CreateCubeToBuldings(+6, 12.8, +9.1, -30, vec3(0, 0, 1), White, 5, 0.25f, 0.5); //roof4
 
-	CreateCubeToFarm(-8.3, 10.6, +9.1, +60, vec3(0, 0, 1), White, 3, 0.25f, 0.5); //roof5
-	CreateCubeToFarm(+8.3, 10.6, +9.1, -60, vec3(0, 0, 1), White, 3, 0.25f, 0.5); //roof6
+	CreateCubeToBuldings(-8.3, 10.6, +9.1, +60, vec3(0, 0, 1), White, 3, 0.25f, 0.5); //roof5
+	CreateCubeToBuldings(+8.3, 10.6, +9.1, -60, vec3(0, 0, 1), White, 3, 0.25f, 0.5); //roof6
  //---------------- w4
 
 
@@ -480,6 +535,7 @@ void ModuleSceneIntro::CreateFarm()
 
 }
 //================
+
 void ModuleSceneIntro::CreateFence(float distance, float tall, vec3 Position, vec3 rotationvec, float angle, int magicX, int magicZ)
 {
 	Cube* trans1 = new Cube(distance, 0.3f, 0.2f);
@@ -548,6 +604,7 @@ void ModuleSceneIntro::CreateFences()
 	}
 }
 //================
+
 void ModuleSceneIntro::CreateBale(const float x, const float y, const float z, const float angle, const vec3& rotationAxis)
 {
 	Cube* heno = new Cube(1, 1, 2.2f);
@@ -733,9 +790,6 @@ void ModuleSceneIntro::CreateBales()
 	CreateBale(132.5, 0.5f, 100.5, -110, vec3{ 0,1,0 });
 	CreateBale(130, 0.5f, 98.5, -130, vec3{ 0,1,0 });
 	CreateBale(128, 0.5f, 96, -140, vec3{ 0,1,0 });
-	
-	
-	
 
 }
 //================
@@ -1034,7 +1088,6 @@ void ModuleSceneIntro::CreateCows()
 	CreateCow(60, 0, 50, 170, { 0,0,1 });
 	CreateCow(50, 0, 49, 50, { 0,0,1 });
 }
-
 //================
 
 void ModuleSceneIntro::CreateInvisibleWall(const float x, const float y, const float z, const vec3 box , const float angle, const vec3 RotationAxis) {
@@ -1061,3 +1114,4 @@ void ModuleSceneIntro::CreateInvisibleWalls()
 	CreateInvisibleWall(8.5, 0, 0, vec3{ 18,15,0.5f }, 90, vec3{ 0,1,0 });
 
 }
+//================
