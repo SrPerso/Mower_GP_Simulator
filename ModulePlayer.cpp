@@ -29,7 +29,7 @@ bool ModulePlayer::Start()
 	car.Sit2_offset.Set(0, 0.7f, -.60f);
 	car.bin_offset.Set(0, 0.8f, -1.70f);
 
-	car.mass = 400.0f;
+	car.mass = 1000.0f;
 	car.suspensionStiffness = 15.88f;
 	car.suspensionCompression = 0.83f;
 	car.suspensionDamping = 0.88f;

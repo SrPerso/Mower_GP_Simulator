@@ -68,7 +68,9 @@ bool ModuleSceneIntro::Start()
 		App->camera->Move(vec3(130,70, -160));
 		App->camera->LookAt(vec3(90, 2.6f, -70));
 	}*/
-
+		/*for (uint i = 0; i <= 8; i++) {
+			checkpoints[i] = false;
+		}*/
 	//bales
 	return ret;
 }
@@ -450,14 +452,19 @@ void ModuleSceneIntro::WorldUpdate() {
 //colision
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	if (body1 == sensors_bodycube.getFirst()->data) {
-		playerTime.Start();
-	}
-	else {
-		if (kicked == false) {
-			kicked = true;
+	for (uint i = 0; i < 8; i++) {
+		if (body1 == sensors_bodycube[i]) {		
+				playerTime.Start();
+				checkpoints[i] = true;			
 		}
 	}
+	
+
+	if (kicked == false) {
+		kicked = true;
+	}
+		
+	
 	
 	
 	LOG("Hit!");
@@ -466,39 +473,44 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 //=========================================================================================================
 //creators  =========================================================================================================
 //=========================================================================================================
-void ModuleSceneIntro::CreateSensor( const float x, const float y, const float z, const float angle,const vec3& rotationAxis, int i) {
+void ModuleSceneIntro::CreateSensor(const float x, const float y, const float z, const float angle,const vec3& rotationAxis, const int i, const float sizeX, const float sizeY, const int pos) {
 	if (i == 0) {
 		Cylinder* sensor = new Cylinder(1, 1);
 		sensor->SetPos(x, y, z);
 		sensor->SetRotation(angle, rotationAxis);
 		sensors.add(sensor);
-		sensors_body.add(App->physics->AddBody(*sensor, 0.0f));
+		sensors_body.add(App->physics->AddBody(*sensor, 0));
 		sensors_body.getLast()->data->SetAsSensor(true);
 		sensors_body.getLast()->data->collision_listeners.add(this);
 	}
 	else if (i == 1) {
-		Cube* sensor = new Cube(7, 1,1);
+		Cube* sensor = new Cube(sizeX, sizeY,1);
 		sensor->SetPos(x, y, z);
 		sensor->SetRotation(angle, rotationAxis);
-		sensorscube.add(sensor);
-		sensors_bodycube.add(App->physics->AddBody(*sensor, 0));
-		sensors_bodycube.getLast()->data->SetAsSensor(true);
-		sensors_bodycube.getLast()->data->collision_listeners.add(this);
+		sensorscube.add(sensor);		
+		sensors_bodycube[pos] = (App->physics->AddBody(*sensor, 0.0f));
+		sensors_bodycube[pos]->SetAsSensor(true);
+		sensors_bodycube[pos]->collision_listeners.add(this);
 	}
 	
 
 }
 void ModuleSceneIntro::CreateSensors() {
 	//Obstacles
-	CreateSensor(121, 0.0f, 70, 90, vec3{ 0,0,1},0);	
-	CreateSensor(124.9, 0.0f, 59.8, 90, vec3{ 0,0,1},0);
-	CreateSensor(125.4, 0.0f, 19.4, 90, vec3{ 0,0,1},0);
+	CreateSensor(121, 0.0f, 70, 90, vec3{ 0,0,1 },0);
+	CreateSensor(124.9, 0.0f, 59.8, 90, vec3{ 0,0,1 },0);
+	CreateSensor(125.4, 0.0f, 19.4, 90, vec3{ 0,0,1 },0);
 	CreateSensor(131.4, 0.0f, 19.4, 90, vec3{ 0,0,1 },0);
 	CreateSensor(128.4, 0.0f, 10.4, 90, vec3{ 0,0,1 },0);
 	CreateSensor(124.9, 0.0f, -10.4, 90, vec3{ 0,0,1 },0);
 
 	//
-	CreateSensor(0, 0.9f, 2, 0, vec3{ 0,0,1 }, 1);
+	CreateSensor(0, 0.9f, 2, 0, vec3{ 0,0,1 }, 1,7,1, 0);
+	CreateSensor(7.5, 0.9f, 40, 0, vec3{ 0,1,0 }, 1,6,1,1);
+	CreateSensor(10, 0.9f, 67.5, 90, vec3{ 0,1,0 }, 1,7.2,1, 2);
+	CreateSensor(72, 0.9f, 32.5, 90, vec3{ 0,1,0 }, 1,6.5,1, 3);
+	CreateSensor(140, 0.9f, 77.8, 90, vec3{ 0,1,0 }, 1, 9, 1, 4);
+	CreateSensor(124, 0.9f, -50, 0, vec3{ 0,1,0 }, 1, 9, 1, 5);
 }
 void ModuleSceneIntro::CreateCubeToBuldings(const float x, const float y, const float z, const float angle, const vec3 & rotationAxis, Color colorr , const float w, const float h , const float l)
 {
