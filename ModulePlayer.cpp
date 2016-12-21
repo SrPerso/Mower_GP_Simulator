@@ -5,6 +5,7 @@
 #include "PhysVehicle3D.h"
 #include "PhysBody3D.h"
 
+#define MAXTIME 90.0f
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
 {
 	turn = acceleration = brake = 0.0f;
@@ -164,25 +165,42 @@ update_status ModulePlayer::Update(float dt)
 	
 
 	vehicle->Render();
+	
+	if (thistime <MAXTIME) {		
+
+	}
+	else {
+		RestartAll();
+		losed = true;
+	}
 
 	char title[1000];
-	float thistime = (float)App->scene_intro->playerTime.Read() / 1000;
-	sprintf_s(title, "%.1f Km/h, Time: %.2f", vehicle->GetKmh(), thistime);
+	thistime = (float)App->scene_intro->playerTime.Read() / 1000;	
+	
+	if (restart == true) {
+		thistime = 0;
+	}
+	
+	sprintf_s(title, "%.1f Km/h, Time: %.2f, Less Time: %.2f ", vehicle->GetKmh(), thistime, lessScore);
 	App->window->SetTitle(title);
-
+	losed = false;
+	//restart = false;
 	return UPDATE_CONTINUE;
 }
 
 
 void ModulePlayer::RestartAll() {
-	App->scene_intro->CleanUp();
-	App->scene_intro->Start();
+	/*App->scene_intro->CleanUp();
+	App->scene_intro->Start();*/
+	restart = true;	
 	vehicle->SetPos(0, 0, -20);
 	vehicle->get_rigidbody()->setLinearVelocity({ 0,0,0 });
 	vehicle->get_rigidbody()->setAngularVelocity({ 0,0,0 });
 	vehicle->SetTransform(&initial_matrix);
 	//vehicle->Brake(1200);
 	App->scene_intro->playerTime.Stop();
-	
+	for (uint i = 0; i <7; i++) {
+		App->scene_intro->checkpoints[i] = false;
+	}
 
 }

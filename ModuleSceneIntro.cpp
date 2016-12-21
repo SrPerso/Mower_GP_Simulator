@@ -19,7 +19,7 @@ bool ModuleSceneIntro::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
-
+	App->player->restart = true;
 	//--- Audio
 	App->audio->Init();
 	App->audio->setMusicVolume(80);
@@ -162,7 +162,7 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
 	{
-		playerTime.Start();
+		
 		if (App->player->MowerON == true) {
 			App->player->MowerON = false;
 			fxTurnOff.play();
@@ -453,24 +453,72 @@ void ModuleSceneIntro::WorldUpdate() {
 //colision
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	for (uint i = 0; i < 7; i++) {
-		if (body1 == sensors_bodycube[i]) {		
-				playerTime.Start();
-				checkpoints[i] = true;			
-		}
-	}
-	
 
-	if (kicked == false) {
-		kicked = true;
-	}
-		
-	
-	
+	for (uint i = 0; i <= 5; i++) {
+		if(body1==sensors_body[i])
+		if (kicked == false) {
+			kicked = true;
+		}
+	}	
+
+	for (uint i = 0; i <= 7; i++) {
+		if (body1 == sensors_bodycube[i]) {
+			isCheckpoint == true;
+			CheckBehaviour(i);							
+		}
+	}	
 	
 	LOG("Hit!");
 }
 
+void ModuleSceneIntro::CheckBehaviour(int i) {
+	if (i == 0) {
+		if (checkpoints[i] == false) {
+			App->player->restart = false;
+			playerTime.Start();
+			checkpoints[i] = true;
+		}
+	}
+	else if (i == 1) {
+		if (checkpoints[i - 1] == true) {
+			checkpoints[i] = true;
+		}
+	}
+	else if (i == 2) {
+		if (checkpoints[i - 1] == true) {
+			checkpoints[i] = true;
+		}
+	}
+	else if (i == 3) {
+		if (checkpoints[i - 1] == true) {
+			checkpoints[i] = true;
+		}
+	}
+	else if (i == 4) {
+		if (checkpoints[i - 1] == true) {
+			checkpoints[i] = true;
+		}
+	}
+	else if (i == 5) {
+		if (checkpoints[i - 1] == true) {
+			checkpoints[i] = true;
+		}
+	}
+	else if (i == 6) {
+		if (checkpoints[i - 1] == true) {
+			checkpoints[i] = true;
+		}
+	}
+	else if (i == 7) {
+		if (checkpoints[i - 1] == true) {
+			if (App->player->lessScore > App->player->thistime) {
+				App->player->lessScore = App->player->thistime;
+			}
+			App->player->RestartAll();
+		}
+	}
+	
+}
 //=========================================================================================================
 //creators  =========================================================================================================
 //=========================================================================================================
@@ -510,10 +558,10 @@ void ModuleSceneIntro::CreateSensors() {
 	CreateSensor(7.5, 0.9f, 40, 0, vec3{ 0,1,0 }, 1,6,1,1);
 	CreateSensor(10, 0.9f, 67.5, 90, vec3{ 0,1,0 }, 1,7.2,1, 2);
 	CreateSensor(72, 0.9f, 32.5, 90, vec3{ 0,1,0 }, 1,6.5,1, 3);
-	CreateSensor(140, 0.9f, 77.8, 90, vec3{ 0,1,0 }, 1, 9, 1, 4);
+	CreateSensor(140, 0.9f, 77.8, 90, vec3{ 0,1,0 }, 1, 9, 9, 4);
 	CreateSensor(123.6, 0.9f, -50, 0, vec3{ 0,1,0 }, 1, 9, 1, 5);
 	CreateSensor(0, 0.9f, -56, 0, vec3{ 0,1,0 }, 1, 5, 1, 6);
-	CreateSensor(0, 0.9f, -56, 0, vec3{ 0,1,0 }, 1, 5, 1, 7);
+	CreateSensor(0, 0.9f, -10, 0, vec3{ 0,1,0 }, 1, 5, 1, 7);
 	
 }
 void ModuleSceneIntro::CreateCubeToBuldings(const float x, const float y, const float z, const float angle, const vec3 & rotationAxis, Color colorr , const float w, const float h , const float l)
@@ -935,6 +983,7 @@ void ModuleSceneIntro::CreateBale(const float x, const float y, const float z, c
 	heno->SetRotation(angle, rotationAxis);
 	heno->color = Yellow;	
 	bales.add(heno);
+	//&bales.getLast()->data->;
 
 	bales_body.add(App->physics->AddBody(*heno, 1500));
 

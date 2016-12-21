@@ -40,8 +40,8 @@ public:
 	//SENSORS
 	
 	
-	
-
+	bool isCheckpoint = true;
+	bool checkpoints[8];
 	bool kicked = false;
 private:
 	// --- Audio
@@ -119,7 +119,7 @@ private:
 
 	//sensor
 	PhysBody3D* sensors_bodycube[8];
-	bool checkpoints[8];
+	
 	bool in = false;
 	p2List<Cylinder*> sensors;
 	p2List<PhysBody3D*> sensors_body;
@@ -168,6 +168,8 @@ public:
 
 	void CreateObstacle(const float x, const float y, const float z, const float angle, const vec3& rotationAxis);
 	void CreateObstacles();
+
+	void CheckBehaviour(int i);
 };
 
 #endif // _SCENE_INTRO_

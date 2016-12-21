@@ -52,6 +52,7 @@ public :
 		size.y = s.y;	
 		size.z = s.z;
 	}
+	
 
 public:
 	vec3 size;

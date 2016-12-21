@@ -21,6 +21,11 @@ public:
 	bool CleanUp();
 	float inTime=0;
 	void RestartAll();
+	float thistime;
+	bool restart=false;
+	float lessScore=90;
+	bool losed = false;
+	bool win = false;
 	
 public:
 	bool MowerON = false;
