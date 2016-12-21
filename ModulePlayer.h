@@ -19,6 +19,8 @@ public:
 	bool Start();
 	update_status Update(float dt);
 	bool CleanUp();
+	float inTime=0;
+	void RestartAll();
 	
 public:
 	bool MowerON = false;
@@ -26,7 +28,7 @@ public:
 	float turn;
 	float acceleration;
 	float brake;
-
+	mat4x4 initial_matrix;
 
 	bool debugCameramode = true;
 

@@ -26,6 +26,8 @@ public:
 	void SetAsSensor(bool is_sensor);
 	bool IsSensor() const;
 
+	btRigidBody* get_rigidbody() const;
+
 private:
 	btRigidBody* body = nullptr;
 	vec3 vehicle_position;

@@ -20,6 +20,7 @@ bool ModulePlayer::Start()
 
 	VehicleInfo car;
 
+	
 	// Car properties ----------------------------------------
 	car.chassis_size.Set(1.0f,0.3f, 2.2f);
 	
@@ -63,7 +64,7 @@ bool ModulePlayer::Start()
 	car.wheels[0].width = wheel_width;
 	car.wheels[0].front = true;
 	car.wheels[0].drive = true;
-	car.wheels[0].brake = false;
+	car.wheels[0].brake = true;
 	car.wheels[0].steering = true;
 
 	// FRONT-RIGHT ------------------------
@@ -75,7 +76,7 @@ bool ModulePlayer::Start()
 	car.wheels[1].width = wheel_width;
 	car.wheels[1].front = true;
 	car.wheels[1].drive = true;
-	car.wheels[1].brake = false;
+	car.wheels[1].brake = true;
 	car.wheels[1].steering = true;
 
 	// REAR-LEFT ------------------------
@@ -104,6 +105,7 @@ bool ModulePlayer::Start()
 
 	vehicle = App->physics->AddVehicle(car);
 	vehicle->SetPos(0, 0, -20);
+	vehicle->GetTransform(&initial_matrix);
 	return true;
 }
 
@@ -120,8 +122,14 @@ update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
 
+	if (App->scene_intro->playerTime.Read() == 10.0f) {
+		vehicle->SetPos(0, 0, -20);
+		vehicle->Brake(1200);
+	}
+
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
+		vehicle->Brake(brake);
 		acceleration = MAX_ACCELERATION;
 	}
 
@@ -144,7 +152,7 @@ update_status ModulePlayer::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 	{
-		vehicle->SetPos(0, 0, -20);
+		RestartAll();		
 	}
 
 	if (vehicle->GetPos().x >= 200 || vehicle->GetPos().x <= -200 || vehicle->GetPos().z > 200 || vehicle->GetPos().z < -200) {
@@ -153,11 +161,11 @@ update_status ModulePlayer::Update(float dt)
 
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
-	vehicle->Brake(brake);
+	
 
 	vehicle->Render();
 
-	char title[80];
+	char title[1000];
 	float thistime = (float)App->scene_intro->playerTime.Read() / 1000;
 	sprintf_s(title, "%.1f Km/h, Time: %.2f", vehicle->GetKmh(), thistime);
 	App->window->SetTitle(title);
@@ -166,4 +174,15 @@ update_status ModulePlayer::Update(float dt)
 }
 
 
+void ModulePlayer::RestartAll() {
+	App->scene_intro->CleanUp();
+	App->scene_intro->Start();
+	vehicle->SetPos(0, 0, -20);
+	vehicle->get_rigidbody()->setLinearVelocity({ 0,0,0 });
+	vehicle->get_rigidbody()->setAngularVelocity({ 0,0,0 });
+	vehicle->SetTransform(&initial_matrix);
+	//vehicle->Brake(1200);
+	App->scene_intro->playerTime.Stop();
+	
 
+}

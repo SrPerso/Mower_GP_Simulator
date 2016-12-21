@@ -5,6 +5,7 @@
 #include "PhysBody3D.h"
 #include "Time.h"
 #include "ModulePhysics3D.h"
+#include "ModulePlayer.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -68,9 +69,10 @@ bool ModuleSceneIntro::Start()
 		App->camera->Move(vec3(130,70, -160));
 		App->camera->LookAt(vec3(90, 2.6f, -70));
 	}*/
-		/*for (uint i = 0; i <= 8; i++) {
+		//set checkpoints 
+		for (uint i = 0; i <7; i++) {
 			checkpoints[i] = false;
-		}*/
+		}
 	//bales
 	return ret;
 }
@@ -182,7 +184,6 @@ update_status ModuleSceneIntro::Update(float dt)
 }
 
 void ModuleSceneIntro::WorldUpdate() {
-
 
 	//-----------------------------
 	//--- invisible walls
@@ -452,7 +453,7 @@ void ModuleSceneIntro::WorldUpdate() {
 //colision
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	for (uint i = 0; i < 8; i++) {
+	for (uint i = 0; i < 7; i++) {
 		if (body1 == sensors_bodycube[i]) {		
 				playerTime.Start();
 				checkpoints[i] = true;			
@@ -510,7 +511,10 @@ void ModuleSceneIntro::CreateSensors() {
 	CreateSensor(10, 0.9f, 67.5, 90, vec3{ 0,1,0 }, 1,7.2,1, 2);
 	CreateSensor(72, 0.9f, 32.5, 90, vec3{ 0,1,0 }, 1,6.5,1, 3);
 	CreateSensor(140, 0.9f, 77.8, 90, vec3{ 0,1,0 }, 1, 9, 1, 4);
-	CreateSensor(124, 0.9f, -50, 0, vec3{ 0,1,0 }, 1, 9, 1, 5);
+	CreateSensor(123.6, 0.9f, -50, 0, vec3{ 0,1,0 }, 1, 9, 1, 5);
+	CreateSensor(0, 0.9f, -56, 0, vec3{ 0,1,0 }, 1, 5, 1, 6);
+	CreateSensor(0, 0.9f, -56, 0, vec3{ 0,1,0 }, 1, 5, 1, 7);
+	
 }
 void ModuleSceneIntro::CreateCubeToBuldings(const float x, const float y, const float z, const float angle, const vec3 & rotationAxis, Color colorr , const float w, const float h , const float l)
 {

@@ -26,6 +26,11 @@ void PhysBody3D::GetTransform(float* matrix) const
 	
 }
 
+btRigidBody* PhysBody3D::get_rigidbody() const
+{
+	return body;
+}
+
 // ---------------------------------------------------------
 btTransform* PhysBody3D::GetBTTransform() const
 {
