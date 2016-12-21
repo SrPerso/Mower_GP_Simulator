@@ -314,7 +314,43 @@ PhysVehicle3D* ModulePhysics3D::AddVehicle(const VehicleInfo& info)
 	trans.setIdentity();
 	trans.setOrigin(btVector3(info.chassis_offset.x, info.chassis_offset.y, info.chassis_offset.z));
 
+	//---------------------
+	btCollisionShape* colShape2 = new btBoxShape(btVector3(info.chassis_size.x*0.8f*0.5f, info.chassis_size.y *2.4f*0.5f, info.chassis_size.z*0.55f*0.5f));
+	shapes.add(colShape2);
+
+	btTransform trans2;
+	trans2.setIdentity();
+	trans2.setOrigin(btVector3(info.Motor_offset.x, info.Motor_offset.y, info.Motor_offset.z));
+	//---------------------
+
+	btCollisionShape* colShape3 = new btBoxShape(btVector3(info.chassis_size.x*0.9f*0.5f, info.chassis_size.y *3.0f*0.5f, info.chassis_size.z*0.1f*0.5f));
+	shapes.add(colShape3);
+
+	btTransform trans3;
+	trans3.setIdentity();
+	trans3.setOrigin(btVector3(info.Sit_offset.x, info.Sit_offset.y, info.Sit_offset.z));
+
+	//---------------------
+	btCollisionShape* colShape4 = new btBoxShape(btVector3(info.chassis_size.x*0.9f*0.5f, info.chassis_size.y *0.7f*0.5f, info.chassis_size.z*0.3f*0.5f));
+	shapes.add(colShape4);
+
+	btTransform trans4;
+	trans4.setIdentity();
+	trans4.setOrigin(btVector3(info.Sit2_offset.x, info.Sit2_offset.y, info.Sit2_offset.z));
+	//---------------------
+	btCollisionShape* colShape5 = new btBoxShape(btVector3(info.chassis_size.x*1.1f*0.5f, info.chassis_size.y *3.2f*0.5f, info.chassis_size.z*0.55f*0.5f));
+	shapes.add(colShape5);
+
+	btTransform trans5;
+	trans5.setIdentity();
+	trans5.setOrigin(btVector3(info.bin_offset.x, info.bin_offset.y, info.bin_offset.z));
+	
+	//----------------------------------------
 	comShape->addChildShape(trans, colShape);
+	comShape->addChildShape(trans2, colShape2);
+	comShape->addChildShape(trans3, colShape3);
+	comShape->addChildShape(trans4, colShape4);
+	comShape->addChildShape(trans5, colShape5);
 
 	btTransform startTransform;
 	startTransform.setIdentity();
