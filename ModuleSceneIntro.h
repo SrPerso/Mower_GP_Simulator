@@ -119,7 +119,11 @@ private:
 
 	//sensor
 	p2List<PhysBody3D*> sensors_body;
-	p2List<Cylinder> sensors;
+	p2List<Cylinder*> sensors;
+	p2List<PhysBody3D*> sensors_bodycube;
+	p2List<Cube*> sensorscube;
+
+	p2List<Cylinder*> obstacles;
 	
 
 
@@ -157,8 +161,11 @@ public:
 	void CreateInvisibleWall(const float x, const float y, const float z, const vec3 box, const float angle, const vec3 RotationAxis);
 	void CreateInvisibleWalls();
 
-	void CreateSensor( const float x, const float y, const float z, const float angle, const vec3& rotationAxis);
+	void CreateSensor( const float x, const float y, const float z, const float angle, const vec3& rotationAxis, int i);
 	void CreateSensors();
+
+	void CreateObstacle(const float x, const float y, const float z, const float angle, const vec3& rotationAxis);
+	void CreateObstacles();
 };
 
 #endif // _SCENE_INTRO_

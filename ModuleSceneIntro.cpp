@@ -55,6 +55,7 @@ bool ModuleSceneIntro::Start()
 	CreateGreenBales();
 	CreateBulding(60, 0, -69);
 	CreateSensors();
+	CreateObstacles();
 	
 	CreateBridge(115, 0 ,77.5f);
 
@@ -76,6 +77,18 @@ bool ModuleSceneIntro::Start()
 bool ModuleSceneIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
+	if (sensors.getFirst() != nullptr) {
+		for (int i = 0; i < sensors.count(); i++)
+			delete sensors[i];
+	}
+	if (obstacles.getFirst() != nullptr) {
+		for (int i = 0; i < obstacles.count(); i++)
+			delete obstacles[i];
+	}
+	if (greenbales.getFirst() != nullptr) {
+		for (int i = 0; i < greenbales.count(); i++)
+			delete greenbales[i];
+	}
 	if (bales.getFirst() != nullptr) {
 		for (int i = 0; i < bales.count(); i++)
 			delete bales[i];
@@ -361,7 +374,24 @@ void ModuleSceneIntro::WorldUpdate() {
 			iteratorRock_body = iteratorRock_body->next;
 		}
 	}
+	if (sensors.getFirst() != nullptr) {
 
+		p2List_item<Cylinder*>* iteratorSensor;
+		p2List_item<PhysBody3D*>* iteratorSensor_body;
+
+		iteratorSensor = sensors.getFirst();
+		iteratorSensor_body = sensors_body.getFirst();
+
+		while (iteratorSensor != nullptr) {
+
+			iteratorSensor_body->data->GetTransform(&(iteratorSensor->data->transform));
+			iteratorSensor->data->Render();
+
+			iteratorSensor = iteratorSensor->next;
+			iteratorSensor_body = iteratorSensor_body->next;
+		}
+	}
+	
 	//-----------------------------
 	//--- render Cows
 	//-----------------------------
@@ -420,9 +450,15 @@ void ModuleSceneIntro::WorldUpdate() {
 //colision
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	if (kicked == false) {
-		kicked = true;
+	if (body1 == sensors_bodycube.getFirst()->data) {
+		playerTime.Start();
 	}
+	else {
+		if (kicked == false) {
+			kicked = true;
+		}
+	}
+	
 	
 	LOG("Hit!");
 }
@@ -430,25 +466,39 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 //=========================================================================================================
 //creators  =========================================================================================================
 //=========================================================================================================
-void ModuleSceneIntro::CreateSensor( const float x, const float y, const float z, const float angle,const vec3& rotationAxis) {
-	Cylinder sensor;
-	sensor.radius = 1;
-	sensor.height = 1;
-	sensor.SetPos(x, y, z);
-	sensor.SetRotation(angle, rotationAxis);
-	sensors.add(sensor);
-	sensors_body.add(App->physics->AddBody(sensor, 0));
-	sensors_body.getFirst()->data->SetAsSensor(true);
-	sensors_body.getFirst()->data->collision_listeners.add(this);
+void ModuleSceneIntro::CreateSensor( const float x, const float y, const float z, const float angle,const vec3& rotationAxis, int i) {
+	if (i == 0) {
+		Cylinder* sensor = new Cylinder(1, 1);
+		sensor->SetPos(x, y, z);
+		sensor->SetRotation(angle, rotationAxis);
+		sensors.add(sensor);
+		sensors_body.add(App->physics->AddBody(*sensor, 0.0f));
+		sensors_body.getLast()->data->SetAsSensor(true);
+		sensors_body.getLast()->data->collision_listeners.add(this);
+	}
+	else if (i == 1) {
+		Cube* sensor = new Cube(7, 1,1);
+		sensor->SetPos(x, y, z);
+		sensor->SetRotation(angle, rotationAxis);
+		sensorscube.add(sensor);
+		sensors_bodycube.add(App->physics->AddBody(*sensor, 0));
+		sensors_bodycube.getLast()->data->SetAsSensor(true);
+		sensors_bodycube.getLast()->data->collision_listeners.add(this);
+	}
+	
 
 }
 void ModuleSceneIntro::CreateSensors() {
-	CreateSensor(121, 0.5f, 70, 90, vec3{ 0,0,1 });	
-	CreateSensor(125, 0.5f, 59.8, 90, vec3{ 0,0,1 });
-	CreateSensor(125.5, 0.5f, 19.5, 90, vec3{ 0,0,1 });
-	CreateSensor(131.5, 0.5f, 19.5, 90, vec3{ 0,0,1 });
-	CreateSensor(128.5, 0.5f, 10.5, 90, vec3{ 0,0,1 });
-	CreateSensor(125, 0.5f, -10.5f, 90, vec3{ 0,0,1 });
+	//Obstacles
+	CreateSensor(121, 0.0f, 70, 90, vec3{ 0,0,1},0);	
+	CreateSensor(124.9, 0.0f, 59.8, 90, vec3{ 0,0,1},0);
+	CreateSensor(125.4, 0.0f, 19.4, 90, vec3{ 0,0,1},0);
+	CreateSensor(131.4, 0.0f, 19.4, 90, vec3{ 0,0,1 },0);
+	CreateSensor(128.4, 0.0f, 10.4, 90, vec3{ 0,0,1 },0);
+	CreateSensor(124.9, 0.0f, -10.4, 90, vec3{ 0,0,1 },0);
+
+	//
+	CreateSensor(0, 0.9f, 2, 0, vec3{ 0,0,1 }, 1);
 }
 void ModuleSceneIntro::CreateCubeToBuldings(const float x, const float y, const float z, const float angle, const vec3 & rotationAxis, Color colorr , const float w, const float h , const float l)
 {
@@ -468,6 +518,24 @@ void ModuleSceneIntro::CreateCylinderToBuldings(const float x, const float y, co
 	BuldingsCy.add(cylinder);
 }
 
+void ModuleSceneIntro::CreateObstacle(const float x, const float y, const float z, const float angle, const vec3& rotationAxis)
+{
+	/*Cylinder* material = new Cylinder(1, 0.25f);
+	material->height = 0.25f;
+	material->radius = 1;
+	material->color = Black;
+	obstacles.add(material);*/
+
+	
+}
+void ModuleSceneIntro::CreateObstacles() {
+	/*CreateObstacle(121, 0.5, 70, 90, vec3{ 0,0,1 });
+	CreateObstacle(124.9, 0.5, 59.8, 90, vec3{ 0,0,1 });
+	CreateObstacle(125.4, 0.5, 19.4, 90, vec3{ 0,0,1 });
+	CreateObstacle(131.4, 0.5, 19.4, 90, vec3{ 0,0,1 });
+	CreateObstacle(128.4, 0.5, 10.4, 90, vec3{ 0,0,1 });
+	CreateObstacle(124.9, 0.5, -10.4, 90, vec3{ 0,0,1 });*/
+}
 void ModuleSceneIntro::CreateBulding(float x, float y, float z)
 {
 
@@ -1165,12 +1233,12 @@ void ModuleSceneIntro::CreateRocks() {
 		j -= 1.5;
 	}
 	//OBSTACLES
-	CreateRock(121, 0.5f, 70, 90, vec3{ 0,0,1 });
+	/*CreateRock(121, 0.5f, 70, 90, vec3{ 0,0,1 });
 	CreateRock(125, 0.5f,60 , 90, vec3{ 0,0,1 });
 	CreateRock(125.5, 0.5f, 19.5, 90, vec3{ 0,0,1 });
 	CreateRock(131.5, 0.5f, 19.5, 90, vec3{ 0,0,1 });
 	CreateRock(128.5, 0.5f, 10.5, 90, vec3{ 0,0,1 });
-	CreateRock(125, 0.5f, -10.5f, 90, vec3{ 0,0,1 });
+	CreateRock(125, 0.5f, -10.5f, 90, vec3{ 0,0,1 });*/
 	
 	//CURVE
 	CreateRock(119, 0.5f, 48.5, 90, vec3{ 0,0,1 });
