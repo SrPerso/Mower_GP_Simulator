@@ -33,12 +33,14 @@ bool ModuleSceneIntro::Start()
 
 	//--- Audio
 	//SENSORS
-	s.size = vec3(5, 3, 1);
+
+	/*s.height = 1;
+	s.radius = 1;
 	s.SetPos(0, 0, 20);
 
 	sensor = App->physics->AddBody(s, 0.0f);
 	sensor->SetAsSensor(true);
-	sensor->collision_listeners.add(this);
+	sensor->collision_listeners.add(this);*/
 
 	srand(time(NULL));
 
@@ -52,6 +54,7 @@ bool ModuleSceneIntro::Start()
 	CreateInvisibleWalls();
 	CreateGreenBales();
 	CreateBulding(60, 0, -69);
+	CreateSensors();
 	
 	CreateBridge(115, 0 ,77.5f);
 
@@ -138,8 +141,7 @@ update_status ModuleSceneIntro::Update(float dt)
 {
 	WorldUpdate();
 
-	sensor->GetTransform(&s.transform);
-	s.Render();
+	
 
 	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
 	{
@@ -418,13 +420,36 @@ void ModuleSceneIntro::WorldUpdate() {
 //colision
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
+	if (kicked == false) {
+		kicked = true;
+	}
+	
 	LOG("Hit!");
 }
 
 //=========================================================================================================
 //creators  =========================================================================================================
 //=========================================================================================================
+void ModuleSceneIntro::CreateSensor( const float x, const float y, const float z, const float angle,const vec3& rotationAxis) {
+	Cylinder sensor;
+	sensor.radius = 1;
+	sensor.height = 1;
+	sensor.SetPos(x, y, z);
+	sensor.SetRotation(angle, rotationAxis);
+	sensors.add(sensor);
+	sensors_body.add(App->physics->AddBody(sensor, 0));
+	sensors_body.getFirst()->data->SetAsSensor(true);
+	sensors_body.getFirst()->data->collision_listeners.add(this);
 
+}
+void ModuleSceneIntro::CreateSensors() {
+	CreateSensor(121, 0.5f, 70, 90, vec3{ 0,0,1 });	
+	CreateSensor(125, 0.5f, 59.8, 90, vec3{ 0,0,1 });
+	CreateSensor(125.5, 0.5f, 19.5, 90, vec3{ 0,0,1 });
+	CreateSensor(131.5, 0.5f, 19.5, 90, vec3{ 0,0,1 });
+	CreateSensor(128.5, 0.5f, 10.5, 90, vec3{ 0,0,1 });
+	CreateSensor(125, 0.5f, -10.5f, 90, vec3{ 0,0,1 });
+}
 void ModuleSceneIntro::CreateCubeToBuldings(const float x, const float y, const float z, const float angle, const vec3 & rotationAxis, Color colorr , const float w, const float h , const float l)
 {
 	Cube* cube = new Cube(w, h, l);

@@ -38,8 +38,11 @@ public:
 	Timer playerTime;
 
 	//SENSORS
-	Cube s;
-	PhysBody3D* sensor;
+	
+	
+	
+
+	bool kicked = false;
 private:
 	// --- Audio
 	AudioMusic BSO;
@@ -114,8 +117,10 @@ private:
 	noCube* invDoor;
 	PhysBody3D* invDoor_body;
 
-
-	bool kicked = true;
+	//sensor
+	p2List<PhysBody3D*> sensors_body;
+	p2List<Cylinder> sensors;
+	
 
 
 	//pb_snake[i]->GetTransform(&(s_snake[i].transform));
@@ -152,7 +157,8 @@ public:
 	void CreateInvisibleWall(const float x, const float y, const float z, const vec3 box, const float angle, const vec3 RotationAxis);
 	void CreateInvisibleWalls();
 
-
+	void CreateSensor( const float x, const float y, const float z, const float angle, const vec3& rotationAxis);
+	void CreateSensors();
 };
 
 #endif // _SCENE_INTRO_
