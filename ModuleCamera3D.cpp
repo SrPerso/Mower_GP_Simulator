@@ -49,31 +49,17 @@ bool ModuleCamera3D::CleanUp()
 // -----------------------------------------------------------------
 update_status ModuleCamera3D::Update(float dt)
 {
-	// Implement a debug camera with keys and mouse
-	// Now we can make this movememnt frame rate independant!
 
 	vec3 newPos(0,0,0);
 
 
 
-//	if (App->player->debugCameramode == true) {
 		float speed = 3.0f * dt;
-		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-			speed = 8.0f * dt;
 
-		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
-		if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed;
-
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
-		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
-
-
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
 
 		Position += newPos;
 		Reference += newPos;
-	//}
+
 	// Mouse motion ----------------
 
 
@@ -82,10 +68,7 @@ update_status ModuleCamera3D::Update(float dt)
 		int dx = 0;
 		int dy = 0;
 		
-	//	if (App->player->debugCameramode == true) {
-			 dx = -App->input->GetMouseXMotion();
-			 dy = -App->input->GetMouseYMotion();
-		//}
+
 		float Sensitivity = 0.25f;
 
 		Position -= Reference;
@@ -121,12 +104,12 @@ update_status ModuleCamera3D::Update(float dt)
 		mat4x4 vehicle_trans;
 		Target->GetTransform(&vehicle_trans);
 
-		//Vehicle Axis
+	
 		X = vec3(vehicle_trans[0], vehicle_trans[1], vehicle_trans[2]);
 		Y = vec3(vehicle_trans[4], vehicle_trans[5], vehicle_trans[6]);
 		Z = vec3(vehicle_trans[8], vehicle_trans[9], vehicle_trans[10]);
 
-		//Vehicle pos and camera look to it
+	
 		VehiclePos = vehicle_trans.translation();
 		App->camera->Look((VehiclePos + CameraPos) - Z * 10, ViewDirection + VehiclePos, true);
 

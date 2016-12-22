@@ -48,6 +48,7 @@ bool ModulePhysics3D::Init()
 // ---------------------------------------------------------
 bool ModulePhysics3D::Start()
 {
+	debug = !debug;
 	LOG("Creating Physics environment");
 
 	world = new btDiscreteDynamicsWorld(dispatcher, broad_phase, solver, collision_conf);
@@ -127,13 +128,7 @@ update_status ModulePhysics3D::Update(float dt)
 			item = item->next;
 		}
 
-		/*if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-		{
-			Sphere s(1);
-			s.SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
-			float force = 30.0f;
-			AddBody(s)->Push(-(App->camera->Z.x * force), -(App->camera->Z.y * force), -(App->camera->Z.z * force));
-		}*/
+	
 	}
 
 	return UPDATE_CONTINUE;
@@ -150,7 +145,7 @@ bool ModulePhysics3D::CleanUp()
 {
 	LOG("Destroying 3D Physics simulation");
 
-	// Remove from the world all collision bodies
+
 	for(int i = world->getNumCollisionObjects() - 1; i >= 0; i--)
 	{
 		btCollisionObject* obj= world->getCollisionObjectArray()[i];

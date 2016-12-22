@@ -56,7 +56,7 @@ public:
 	AudioFX fxbaleImpact;
 	AudioMusic fxMiddle;
 	// --- Audio
-
+	PhysBody3D* invDoor_body;
 private:
 	
 
@@ -81,8 +81,6 @@ private:
 	p2List<PhysBody3D*> greenbales_body;
 	p2List<Cube*> greenbales;
 
-	p2List<PhysBody3D*> rocks_body;
-	p2List<Cylinder*> rocks;
 
 	p2List<PhysBody3D*> trees_top_body;
 	p2List<TreeTop*> trees_top;
@@ -112,7 +110,6 @@ private:
 	Cylinder* silo1;
 	Cylinder* silo2;
 
-
 	p2List<Cylinder*> BuldingsCy;
 
 	p2List<Cube*> Doors;
@@ -121,7 +118,7 @@ private:
 	Cube* redFence1;
 	Cube* redFence2;
 	noCube* invDoor;
-	PhysBody3D* invDoor_body;
+
 
 	//sensor
 	PhysBody3D* sensors_bodycube[8];
@@ -135,7 +132,6 @@ private:
 	
 
 
-	//pb_snake[i]->GetTransform(&(s_snake[i].transform));
 public:
 
 	void CreateCylinderToBuldings(const float x, const float y, const  float z, const  float angle, const vec3&, Color colorr, const float r, const float h);
@@ -153,9 +149,6 @@ public:
 
 	void CreateGreenBale(const float x, const float y, const float z, const float angle, const vec3& rotationAxis, float sizeX, float sizeY, float sizeZ);
 	void CreateGreenBales();
-
-	void CreateRock(const float x, const float y, const float z, const float angle, const vec3& rotationAxis);
-	void CreateRocks();
 	
 	void CreateTree(const float x, const float y, const float z, const float tall, const float radious);
 	void CreateTrees();
@@ -171,9 +164,6 @@ public:
 
 	void CreateSensor( const float x, const float y, const float z, const float angle, const vec3& rotationAxis, const int i, const float sizeX=1, const float sizeY = 1, const int pos = 0);
 	void CreateSensors();
-
-	void CreateObstacle(const float x, const float y, const float z, const float angle, const vec3& rotationAxis);
-	void CreateObstacles();
 
 	void CheckBehaviour(int i);
 	void CreateExtras();

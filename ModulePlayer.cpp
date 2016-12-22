@@ -197,20 +197,19 @@ update_status ModulePlayer::Update(float dt)
 	sprintf_s(title, "%.1f Km/h, Time: %.2f, Less Time: %.2f ,MaxTime %0.2f", vehicle->GetKmh(), thistime, lessScore,MaxTime);
 	App->window->SetTitle(title);
 	losed = false;
-	//restart = false;
+
 	return UPDATE_CONTINUE;
 }
 
 
 void ModulePlayer::RestartAll() {
-	/*App->scene_intro->CleanUp();
-	App->scene_intro->Start();*/
+
 	restart = true;	
 	vehicle->SetPos(0, 0, -20);
 	vehicle->get_rigidbody()->setLinearVelocity({ 0,0,0 });
 	vehicle->get_rigidbody()->setAngularVelocity({ 0,0,0 });
 	vehicle->SetTransform(&initial_matrix);
-	//vehicle->Brake(1200);
+
 	App->scene_intro->playerTime.Stop();
 	for (uint i = 0; i <7; i++) {
 		App->scene_intro->checkpoints[i] = false;
@@ -218,5 +217,5 @@ void ModulePlayer::RestartAll() {
 	App->scene_intro->kicked = false;
 	App->scene_intro->fxTurnOn.play();
 	App->scene_intro->fxMiddle.play(0);
-	
+	App->scene_intro->invDoor_body->SetPos(60 + 0.25f, 4 + 0, -69);
 }

@@ -23,7 +23,7 @@ bool ModuleSceneIntro::Start()
 	//--- Audio
 	App->audio->Init();
 	App->audio->setMusicVolume(80);
-
+	
 	fxWoodImpact = App->audio->LoadAudioFX("Sounds/FX/wood_impact_fx.wav");
 	fxbaleImpact = App->audio->LoadAudioFX("Sounds/FX/bale_impact_fx.wav");
 	fxTurnOff = App->audio->LoadAudioFX("Sounds/FX/TurnOff_Tractor_Sound.wav");
@@ -31,44 +31,30 @@ bool ModuleSceneIntro::Start()
 	fxMiddle = App->audio->LoadAudioMusic("Sounds/BSO/Game_Music1.ogg");	
 	BSO = App->audio->LoadAudioMusic("Sounds/BSO/Intro_Music.ogg");
 	BSO.play();
-
 	//--- Audio
-	//SENSORS
 
-	/*s.height = 1;
-	s.radius = 1;
-	s.SetPos(0, 0, 20);
 
-	sensor = App->physics->AddBody(s, 0.0f);
-	sensor->SetAsSensor(true);
-	sensor->collision_listeners.add(this);*/
 
 	srand(time(NULL));
-
+	//--- Creators
 	CreateBales();
 	CreateTrees();
 	CreateFences();
 	CreatePlanes();
 	CreateFarm();
 	CreateCows();
-	CreateRocks();
 	CreateInvisibleWalls();
 	CreateGreenBales();
 	CreateBulding(60, 0, -69);
 	CreateSensors();
-	CreateObstacles();
 	CreateExtras();
 	CreateBridge(115, 0 ,77.5f);
 
-	//if (App->player->debugCameramode == true) {
-		App->camera->Move(vec3(0, +0, 0.0));
-		App->camera->LookAt(vec3(120, 1.5f, 60));
+
+		App->camera->Move(vec3(180, 30, 120));
+		App->camera->LookAt(vec3(0, 0, -60));
 	
-//	}
-	/*else if(App->player->debugCameramode==false){
-		App->camera->Move(vec3(130,70, -160));
-		App->camera->LookAt(vec3(90, 2.6f, -70));
-	}*/
+
 		//set checkpoints 
 		for (uint i = 0; i <7; i++) {
 			checkpoints[i] = false;
@@ -133,10 +119,7 @@ bool ModuleSceneIntro::CleanUp()
 			delete Cow_legs[i];
 	}
 
-	if (rocks.getFirst() != nullptr) {
-		for (int i = 0; i < rocks.count(); i++)
-			delete rocks[i];
-	}
+
 
 	if (BuldingsCy.getFirst() != nullptr) {
 		for (int i = 0; i < BuldingsCy.count(); i++)
@@ -147,8 +130,8 @@ bool ModuleSceneIntro::CleanUp()
 			delete Doors[i];
 	}
 
-	//delete silo1;
-	//delete silo2;
+	delete silo1;
+	delete silo2;
 
 	return true;
 }
@@ -207,9 +190,9 @@ void ModuleSceneIntro::WorldUpdate() {
 	}
 	//--------------------
 
-//	silo2->Render();
+	silo2->Render();
 
-	//silo1->Render();
+	silo1->Render();
 
 
 
@@ -295,15 +278,10 @@ void ModuleSceneIntro::WorldUpdate() {
 	if (trees_top.getFirst() != nullptr|| trees_trunk.getFirst() != nullptr) {
 
 		p2List_item<TreeTop*>* iteratorTop;
-		//p2List_item<PhysBody3D*>*iteratorTop_body;
-
 		p2List_item<Cylinder*>* iteratorTrunk;
 		p2List_item<PhysBody3D*>*iteratorTrunk_body;
-
-
+		
 		iteratorTop = trees_top.getFirst();
-		//iteratorTop_body = trees_top_body.getFirst();
-
 		iteratorTrunk = trees_trunk.getFirst();
 		iteratorTrunk_body = trees_trunk_body.getFirst();
 
@@ -315,7 +293,6 @@ void ModuleSceneIntro::WorldUpdate() {
 			iteratorTrunk->data->Render();
 
 			iteratorTop = iteratorTop->next;
-			//iteratorTop_body = iteratorTop_body->next;
 			iteratorTrunk = iteratorTrunk->next;
 			iteratorTrunk_body = iteratorTrunk_body->next;
 		}
@@ -360,23 +337,7 @@ void ModuleSceneIntro::WorldUpdate() {
 	//-----------------------------
 	//--- render ROCKS
 	//-----------------------------
-	if (rocks.getFirst() != nullptr) {
 
-		p2List_item<Cylinder*>* iteratorRock;
-		p2List_item<PhysBody3D*>* iteratorRock_body;
-
-		iteratorRock = rocks.getFirst();
-		iteratorRock_body = rocks_body.getFirst();
-
-		while (iteratorRock != nullptr) {
-
-			iteratorRock_body->data->GetTransform(&(iteratorRock->data->transform));
-			iteratorRock->data->Render();
-
-			iteratorRock = iteratorRock->next;
-			iteratorRock_body = iteratorRock_body->next;
-		}
-	}
 	if (sensors.getFirst() != nullptr) {
 
 		p2List_item<Cylinder*>* iteratorSensor;
@@ -586,12 +547,6 @@ void ModuleSceneIntro::CreateCylinderToBuldings(const float x, const float y, co
 	cylinder->color = colorr;
 	BuldingsCy.add(cylinder);
 }
-void ModuleSceneIntro::CreateObstacle(const float x, const float y, const float z, const float angle, const vec3& rotationAxis)
-{
-}
-void ModuleSceneIntro::CreateObstacles() {
-	
-}
 void ModuleSceneIntro::CreateBulding(float x, float y, float z)
 {
 
@@ -664,8 +619,7 @@ void ModuleSceneIntro::CreateBulding(float x, float y, float z)
 		CreateCubeToBuldings(x - 2.5*i, y + 8 + 2, z, 0, vec3(PUTVERTICALzy), Brown6, 1, 1, 25); //window
 	}
 	CreateCubeToBuldings(x - (BUIDINGWIDTH *0.5f), y + 9.2 + 2, z, 0, vec3(PUTVERTICALzy), White, 20, 0.25f, 25); //window
-
-
+	
 																												  //windows
 
 																												  //delante parte izquierda
@@ -880,7 +834,7 @@ void ModuleSceneIntro::CreateBulding(float x, float y, float z)
 	CreateCubeToBuldings(x + 0.15f, y + 8.5 + 4.0f, z, 90, vec3(PUTHORIZONALxz), Brown6, 3, 5.5, 0.25); //window
 
 
-																										//-----------------DOORs----------------
+	//-----------------DOORs----------------
 
 																										//door1
 	Cube* door1 = new Cube(0.25f, 7.75f, 4.5F);
@@ -1001,21 +955,7 @@ void ModuleSceneIntro::CreateBulding(float x, float y, float z)
 	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 19, z - 12.25, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
 	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 19, z - 7.75, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	//RIVER
 	CreateCubeToBuldings(124.5, 0.5f, 90, 30, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
 	CreateCubeToBuldings(120.8, 0.5f, 80.5, 10, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
 	CreateCubeToBuldings(121, 0.5f, 70.5, -15, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
@@ -1033,7 +973,7 @@ void ModuleSceneIntro::CreateBulding(float x, float y, float z)
 	CreateCubeToBuldings(100.5, 0.5f, -2.5, 0, vec3{ 0, 1, 0 }, grey, 1, 1, 16);
 	CreateCubeToBuldings(106, 0.5f, -17.3, -40, vec3{ 0, 1, 0 }, grey, 1, 1, 17);
 	CreateCubeToBuldings(121, 0.5f, -25, -80, vec3{ 0, 1, 0 }, grey, 1, 1, 20);
-		//inter/exter
+		
 	CreateCubeToBuldings(135.8, 0.5f, 68.5, -40, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
 	CreateCubeToBuldings(143.5, 0.5f, 62.2, -60, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
 	CreateCubeToBuldings(152.7, 0.5f, 58, -70, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
@@ -1045,7 +985,7 @@ void ModuleSceneIntro::CreateBulding(float x, float y, float z)
 	CreateCubeToBuldings(129.5, 0.5f, 16, 60, vec3{ 0, 1, 0 }, grey, 1, 1, 25);
 	CreateCubeToBuldings(115.5, 0.5f, 6, 40, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
 	CreateCubeToBuldings(112.5, 0.5f, -3, 0, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
-		//
+
 	CreateCubeToBuldings(115.5, 0.5f, -12, -40, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
 	CreateCubeToBuldings(126.5, 0.5f, -17, -80, vec3{ 0, 1, 0 }, grey, 1, 1, 15);
 
@@ -1059,8 +999,6 @@ void ModuleSceneIntro::CreateBulding(float x, float y, float z)
 		//before ramp
 	CreateCylinderToBuldings(139, 1, -28.3, 13, vec3{ 0,1,0 }, Brown2, 0.6, 16);
 	CreateInvisibleWall(139, 1, -28.3f, vec3{ 1.2f ,1.2f ,16 }, 102, vec3(0, 1, 0));
-	
-
 
 		//river
 	CreateCylinderToBuldings(142, 1, 27, 60, vec3{ 0,1,0 }, Brown2, 0.5, 5);
@@ -1075,7 +1013,6 @@ void ModuleSceneIntro::CreateBulding(float x, float y, float z)
 	CreateInvisibleWall(125, 1, 18, vec3{ 1 ,1 ,5 }, -30, vec3(0, 1, 0));
 	CreateInvisibleWall(108.5, 1, -2, vec3{ 1 ,1 ,5 }, 90, vec3(0, 1, 0));
 	CreateInvisibleWall(108.5, 1, -15, vec3{ 1 ,1 ,5 }, 52, vec3(0, 1, 0));
-	
 	
 		//RIVER
 	CreateInvisibleWall(124.5, 0.5f, 90, vec3{ 1 ,1 ,10 }, 30, vec3(0, 1, 0));
@@ -1094,8 +1031,7 @@ void ModuleSceneIntro::CreateBulding(float x, float y, float z)
 	CreateInvisibleWall(100.5, 0.5f, -2.5, vec3{ 1 ,1 ,16 }, 0, vec3(0, 1, 0));
 	CreateInvisibleWall(106, 0.5f, -17.3, vec3{ 1 ,1 ,17 }, -40, vec3(0, 1, 0));
 	CreateInvisibleWall(121, 0.5f, -25, vec3{ 1 ,1 ,20 }, -80, vec3(0, 1, 0));
-	
-	
+		
 	
 	CreateInvisibleWall(135.8, 0.5f, 68.5, vec3{ 1 ,1 ,10 }, -40, vec3(0, 1, 0));
 	CreateInvisibleWall(143.5, 0.5f, 62.2, vec3{ 1 ,1 ,10 }, -60, vec3(0, 1, 0));
@@ -1139,7 +1075,7 @@ void ModuleSceneIntro::CreateFarm()
 	CreateCubeToBuldings(-8.3, 10.8, 0, +60, vec3(0, 0, 1), grey, 3, 0.25f, 20); //roof5
 	CreateCubeToBuldings(+8.3, 10.8, 0, -60, vec3(0, 0, 1), grey, 3, 0.25f, 20); //roof6
 
-																				 //---------------- w1
+							 //---------------- w1
 
 	CreateCubeToBuldings(+8.3, 5, -8.5, 90, vec3(0, 0, 1), White, 11, 0.25f, 0.5); //wall1
 
@@ -1325,7 +1261,7 @@ void ModuleSceneIntro::CreateFence(float distance, float tall, vec3 Position, ve
 	do {
 		Cylinder* Poste = new Cylinder(0.15f, 1.2f*tall);
 		Poste->SetRotation(90, vec3(0, 0, 1));
-		//Poste->SetRotation(angle, rotationvec);
+		
 		Poste->SetPos(Position.x + (Postes_distance*i - distance / 2)*magicX, Position.y, Position.z + (Postes_distance*i - distance / 2)*magicZ);
 		Poste->color = Brown;
 
@@ -1380,7 +1316,6 @@ void ModuleSceneIntro::CreateBale(const float x, const float y, const float z, c
 	heno->SetRotation(angle, rotationAxis);
 	heno->color = Yellow;
 	bales.add(heno);
-	//&bales.getLast()->data->;
 
 	bales_body.add(App->physics->AddBody(*heno, 1500));
 }
@@ -1491,9 +1426,8 @@ void ModuleSceneIntro::CreateBales()
 	CreateBale(14.5, 0.5f, 49.5, 140, vec3{ 0,1,0 });
 	CreateBale(16, 0.5f, 47, 160, vec3{ 0,1,0 });
 
-	//marc
-	//12
-
+	
+	
 	//13 L
 	//CURVE1
 	CreateBale(75, 0.5f, 29, 90, vec3{ 0,1,0 });
@@ -1510,21 +1444,21 @@ void ModuleSceneIntro::CreateBales()
 	CreateBale(84, 0.5f, 69.5, 40, vec3{ 0,1,0 });
 	CreateBale(86.5, 0.5f, 71.5, 60, vec3{ 0,1,0 });
 	CreateBale(89.5, 0.5f, 72.5, 90, vec3{ 0,1,0 });
-	//INTERIOR
+
 	CreateBale(74, 0.5f, 79.5, 50, vec3{ 0,1,0 });
 	CreateBale(76.5, 0.5f, 81.5, 70, vec3{ 0,1,0 });
 	CreateBale(79.5, 0.5f, 82.5, 80, vec3{ 0,1,0 });
 	CreateBale(82.5, 0.5f, 83, 90, vec3{ 0,1,0 });
 
 	//CURV3
-	//CreateBale(158, 0.5f, 73, 70, vec3{ 0,1,0 });
+
 	CreateBale(160.5, 0.5f, 74.5, 50, vec3{ 0,1,0 });
 	CreateBale(162, 0.5f, 77, 20, vec3{ 0,1,0 });
 	CreateBale(163, 0.5f, 80, 15, vec3{ 0,1,0 });
 	CreateBale(163.5, 0.5f, 83, 10, vec3{ 0,1,0 });
 	CreateBale(164, 0.5f, 86, 5, vec3{ 0,1,0 });
 	CreateBale(164, 0.5f, 89, 0, vec3{ 0,1,0 });
-	//INTERIOR
+
 	CreateBale(150, 0.5f, 84, 20, vec3{ 0,1,0 });
 	CreateBale(150, 0.5f, 87, -10, vec3{ 0,1,0 });
 	CreateBale(148, 0.5f, 89, -70, vec3{ 0,1,0 });
@@ -1553,26 +1487,6 @@ void ModuleSceneIntro::CreateBales()
 	CreateBale(128, 0.5f, 96, -140, vec3{ 0,1,0 });
 
 
-
-	////CURV6 INTERIOR
-	//CreateBale(108, 0.5f, -59, 90, vec3{ 0,1,0 });//3
-	//CreateBale(111, 0.5f, -58.5, 80, vec3{ 0,1,0 });//3
-	//CreateBale(114, 0.5f, -57, 60, vec3{ 0,1,0 });//1.5
-	//CreateBale(116.5, 0.5f, -54.5, 30, vec3{ 0,1,0 });//1.5
-	//CreateBale(118, 0.5f, -51.5, 10, vec3{ 0,1,0 });//5.5 
-
-	////EXTERIOR	
-	//CreateBale(126.5, 0.5f, -72, 30, vec3{ 0,1,0 });
-	//CreateBale(125, 0.5f, -74, 40, vec3{ 0,1,0 });
-	//CreateBale(123, 0.5f, -75.5, 60, vec3{ 0,1,0 });//1.5
-	//CreateBale(120.5, 0.5f, -76.5, 70, vec3{ 0,1,0 });//1.5
-	//CreateBale(118, 0.5f, -77, 80, vec3{ 0,1,0 });//1.5
-	//CreateBale(115.5, 0.5f, -77.5, 90, vec3{ 0,1,0 });//1.5
-	//CreateBale(112.5, 0.5f, -77.5, 90, vec3{ 0,1,0 });//1.5
-	//CreateBale(110, 0.5f, -77.5, 90, vec3{ 0,1,0 });//1.5
-
-	//last rect interior
-
 	for (int j = -12.5; j >-60; j--) {
 		CreateBale(3.5, 0.5f, j, 0, vec3{ 1,0,0 });
 		j -= 2;
@@ -1598,7 +1512,7 @@ void ModuleSceneIntro::CreateBales()
 		CreateBale(j, 0.5f, -63.2, 90, vec3{ 0,1,0 });
 		j += 2;
 	}
-	//Ramp Jump //Interior
+	// Jump 
 	for (int j = -47; j <-30; j++) {
 		CreateBale(148, 0.5f, j, 0, vec3{ 0,1,0 });
 		j += 2;
@@ -1610,7 +1524,7 @@ void ModuleSceneIntro::CreateBales()
 		j += 2;
 	}
 
-	//CreateBale(159.5, 0.5f, -27, -5, vec3{ 0,1,0 });
+
 	CreateBale(159, 0.5f, -23.5, -20, vec3{ 0,1,0 });//+3
 	CreateBale(157.5, 0.5f, -21, -40, vec3{ 0,1,0 });//+2.5
 	CreateBale(155.5, 0.5f, -19, -50, vec3{ 0,1,0 });//+2
@@ -1647,7 +1561,7 @@ void ModuleSceneIntro::CreateGreenBales() {
 
 
 	CreateGreenBale(34, 0.5f, -35.5, 45, vec3{ 0,1,0 }, 1, 1.5f, 30);
-	//CreateGreenBale(33, 0.5f, -40, 45, vec3{ 0,1,0 }, 1, 1.5f, 12);
+
 	CreateGreenBale(23, 0.5f, -54.5, 0, vec3{ 0,1,0 }, 1, 1.5f, 17);
 
 
@@ -1661,119 +1575,7 @@ void ModuleSceneIntro::CreateGreenBales() {
 
 
 }
-//================
-void ModuleSceneIntro::CreateRock(const float x, const float y, const float z, const float angle, const vec3& rotationAxis)
-{
-	Cylinder* material = new Cylinder(1, 1);
 
-	material->SetPos(x, y, z);
-	material->SetRotation(angle, rotationAxis);
-	material->color = grey;
-	rocks.add(material);
-
-	rocks_body.add(App->physics->AddBody(*material, 10000));
-}
-void ModuleSceneIntro::CreateRocks() {
-	//
-	//	CreateRock(126, 0.5f, 93.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(124, 0.5f, 90.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(122.5, 0.5f, 88.5,90, vec3{ 0,0,1 });
-	//	CreateRock(121.5, 0.5f, 86,90, vec3{ 0,0,1 });
-	//	CreateRock(120.5, 0.5f, 83.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(119.5, 0.5f, 81, 90, vec3{ 0,0,1 });
-	//	CreateRock(119, 0.5f, 78.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(118.5, 0.5f, 76, 90, vec3{ 0,0,1 });
-	//
-	//	//RECT5
-	//	for (float j = 73.5; j > 50; j--) {
-	//		CreateRock(118.5, 0.5f, j, 90, vec3{ 0,0,1 });
-	//		j -= 1.5;
-	//	}
-
-	//	//OBSTACLES
-	//	/*CreateRock(121, 0.5f, 70, 90, vec3{ 0,0,1 });
-	//	CreateRock(125, 0.5f,60 , 90, vec3{ 0,0,1 });
-	//	CreateRock(125.5, 0.5f, 19.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(131.5, 0.5f, 19.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(128.5, 0.5f, 10.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(125, 0.5f, -10.5f, 90, vec3{ 0,0,1 });*/
-	//	
-	//	//CURVE
-	//	CreateRock(119, 0.5f, 48.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(119.5, 0.5f, 46, 90, vec3{ 0,0,1 });
-	//	CreateRock(120.5, 0.5f, 44, 90, vec3{ 0,0,1 });
-	//	CreateRock(121.5, 0.5f, 42, 90, vec3{ 0,0,1 });
-	//	CreateRock(122.5, 0.5f, 40, 90, vec3{ 0,0,1 });
-	//	CreateRock(123.5, 0.5f, 38, 90, vec3{ 0,0,1 });
-	//	CreateRock(123.5, 0.5f, 36, 90, vec3{ 0,0,1 });
-	//	//RECT2
-	//	for (float j = 72; j >50; j--) {
-	//	CreateRock(130, 0.5f, j, 90, vec3{ 0,0,1 });
-	//	j -= 1.5;
-	//}
-	//
-	//	//RECTA INTERIOR
-	//	for (float j = 34; j >20; j--) {
-	//		CreateRock(123, 0.5f, j, 90, vec3{ 0,0,1 });
-	//		j -= 1.5;
-	//	}
-	//	//CURVE INTERN
-	//	CreateRock(130, 0.5f, 50, 90, vec3{ 0,0,1 });
-	//	CreateRock(131, 0.5f, 47.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(132, 0.5f, 45.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(133, 0.5f, 43.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(134, 0.5f, 41, 90, vec3{ 0,0,1 });
-	//	CreateRock(135, 0.5f, 39, 90, vec3{ 0,0,1 });
-	//	CreateRock(135, 0.5f, 36, 90, vec3{ 0,0,1 });
-	//	//RECT2 INT
-	//	for (float j = 34; j >20; j--) {
-	//		CreateRock(135, 0.5f, j, 90, vec3{ 0,0,1 });
-	//		j -= 1.5;
-	//	}
-	//
-	//	//CURVE
-	//	CreateRock(134.5, 0.5f, 19.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(134, 0.5f, 17.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(133.5, 0.5f, 15.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(133, 0.5f, 13.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(132.5, 0.5f, 11.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(132, 0.5f, 9.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(131.5, 0.5f, 7.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(131, 0.5f, 5.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(130.5, 0.5f, 3.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(130, 0.5f, 1.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(130, 0.5f, -0.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(130, 0.5f, -2.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(130, 0.5f, -4.5, 90, vec3{ 0,0,1 });
-	//
-	//	for (int i = -6.5; i > -40; i--) {
-	//		CreateRock(130, 0.5f, i, 90, vec3{ 0,0,1 });
-	//		i -= 1.5;
-	//	}
-	//
-	//	CreateRock(130.5, 0.5f, -40, 90, vec3{ 0,0,1 });
-	//	CreateRock(131, 0.5f, -42.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(131.5, 0.5f, -44.5, 90, vec3{ 0,0,1 });
-	//
-	//
-	//	//INTERIOR
-	//	CreateRock(122.5, 0.5f, 19.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(122, 0.5f, 17.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(121.5, 0.5f, 15.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(121, 0.5f, 13.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(120.5, 0.5f, 11.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(120, 0.5f, 9.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(119.5, 0.5f, 7.5, 90, vec3{ 0,0,1 });
-	//	CreateRock(119, 0.5f, 5.5, 90, vec3{ 0,0,1 });
-	//
-	//
-	//	for (int i = 3.5; i > -34; i--) {
-	//		CreateRock(118, 0.5f, i, 90, vec3{ 0,0,1 });
-	//		i -= 1.5;
-	//	}
-
-
-}
 //================
 void ModuleSceneIntro::CreateTree(const float x, const float y, const float z, const float tall, const float radious)
 {
@@ -1807,6 +1609,24 @@ void ModuleSceneIntro::CreateTrees()
 	CreateTree(13.5, 0, 29, 15, 2);
 
 	CreateTree(25, 0, 75, 15, 2);
+
+	CreateTree(90, 0, 2, 15, 2);
+	CreateTree(-10, 0, 10, 15, 2);
+
+	CreateTree(110, 0, 50, 15, 2);
+	CreateTree(127, 0, 43, 15, 2);
+
+	CreateTree(177, 0, -5, 15, 2);
+	CreateTree(186, 0, -10, 15, 2);
+
+	CreateTree(167, 0, 2, 15, 2);
+	CreateTree(150, 0, 7, 15, 2);
+
+	CreateTree(130, 0, 58, 15, 2);
+	CreateTree(117, 0, 62, 15, 2);
+
+	CreateTree(130, 0, 110, 15, 2);
+	CreateTree(187, 0, 65, 15, 2);
 
 	CreateTree(50, 0, 80, 15, 2);
 	CreateTree(56, 0, 80, 15, 2);
@@ -1855,20 +1675,35 @@ void ModuleSceneIntro::CreatePlanes()
 	CreatePlane(-3, 0.1, -74, 35, 9, Brown_way, 0, vec3(PUTHORIZONALxz));
 	CreatePlane(73, 0.1, 73.5, 39, 9, Brown_way, 0, vec3(PUTHORIZONALxz));
 	CreatePlane(137, 0.1, 73.5, 70, 9, Brown_way, 0, vec3(PUTHORIZONALxz));
-
-
-
+	
 
 	CreatePlane(35, 0.15, -39, 60, 30, Grey2, 90, vec3(PUTHORIZONALxz));
 	CreatePlane(50, 0.15, -74, 180, 12, Grey2, 0, vec3(PUTHORIZONALxz));
+	CreatePlane(130, 0.1, 100, 11,90 , Blue, 90, vec3(PUTHORIZONALxz));
+	CreatePlane(130, 0.1,100, 25, 11, Blue, 120, vec3(PUTHORIZONALxz));
+	CreatePlane(120, 0.1, 85, 20, 11, Blue, 85, vec3(PUTHORIZONALxz));
+	CreatePlane(122, 0.1, 66, 11, 11, Blue, 45, vec3(PUTHORIZONALxz));
+	CreatePlane(126, 0.1, 61, 25, 11, Blue, 30, vec3(PUTHORIZONALxz));
+	CreatePlane(135, 0.1, 54, 25, 9, Blue, 20, vec3(PUTHORIZONALxz));
 
+	CreatePlane(120, 0.1, 10, 35, 13, Blue,-30, vec3(PUTHORIZONALxz));
+	CreatePlane(115, 0.1 ,7, 10, 12, Blue, -40, vec3(PUTHORIZONALxz));
+	CreatePlane(113, 0.1, 3, 10, 12, Blue, -50, vec3(PUTHORIZONALxz));
 
+	CreatePlane(148, 0.1, 33, 15, 20, Blue, 0, vec3(PUTHORIZONALxz));
+	CreatePlane(148, 0.1, 25, 15, 12, Blue, -30, vec3(PUTHORIZONALxz));
+
+	CreatePlane(112, 0.1, -2, 10, 12, Blue, -70, vec3(PUTHORIZONALxz));
+	CreatePlane(112, 0.1, -10, 16, 12, Blue, -90, vec3(PUTHORIZONALxz));
+	CreatePlane(100, 0.1, -10, 16, 12, Blue, 50, vec3(PUTHORIZONALxz));
+	CreatePlane(112, 0.1, -23, 25, 9, Blue, 10, vec3(PUTHORIZONALxz));
+	CreatePlane(132, 0.1, -53, 15, 35, Blue, 10, vec3(PUTHORIZONALxz));
+	CreatePlane(132, 0.1, -53, 9, 80, Blue, 90, vec3(PUTHORIZONALxz));
 	//sky
 	CreatePlane(200, 0, -200, 600, 600, Blue, 90, vec3(PUTVERTICALxy));
 	CreatePlane(-200, +400, -200, 600, 600, Blue, 270, vec3(PUTVERTICALxy));
 	CreatePlane(-200, 0, 200, 400, 600, Blue, 270, vec3(PUTVERTICALzy));
 	CreatePlane(-200, +400, -200, 600, 600, Blue, 90, vec3(PUTVERTICALzy));
-
 
 }
 //================
