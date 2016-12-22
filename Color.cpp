@@ -22,5 +22,5 @@ Color Brown2 = Color(0.55f, 0.55f, 0.225f);
 
 Color Brown3 = Color(0.65, 0.70, 0.4);
 Color Brown4 = Color(0.8, 0.8, 0.4);
-Color Brown5 = Color(2.0, 2.0, 1.0);
-Color Brown6 = Color(1.0, 1.0, 0.5);
+Color Brown5 = Color(0.4, 0.4, 0.2);
+Color Brown6 = Color(0.3, 0.3, 0.15);

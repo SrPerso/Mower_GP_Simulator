@@ -607,32 +607,32 @@ void ModuleSceneIntro::CreateBulding(float x, float y, float z)
 	CreateCubeToBuldings((x - (BUIDINGWIDTH *0.5f)), ((BULDINGHEIGHT *0.5f) + y + 0), (z + 23), ORTHOGONAL, vec3(PUTVERTICALzy), White, BUIDINGWIDTH, 0.25f, BULDINGHEIGHT); //wall2
 	CreateCubeToBuldings((x - (BUIDINGWIDTH *0.5f)), ((BULDINGHEIGHT *0.5f) + y + 0), (z - 23), ORTHOGONAL, vec3(PUTVERTICALzy), White, BUIDINGWIDTH, 0.25f, BULDINGHEIGHT); //wall3
 
-	CreateCubeToBuldings((x + 4), (y + 10), (z), 0, vec3(PUTVERTICALxy), White, 8, 1, 16); //wall5
+	CreateCubeToBuldings((x + 4), (y + 9.5), (z), 0, vec3(PUTVERTICALxy), White, 8, 0.5f, 16); //wall5
 
 	CreateCubeToBuldings(x - BUIDINGWIDTH, (6 * 0.5f) + y, z + 3 + (21 * 0.5f), ORTHOGONAL, vec3(PUTVERTICALxy), White, 6, 0.25f, 19); //wall4
 	CreateCubeToBuldings(x - BUIDINGWIDTH, (6 * 0.5f) + y, z - 3 - (21 * 0.5f), ORTHOGONAL, vec3(PUTVERTICALxy), White, 6, 0.25f, 19); //wall4	
 	CreateCubeToBuldings(x - BUIDINGWIDTH, (12 * 0.5f) + y + 6, z + 0, ORTHOGONAL, vec3(PUTVERTICALxy), White, 12, 0.25f, BUIDINGLONG); //wall4	
 
 
-	CreateCubeToBuldings(x - BUIDINGWIDTH, (BULDINGHEIGHT *0.5f) + y, z + BUIDINGLONG *0.5f, ORTHOGONAL, vec3(PUTVERTICALzy), Red, 1, 1, BULDINGHEIGHT); //	retoc
-	CreateCubeToBuldings(x - BUIDINGWIDTH, (BULDINGHEIGHT *0.5f) + y, z - BUIDINGLONG *0.5f, ORTHOGONAL, vec3(PUTVERTICALzy), Red, 1, 1, BULDINGHEIGHT); //retoc
-	CreateCubeToBuldings(x, (BULDINGHEIGHT *0.5f) + y, z + BUIDINGLONG *0.5f, ORTHOGONAL, vec3(PUTVERTICALzy), Red, 1, 1, BULDINGHEIGHT); //retoc
-	CreateCubeToBuldings(x, (BULDINGHEIGHT *0.5f) + y, z - BUIDINGLONG *0.5f, ORTHOGONAL, vec3(PUTVERTICALzy), Red, 1, 1, BULDINGHEIGHT); //retoc
+	CreateCubeToBuldings(x - BUIDINGWIDTH, (BULDINGHEIGHT *0.5f) + y, z + BUIDINGLONG *0.5f, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 1, 1, BULDINGHEIGHT); //	retoc
+	CreateCubeToBuldings(x - BUIDINGWIDTH, (BULDINGHEIGHT *0.5f) + y, z - BUIDINGLONG *0.5f, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 1, 1, BULDINGHEIGHT); //retoc
+	CreateCubeToBuldings(x, (BULDINGHEIGHT *0.5f) + y, z + BUIDINGLONG *0.5f, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 1, 1, BULDINGHEIGHT); //retoc
+	CreateCubeToBuldings(x, (BULDINGHEIGHT *0.5f) + y, z - BUIDINGLONG *0.5f, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 1, 1, BULDINGHEIGHT); //retoc
 
 
-	CreateCubeToBuldings(x, (BULDINGHEIGHT*0.5f *0.5f) + y - 1, z + 5, ORTHOGONAL, vec3(PUTVERTICALzy), Red, 0.5f, 0.5f, BULDINGHEIGHT*0.5f); //retoc  gates
-	CreateCubeToBuldings(x, (BULDINGHEIGHT*0.5f *0.5f) + y - 1, z - 5, ORTHOGONAL, vec3(PUTVERTICALzy), Red, 0.5f, 0.5f, BULDINGHEIGHT*0.5f); //retoc  gates
-	CreateCubeToBuldings(x, (BULDINGHEIGHT*0.5f) + y - 1, z, 0, vec3(PUTVERTICALzy), Red, 0.5f, 0.5f, 12); //retoc  gates
+	CreateCubeToBuldings(x, (BULDINGHEIGHT*0.5f *0.5f) + y - 1, z + 5, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.5f, 0.5f, BULDINGHEIGHT*0.5f); //retoc  gates
+	CreateCubeToBuldings(x, (BULDINGHEIGHT*0.5f *0.5f) + y - 1, z - 5, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.5f, 0.5f, BULDINGHEIGHT*0.5f); //retoc  gates
+	CreateCubeToBuldings(x, (BULDINGHEIGHT*0.5f) + y - 1, z, 0, vec3(PUTVERTICALzy), Brown6, 0.5f, 0.5f, 12); //retoc  gates
 
-	CreateCylinderToBuldings(x + 6, y + (BULDINGHEIGHT *0.5f *0.5f) + 1, z + 6, ORTHOGONAL, vec3(PUTVERTICALxy), Red, 0.5f, (BULDINGHEIGHT / 2) + 1);//retoc
-	CreateCylinderToBuldings(x + 6, y + (BULDINGHEIGHT *0.5f *0.5f) + 1, z - 6, ORTHOGONAL, vec3(PUTVERTICALxy), Red, 0.5f, (BULDINGHEIGHT / 2) + 1);//retoc
+	CreateCylinderToBuldings(x + 6, y + (BULDINGHEIGHT *0.5f *0.5f), z + 6, ORTHOGONAL, vec3(PUTVERTICALxy), Brown6, 0.5f, (BULDINGHEIGHT / 2) + 1);//retoc
+	CreateCylinderToBuldings(x + 6, y + (BULDINGHEIGHT *0.5f *0.5f), z - 6, ORTHOGONAL, vec3(PUTVERTICALxy), Brown6, 0.5f, (BULDINGHEIGHT / 2) + 1);//retoc
 
 
-	CreateCubeToBuldings(x - BUIDINGWIDTH, (BULDINGHEIGHT*0.5f *0.5f) + y - 1.5f, z + 3.75f, ORTHOGONAL, vec3(PUTVERTICALzy), Red, 0.5f, 0.5f, 6); //retoc  gates
-	CreateCubeToBuldings(x - BUIDINGWIDTH, (BULDINGHEIGHT*0.5f *0.5f) + y - 1.5f, z - 3.75f, ORTHOGONAL, vec3(PUTVERTICALzy), Red, 0.5f, 0.5f, 6); //retoc  gates
-	CreateCubeToBuldings(x - BUIDINGWIDTH, (BULDINGHEIGHT*0.5f) + y - 3, z, 0, vec3(PUTVERTICALzy), Red, 0.5f, 0.5f, 8.5); //retoc  gates
+	CreateCubeToBuldings(x - BUIDINGWIDTH, (BULDINGHEIGHT*0.5f *0.5f) + y - 1.5f, z + 3.75f, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.5f, 0.5f, 6); //retoc  gates
+	CreateCubeToBuldings(x - BUIDINGWIDTH, (BULDINGHEIGHT*0.5f *0.5f) + y - 1.5f, z - 3.75f, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.5f, 0.5f, 6); //retoc  gates
+	CreateCubeToBuldings(x - BUIDINGWIDTH, (BULDINGHEIGHT*0.5f) + y - 3, z, 0, vec3(PUTVERTICALzy), Brown6, 0.5f, 0.5f, 8.5); //retoc  gates
 
-																														   //physics
+																															  //physics
 
 	CreateInvisibleWall(x - BUIDINGWIDTH, (BULDINGHEIGHT *0.5f) + y, z + BUIDINGLONG *0.5f, vec3{ 1, 1, BULDINGHEIGHT }, ORTHOGONAL, vec3(PUTVERTICALzy)); //	retoc
 	CreateInvisibleWall(x - BUIDINGWIDTH, (BULDINGHEIGHT *0.5f) + y, z - BUIDINGLONG *0.5f, vec3{ 1, 1, BULDINGHEIGHT }, ORTHOGONAL, vec3(PUTVERTICALzy)); //retoc
@@ -651,15 +651,242 @@ void ModuleSceneIntro::CreateBulding(float x, float y, float z)
 	invDoor = inv;
 	invDoor_body = App->physics->AddBody(*invDoor);
 
+	//indors
 
 
-	//-----------------DOORs----------------
+	CreateInvisibleWall((x - (BUIDINGWIDTH *0.5f)), ((BULDINGHEIGHT *0.5f) + y + 0), (z + 10), vec3{ BUIDINGWIDTH, 0.25f, BULDINGHEIGHT }, ORTHOGONAL, vec3(PUTVERTICALzy)); //wall2
+	CreateInvisibleWall((x - (BUIDINGWIDTH *0.5f)), ((BULDINGHEIGHT *0.5f) + y + 0), (z - 10), vec3{ BUIDINGWIDTH, 0.25f, BULDINGHEIGHT }, ORTHOGONAL, vec3(PUTVERTICALzy)); //wall3
 
-	//door1
+	CreateCubeToBuldings((x - (BUIDINGWIDTH *0.5f)), ((BULDINGHEIGHT *0.5f) + y + 0), (z + 10), ORTHOGONAL, vec3(PUTVERTICALzy), White, BUIDINGWIDTH, 0.25f, BULDINGHEIGHT); //wall2
+	CreateCubeToBuldings((x - (BUIDINGWIDTH *0.5f)), ((BULDINGHEIGHT *0.5f) + y + 0), (z - 10), ORTHOGONAL, vec3(PUTVERTICALzy), White, BUIDINGWIDTH, 0.25f, BULDINGHEIGHT); //wall3
+
+	for (int i = 1; i < 8; i++) {
+		CreateCubeToBuldings(x - 2.5*i, y + 8 + 2, z, 0, vec3(PUTVERTICALzy), Brown6, 1, 1, 25); //window
+	}
+	CreateCubeToBuldings(x - (BUIDINGWIDTH *0.5f), y + 9.2 + 2, z, 0, vec3(PUTVERTICALzy), White, 20, 0.25f, 25); //window
+
+
+																												  //windows
+
+																												  //delante parte izquierda
+																												  //1
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 2, z + 1.5 + 18, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 2, z - 1.5 + 18, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x + 0.25f, y + 0.125 + 2, z + 18, 0, vec3(PUTVERTICALzy), Brown6, 0.75, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 2, z + 18, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.25f, y - 0.125 + 5 + 2, z + 18, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 2, z + 18, 0, vec3(PUTVERTICALzy), Blue, 0.15, 5, 3); //window
+
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 2, z + 20.25, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 2, z + 15.75, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+																										   //2
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 2, z + 1.5 + 10, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 2, z - 1.5 + 10, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x + 0.25f, y + 0.125 + 2, z + 10, 0, vec3(PUTVERTICALzy), Brown6, 0.75, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 2, z + 10, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.25f, y - 0.125 + 5 + 2, z + 10, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 2, z + 10, 0, vec3(PUTVERTICALzy), Blue, 0.15, 5, 3); //window
+
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 2, z + 12.25, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 2, z + 7.75, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+
+																										  //3
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 11, z + 1.5 + 18, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 11, z - 1.5 + 18, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x + 0.25f, y + 0.125 + 11, z + 18, 0, vec3(PUTVERTICALzy), Brown6, 0.75, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 11, z + 18, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.25f, y - 0.125 + 5 + 11, z + 18, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 11, z + 18, 0, vec3(PUTVERTICALzy), Blue, 0.15, 5, 3); //window
+
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 11, z + 20.25, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 11, z + 15.75, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+																											//4
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 11, z + 1.5 + 10, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 11, z - 1.5 + 10, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x + 0.25f, y + 0.125 + 11, z + 10, 0, vec3(PUTVERTICALzy), Brown6, 0.75, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 11, z + 10, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.25f, y - 0.125 + 5 + 11, z + 10, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 11, z + 10, 0, vec3(PUTVERTICALzy), Blue, 0.15, 5, 3); //window
+
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 11, z + 12.25, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 11, z + 7.75, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+																										   //delante parte derecha
+
+																										   //1
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 2, z + 1.5 - 18, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 2, z - 1.5 - 18, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x + 0.25f, y + 0.125 + 2, z - 18, 0, vec3(PUTVERTICALzy), Brown6, 0.75, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 2, z - 18, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.25f, y - 0.125 + 5 + 2, z - 18, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 2, z - 18, 0, vec3(PUTVERTICALzy), Blue, 0.15, 5, 3); //window
+
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 2, z - 20.25, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 2, z - 15.75, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+
+																										   //2
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 2, z + 1.5 - 10, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 2, z - 1.5 - 10, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x + 0.25f, y + 0.125 + 2, z - 10, 0, vec3(PUTVERTICALzy), Brown6, 0.75, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 2, z - 10, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.25f, y - 0.125 + 5 + 2, z - 10, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 2, z - 10, 0, vec3(PUTVERTICALzy), Blue, 0.15, 5, 3); //window
+
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 2, z - 12.25, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 2, z - 7.75, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+
+																										  //3
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 11, z + 1.5 - 18, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 11, z - 1.5 - 18, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x + 0.25f, y + 0.125 + 11, z - 18, 0, vec3(PUTVERTICALzy), Brown6, 0.75, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 11, z - 18, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.25f, y - 0.125 + 5 + 11, z - 18, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 11, z - 18, 0, vec3(PUTVERTICALzy), Blue, 0.15, 5, 3); //window
+
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 11, z - 20.25, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 11, z - 15.75, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+																											//4
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 11, z + 1.5 - 10, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 11, z - 1.5 - 10, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x + 0.25f, y + 0.125 + 11, z - 10, 0, vec3(PUTVERTICALzy), Brown6, 0.75, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 11, z - 10, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.25f, y - 0.125 + 5 + 11, z - 10, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 11, z - 10, 0, vec3(PUTVERTICALzy), Blue, 0.15, 5, 3); //window
+
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 11, z - 12.25, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 11, z - 7.75, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+
+
+																										   //lateral i<quierdo
+
+
+	CreateCubeToBuldings(-10 + x + 1.5, y + 2.5 + 2, 23 + z + 0.25f, ORTHOGONAL, vec3(PUTVERTICALxy), Brown6, 5, 0.25, 0.25); //window
+	CreateCubeToBuldings(-10 + x - 1.5, y + 2.5 + 2, 23 + z + 0.25f, ORTHOGONAL, vec3(PUTVERTICALxy), Brown6, 5, 0.25, 0.25); //window
+	CreateCubeToBuldings(-10 + x, y + 0.125 + 2, 23 + z + 0.25f, 0, vec3(PUTVERTICALzy), Brown6, 3, 0.25, 0.75); //window
+	CreateCubeToBuldings(-10 + x, y + 2.5 + 2, 23 + z + 0.25f, 0, vec3(PUTVERTICALzy), Brown6, 3, 0.25, 0.25); //window
+	CreateCubeToBuldings(-10 + x, y - 0.125 + 5 + 2, 23 + z + 0.25f, 0, vec3(PUTVERTICALzy), Brown6, 3, 0.25, 0.25); //window
+	CreateCubeToBuldings(-10 + x, y + 2.5 + 2, 23 + z + 0.15f, 0, vec3(PUTVERTICALzy), Blue, 3, 5, 0.15); //window
+
+	CreateCubeToBuldings(-10 + x + 2.25, y + 2.5 + 2, 23 + z + 0.15f, 0, vec3(PUTVERTICALzy), Brown5, 1.5, 5, 0.15); //window
+	CreateCubeToBuldings(-10 + x - 2.25, y + 2.5 + 2, 23 + z + 0.15f, 0, vec3(PUTVERTICALzy), Brown5, 1.5, 5, 0.15); //window
+
+
+	CreateCubeToBuldings(-10 + x + 1.5, y + 2.5 + 11, 23 + z + 0.25f, ORTHOGONAL, vec3(PUTVERTICALxy), Brown6, 5, 0.25, 0.25); //window
+	CreateCubeToBuldings(-10 + x - 1.5, y + 2.5 + 11, 23 + z + 0.25f, ORTHOGONAL, vec3(PUTVERTICALxy), Brown6, 5, 0.25, 0.25); //window
+	CreateCubeToBuldings(-10 + x, y + 0.125 + 11, 23 + z + 0.25f, 0, vec3(PUTVERTICALzy), Brown6, 3, 0.25, 0.75); //window
+	CreateCubeToBuldings(-10 + x, y + 2.5 + 11, 23 + z + 0.25f, 0, vec3(PUTVERTICALzy), Brown6, 3, 0.25, 0.25); //window
+	CreateCubeToBuldings(-10 + x, y - 0.125 + 5 + 11, 23 + z + 0.25f, 0, vec3(PUTVERTICALzy), Brown6, 3, 0.25, 0.25); //window
+	CreateCubeToBuldings(-10 + x, y + 2.5 + 11, 23 + z + 0.15f, 0, vec3(PUTVERTICALzy), Blue, 3, 5, 0.15); //window
+
+	CreateCubeToBuldings(-10 + x + 2.25, y + 2.5 + 11, 23 + z + 0.15f, 0, vec3(PUTVERTICALzy), Brown5, 1.5, 5, 0.15); //window
+	CreateCubeToBuldings(-10 + x - 2.25, y + 2.5 + 11, 23 + z + 0.15f, 0, vec3(PUTVERTICALzy), Brown5, 1.5, 5, 0.15); //window
+
+																													  //lateral derecho
+
+	CreateCubeToBuldings(-10 + x + 1.5, y + 2.5 + 2, -24 + z + 0.25f, ORTHOGONAL, vec3(PUTVERTICALxy), Brown6, 5, 0.25, 0.25); //window
+	CreateCubeToBuldings(-10 + x - 1.5, y + 2.5 + 2, -24 + z + 0.25f, ORTHOGONAL, vec3(PUTVERTICALxy), Brown6, 5, 0.25, 0.25); //window
+	CreateCubeToBuldings(-10 + x, y + 0.125 + 2, -24 + z + 0.25f, 0, vec3(PUTVERTICALzy), Brown6, 3, 0.25, 0.75); //window
+	CreateCubeToBuldings(-10 + x, y + 2.5 + 2, -24 + z + 0.25f, 0, vec3(PUTVERTICALzy), Brown6, 3, 0.25, 0.25); //window
+	CreateCubeToBuldings(-10 + x, y - 0.125 + 5 + 2, -24 + z + 0.25f, 0, vec3(PUTVERTICALzy), Brown6, 3, 0.25, 0.25); //window
+	CreateCubeToBuldings(-10 + x, y + 2.5 + 2, -24 + z + 0.35f, 0, vec3(PUTVERTICALzy), Blue, 3, 5, 0.15); //window
+
+	CreateCubeToBuldings(-10 + x + 2.25, y + 2.5 + 2, -24 + z + 0.35f, 0, vec3(PUTVERTICALzy), Brown5, 1.5, 5, 0.15); //window
+	CreateCubeToBuldings(-10 + x - 2.25, y + 2.5 + 2, -24 + z + 0.35f, 0, vec3(PUTVERTICALzy), Brown5, 1.5, 5, 0.15); //window
+
+
+	CreateCubeToBuldings(-10 + x + 1.5, y + 2.5 + 11, -24 + z + 0.25f, ORTHOGONAL, vec3(PUTVERTICALxy), Brown6, 5, 0.25, 0.25); //window
+	CreateCubeToBuldings(-10 + x - 1.5, y + 2.5 + 11, -24 + z + 0.25f, ORTHOGONAL, vec3(PUTVERTICALxy), Brown6, 5, 0.25, 0.25); //window
+	CreateCubeToBuldings(-10 + x, y + 0.125 + 11, -24 + z + 0.25f, 0, vec3(PUTVERTICALzy), Brown6, 3, 0.25, 0.75); //window
+	CreateCubeToBuldings(-10 + x, y + 2.5 + 11, -24 + z + 0.25f, 0, vec3(PUTVERTICALzy), Brown6, 3, 0.25, 0.25); //window
+	CreateCubeToBuldings(-10 + x, y - 0.125 + 5 + 11, -24 + z + 0.25f, 0, vec3(PUTVERTICALzy), Brown6, 3, 0.25, 0.25); //window
+	CreateCubeToBuldings(-10 + x, y + 2.5 + 11, -24 + z + 0.35f, 0, vec3(PUTVERTICALzy), Blue, 3, 5, 0.15); //window
+
+	CreateCubeToBuldings(-10 + x + 2.25, y + 2.5 + 11, -24 + z + 0.35f, 0, vec3(PUTVERTICALzy), Brown5, 1.5, 5, 0.15); //window
+	CreateCubeToBuldings(-10 + x - 2.25, y + 2.5 + 11, -24 + z + 0.35f, 0, vec3(PUTVERTICALzy), Brown5, 1.5, 5, 0.15); //window
+
+																													   //-----------
+																													   //3
+	CreateCubeToBuldings(x - 20.5 + 0.25f, y + 2.5 + 11, z + 1.5 + 18, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x - 20.5 + 0.25f, y + 2.5 + 11, z - 1.5 + 18, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x - 20.5 + 0.25f, y + 0.125 + 11, z + 18, 0, vec3(PUTVERTICALzy), Brown6, 0.75, 0.25, 3); //window
+	CreateCubeToBuldings(x - 20.5 + 0.25f, y + 2.5 + 11, z + 18, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x - 20.5 + 0.25f, y - 0.125 + 5 + 11, z + 18, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x - 20.5 + 0.15f + 0.15f, y + 2.5 + 11, z + 18, 0, vec3(PUTVERTICALzy), Blue, 0.15, 5, 3); //window
+
+	CreateCubeToBuldings(x - 20.5 + 0.15f + 0.15f, y + 2.5 + 11, z + 20.25, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+	CreateCubeToBuldings(x - 20.5 + 0.15f + 0.15f, y + 2.5 + 11, z + 15.75, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+																														   //4
+	CreateCubeToBuldings(x - 20.5 + 0.25f, y + 2.5 + 11, z + 1.5 + 10, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x - 20.5 + 0.25f, y + 2.5 + 11, z - 1.5 + 10, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x - 20.5 + 0.25f, y + 0.125 + 11, z + 10, 0, vec3(PUTVERTICALzy), Brown6, 0.75, 0.25, 3); //window
+	CreateCubeToBuldings(x - 20.5 + 0.25f, y + 2.5 + 11, z + 10, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x - 20.5 + 0.25f, y - 0.125 + 5 + 11, z + 10, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x - 20.5 + 0.15f + 0.15f, y + 2.5 + 11, z + 10, 0, vec3(PUTVERTICALzy), Blue, 0.15, 5, 3); //window
+
+	CreateCubeToBuldings(x - 20.5 + 0.15f + 0.15f, y + 2.5 + 11, z + 12.25, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+	CreateCubeToBuldings(x - 20.5 + 0.15f + 0.15f, y + 2.5 + 11, z + 7.75, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+
+																														  //3
+	CreateCubeToBuldings(x - 20.5 + 0.25f, y + 2.5 + 11, z + 1.5 - 18, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x - 20.5 + 0.25f, y + 2.5 + 11, z - 1.5 - 18, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x - 20.5 + 0.25f, y + 0.125 + 11, z - 18, 0, vec3(PUTVERTICALzy), Brown6, 0.75, 0.25, 3); //window
+	CreateCubeToBuldings(x - 20.5 + 0.25f, y + 2.5 + 11, z - 18, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x - 20.5 + 0.25f, y - 0.125 + 5 + 11, z - 18, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x - 20.5 + 0.15f + 0.15f, y + 2.5 + 11, z - 18, 0, vec3(PUTVERTICALzy), Blue, 0.15, 5, 3); //window
+
+	CreateCubeToBuldings(x - 20.5 + 0.15f + 0.15f, y + 2.5 + 11, z - 20.25, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+	CreateCubeToBuldings(x - 20.5 + 0.15f + 0.15f, y + 2.5 + 11, z - 15.75, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+
+																														   //4
+	CreateCubeToBuldings(x + 0.25f - 20.5, y + 2.5 + 11, z + 1.5 - 10, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x + 0.25f - 20.5, y + 2.5 + 11, z - 1.5 - 10, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x + 0.25f - 20.5, y + 0.125 + 11, z - 10, 0, vec3(PUTVERTICALzy), Brown6, 0.75, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.25f - 20.5, y + 2.5 + 11, z - 10, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.25f - 20.5, y - 0.125 + 5 + 11, z - 10, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.15f - 20.5 + 0.15f, y + 2.5 + 11, z - 10, 0, vec3(PUTVERTICALzy), Blue, 0.15, 5, 3); //window
+
+	CreateCubeToBuldings(x + 0.15f - 20.5 + 0.15f, y + 2.5 + 11, z - 12.25, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+	CreateCubeToBuldings(x + 0.15f - 20.5 + 0.15f, y + 2.5 + 11, z - 7.75, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+
+																														  //5
+	CreateCubeToBuldings(x + 0.25f - 20.5, y + 2.5 + 11, z + 1.5, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x + 0.25f - 20.5, y + 2.5 + 11, z - 1.5, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x + 0.25f - 20.5, y + 0.125 + 11, z, 0, vec3(PUTVERTICALzy), Brown6, 0.75, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.25f - 20.5, y + 2.5 + 11, z, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.25f - 20.5, y - 0.125 + 5 + 11, z, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.15f - 20.5 + 0.15f, y + 2.5 + 11, z, 0, vec3(PUTVERTICALzy), Blue, 0.15, 5, 3); //window
+
+	CreateCubeToBuldings(x + 0.15f - 20.5 + 0.15f, y + 2.5 + 11, z - 2.25, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+	CreateCubeToBuldings(x + 0.15f - 20.5 + 0.15f, y + 2.5 + 11, z + 2.25, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+
+																														  //balcon
+	for (int i = 0; i<15; i++)
+		CreateCubeToBuldings(x + 7, y + 11, z + 7 - 1.0f*i, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.20, 0.20, 3); //window
+
+	for (int i = 0; i<10; i++)
+		CreateCubeToBuldings(x + 7 - 1.0f*i, y + 11, z + 7, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.20, 0.20, 3); //window
+
+	for (int i = 0; i<10; i++)
+		CreateCubeToBuldings(x + 7 - 1.0f*i, y + 11, z - 7, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.20, 0.25, 3); //window
+
+	CreateCubeToBuldings(x + 7, y + 11 + 1.5f, z, 0, vec3(PUTVERTICALzy), grey, 0.25, 0.25, 15); //window
+	CreateCubeToBuldings(x + 3.5f, y + 11 + 1.5f, z + 7, 90, vec3(PUTHORIZONALxz), grey, 0.25, 0.25, 7); //window
+	CreateCubeToBuldings(x + 3.5f, y + 11 + 1.5f, z - 7, 90, vec3(PUTHORIZONALxz), grey, 0.25, 0.25, 7); //window
+
+	CreateCubeToBuldings(x + 7, y + 8.5 + 1.5f, z, 0, vec3(PUTVERTICALzy), Brown5, 0.25, 0.25, 14); //window
+	CreateCubeToBuldings(x + 3.5f, y + 8.5 + 1.5f, z + 7, 90, vec3(PUTHORIZONALxz), Brown5, 0.25, 0.25, 7); //window
+	CreateCubeToBuldings(x + 3.5f, y + 8.5 + 1.5f, z - 7, 90, vec3(PUTHORIZONALxz), Brown5, 0.25, 0.25, 7); //window
+
+
+	CreateCubeToBuldings(x + 0.15f, y + 8.5 + 4.0f, z, 90, vec3(PUTHORIZONALxz), Brown6, 3, 5.5, 0.25); //window
+
+
+																										//-----------------DOORs----------------
+
+																										//door1
 	Cube* door1 = new Cube(0.25f, 7.75f, 4.5F);
 	door1->SetPos(x, y + 4.0f, z + 2.35f);
 
-	door1->SetRotation(0, vec3(PUTVERTICALxy));	door1->color = Brown2;	Doors.add(door1);		//door1
+	door1->SetRotation(0, vec3(PUTVERTICALxy));	door1->color = Brown5;	Doors.add(door1);		//door1
 																								//
 
 																								//wall1
@@ -680,8 +907,8 @@ void ModuleSceneIntro::CreateBulding(float x, float y, float z)
 	//door2
 	Cube* door2 = new Cube(7.75f, 0.25f, 4.5F);
 	door2->SetPos(x, y + 4.0f, z - 2.35f);
-	
-	door2->SetRotation(ORTHOGONAL, vec3(PUTVERTICALxy));	door2->color = Brown2;	Doors.add(door2);	//door2
+
+	door2->SetRotation(ORTHOGONAL, vec3(PUTVERTICALxy));	door2->color = Brown5;	Doors.add(door2);	//door2
 																										//
 																										//wall2
 	Cube* wall2 = new Cube(8, 0.25f, BULDINGHEIGHT);
@@ -709,39 +936,185 @@ void ModuleSceneIntro::CreateBulding(float x, float y, float z)
 	redFence2->SetRotation(0, vec3(PUTVERTICALzy));
 	redFence2->color = Red;
 
-	//River
+
+	//roof
+
+	CreateCubeToBuldings(x - 4, y + 21, z, -30, vec3(PUTVERTICALxy), grey, 14, 0.25f, 48); //roof1
+	CreateCubeToBuldings(x - 5, y + 21, z, -30, vec3(PUTVERTICALxy), Brown6, 1, 1, 47.5); //roof1
+	CreateCubeToBuldings(x, y + 18, z, -30, vec3(PUTVERTICALxy), Brown6, 1, 1, 47.5); //roof1
+	CreateCubeToBuldings(x - 10, y + 23.75, z, -45, vec3(PUTVERTICALxy), Brown6, 1, 1, 47.5); //roofmiddle
+
+	CreateCubeToBuldings(x - 16, y + 21, z, 30, vec3(PUTVERTICALxy), grey, 14, 0.25f, 48); //roof2
+	CreateCubeToBuldings(x - 16, y + 20.5, z, 30, vec3(PUTVERTICALxy), Brown6, 1, 1, 47.5); //roof2
+	CreateCubeToBuldings(x - 20, y + 18, z, 30, vec3(PUTVERTICALxy), Brown6, 1, 1, 47.5); //roof2
+
+	CreateCubeToBuldings(x - 7, y + 17, z + 22.90, -30, vec3(PUTVERTICALxy), White, 12, 10, 0.25f); //roof1
+	CreateCubeToBuldings(x - 13, y + 17, z + 22.90, +30, vec3(PUTVERTICALxy), White, 12, 10, 0.25f); //roof1
+
+	CreateCubeToBuldings(x - 7, y + 17, z - 22.90, -30, vec3(PUTVERTICALxy), White, 12, 10, 0.25f); //roof1
+	CreateCubeToBuldings(x - 13, y + 17, z - 22.90, +30, vec3(PUTVERTICALxy), White, 12, 10, 0.25f); //roof1
+
+
+	CreateCubeToBuldings(x - 4, y + 21, z + 7, +0, vec3(PUTVERTICALxy), White, 9, 6, 0.25f); //roof1
+	CreateCubeToBuldings(x - 4, y + 21, z + 13, +0, vec3(PUTVERTICALxy), White, 9, 6, 0.25f); //roof1
+
+																							  //
+	CreateCubeToBuldings(x - 3.5, y + 24.75, z + 8, -120, vec3(PUTVERTICALzy), grey, 9, 5, 0.25f); //roof1
+	CreateCubeToBuldings(x - 3.5, y + 24.75, z + 12, +120, vec3(PUTVERTICALzy), grey, 9, 5, 0.25f); //roof1
+
+	CreateCubeToBuldings(x, y + 23.25, z + 9.25, -120, vec3(PUTVERTICALzy), White, 0.25f, 4, 4); //roof1
+	CreateCubeToBuldings(x, y + 23.25, z + 10.5, +120, vec3(PUTVERTICALzy), White, 0.25f, 4, 4); //roof1
+	CreateCubeToBuldings(x, y + 21, z + 10, 0, vec3(PUTVERTICALzy), White, 0.25f, 6, 6); //roof1
+
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 19, z + 1.5 + 10, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 19, z - 1.5 + 10, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x + 0.25f, y + 0.125 + 19, z + 10, 0, vec3(PUTVERTICALzy), Brown6, 0.75, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 19, z + 10, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.25f, y - 0.125 + 5 + 19, z + 10, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 19, z + 10, 0, vec3(PUTVERTICALzy), Blue, 0.15, 5, 3); //window
+
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 19, z + 12.25, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 19, z + 7.75, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+
+
+																										   //
+
+
+	CreateCubeToBuldings(x - 4, y + 21, z - 7, +0, vec3(PUTVERTICALxy), White, 9, 6, 0.25f); //roof1
+	CreateCubeToBuldings(x - 4, y + 21, z - 13, +0, vec3(PUTVERTICALxy), White, 9, 6, 0.25f); //roof1
+
+																							  //
+	CreateCubeToBuldings(x - 3.5, y + 24.75, z - 12, -120, vec3(PUTVERTICALzy), grey, 9, 5, 0.25f); //roof1
+	CreateCubeToBuldings(x - 3.5, y + 24.75, z - 8, +120, vec3(PUTVERTICALzy), grey, 9, 5, 0.25f); //roof1
+
+	CreateCubeToBuldings(x, y + 23.25, z - 10.5, -120, vec3(PUTVERTICALzy), White, 0.25f, 4, 4); //roof1
+	CreateCubeToBuldings(x, y + 23.25, z - 9.25, +120, vec3(PUTVERTICALzy), White, 0.25f, 4, 4); //roof1
+	CreateCubeToBuldings(x, y + 21, z - 10, 0, vec3(PUTVERTICALzy), White, 0.25f, 6, 6); //roof1
+
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 19, z + 1.5 - 10, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 19, z - 1.5 - 10, ORTHOGONAL, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 5); //window
+	CreateCubeToBuldings(x + 0.25f, y + 0.125 + 19, z - 10, 0, vec3(PUTVERTICALzy), Brown6, 0.75, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.25f, y + 2.5 + 19, z - 10, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.25f, y - 0.125 + 5 + 19, z - 10, 0, vec3(PUTVERTICALzy), Brown6, 0.25, 0.25, 3); //window
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 19, z - 10, 0, vec3(PUTVERTICALzy), Blue, 0.15, 5, 3); //window
+
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 19, z - 12.25, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+	CreateCubeToBuldings(x + 0.15f, y + 2.5 + 19, z - 7.75, 0, vec3(PUTVERTICALzy), Brown5, 0.15, 5, 1.5); //window
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	CreateCubeToBuldings(124.5, 0.5f, 90, 30, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
 	CreateCubeToBuldings(120.8, 0.5f, 80.5, 10, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
 	CreateCubeToBuldings(121, 0.5f, 70.5, -15, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
 	CreateCubeToBuldings(125.8, 0.5f, 61.7, -40, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
 	CreateCubeToBuldings(133.5, 0.5f, 55.2, -60, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
 	CreateCubeToBuldings(142.7, 0.5f, 51, -70, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
-	CreateCubeToBuldings(148.2, 0.5f,44.5, 0, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
-
+	CreateCubeToBuldings(148.2, 0.5f, 44.5, 0, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
+	
 	CreateCubeToBuldings(143, 0.5f, 38, 70, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
 	CreateCubeToBuldings(127.5, 0.5f, 30, 60, vec3{ 0, 1, 0 }, grey, 1, 1, 25);
 	CreateCubeToBuldings(111, 0.5f, 18.8, 50, vec3{ 0, 1, 0 }, grey, 1, 1, 15);
 	CreateCubeToBuldings(103, 0.5f, 10, 30, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
-
-
+	
+	
 	CreateCubeToBuldings(100.5, 0.5f, -2.5, 0, vec3{ 0, 1, 0 }, grey, 1, 1, 16);
 	CreateCubeToBuldings(106, 0.5f, -17.3, -40, vec3{ 0, 1, 0 }, grey, 1, 1, 17);
 	CreateCubeToBuldings(121, 0.5f, -25, -80, vec3{ 0, 1, 0 }, grey, 1, 1, 20);
-	//inter/exter
-	CreateCubeToBuldings(135.8, 0.5f, 68.5,-40, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
+		//inter/exter
+	CreateCubeToBuldings(135.8, 0.5f, 68.5, -40, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
 	CreateCubeToBuldings(143.5, 0.5f, 62.2, -60, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
 	CreateCubeToBuldings(152.7, 0.5f, 58, -70, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
 	CreateCubeToBuldings(161, 0.5f, 52.5, -40, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
 	CreateCubeToBuldings(164.5, 0.5f, 43.3, 0, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
-	CreateCubeToBuldings(161.5, 0.5f, 34.5, 40, vec3{ 0, 1, 0 }, grey, 1, 1, 10);	
+	CreateCubeToBuldings(161.5, 0.5f, 34.5, 40, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
 	CreateCubeToBuldings(153.5, 0.5f, 29, 70, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
 	CreateCubeToBuldings(144.3, 0.5f, 24.6, 60, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
 	CreateCubeToBuldings(129.5, 0.5f, 16, 60, vec3{ 0, 1, 0 }, grey, 1, 1, 25);
 	CreateCubeToBuldings(115.5, 0.5f, 6, 40, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
-	CreateCubeToBuldings(112.5, 0.5f,-3, 0, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
-	//
+	CreateCubeToBuldings(112.5, 0.5f, -3, 0, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
+		//
 	CreateCubeToBuldings(115.5, 0.5f, -12, -40, vec3{ 0, 1, 0 }, grey, 1, 1, 10);
 	CreateCubeToBuldings(126.5, 0.5f, -17, -80, vec3{ 0, 1, 0 }, grey, 1, 1, 15);
+
+	CreateCubeToBuldings(153.6, 1, -50, 15, vec3(PUTVERTICALzy), grey, 10, 0.25f, 6);
+	CreateInvisibleWall(153.6, 1, -50, vec3{ 10, 0.25f, 6 }, 15, vec3(PUTVERTICALzy));
+	CreateCylinderToBuldings(153.6, 0.5, -50, 0, vec3{ PUTVERTICALxy }, Brown2, 0.5, 11);
+	CreateCylinderToBuldings(153.6, 0.5, -51, 0, vec3{ PUTVERTICALxy }, Brown2, 0.5, 11);
+	CreateCylinderToBuldings(153.6, 0.5, -52, 0, vec3{ PUTVERTICALxy }, Brown2, 0.5, 12);
+	CreateCylinderToBuldings(153.6, 1, -51.5, 0, vec3{ PUTVERTICALxy }, Brown2, 0.5, 10);
+	
+		//before ramp
+	CreateCylinderToBuldings(139, 1, -28.3, 13, vec3{ 0,1,0 }, Brown2, 0.6, 16);
+	CreateInvisibleWall(139, 1, -28.3f, vec3{ 1.2f ,1.2f ,16 }, 102, vec3(0, 1, 0));
+	
+
+
+		//river
+	CreateCylinderToBuldings(142, 1, 27, 60, vec3{ 0,1,0 }, Brown2, 0.5, 5);
+	CreateCylinderToBuldings(131, 1, 29, 60, vec3{ 0,1,0 }, Brown2, 0.5, 5);
+	CreateCylinderToBuldings(125, 1, 18, 60, vec3{ 0,1,0 }, Brown2, 0.5, 5);
+	
+	CreateCylinderToBuldings(108.5, 1, -2, 0, vec3{ 0,1,0 }, Brown2, 0.5, 5);
+	CreateCylinderToBuldings(108.5, 1, -15, -40, vec3{ 0,1,0 }, Brown2, 0.5, 5);
+	
+	CreateInvisibleWall(142, 1, 27, vec3{ 1 ,1 ,5 }, -30, vec3(0, 1, 0));
+	CreateInvisibleWall(131, 1, 29, vec3{ 1 ,1 ,5 }, -30, vec3(0, 1, 0));
+	CreateInvisibleWall(125, 1, 18, vec3{ 1 ,1 ,5 }, -30, vec3(0, 1, 0));
+	CreateInvisibleWall(108.5, 1, -2, vec3{ 1 ,1 ,5 }, 90, vec3(0, 1, 0));
+	CreateInvisibleWall(108.5, 1, -15, vec3{ 1 ,1 ,5 }, 52, vec3(0, 1, 0));
+	
+	
+		//RIVER
+	CreateInvisibleWall(124.5, 0.5f, 90, vec3{ 1 ,1 ,10 }, 30, vec3(0, 1, 0));
+	CreateInvisibleWall(120.8, 0.5f, 80.5, vec3{ 1 ,1 ,10 }, 10, vec3(0, 1, 0));
+	CreateInvisibleWall(121, 0.5f, 70.5, vec3{ 1 ,1 ,10 }, -15, vec3(0, 1, 0));
+	CreateInvisibleWall(125.8, 0.5f, 61.7, vec3{ 1 ,1 ,10 }, -40, vec3(0, 1, 0));
+	CreateInvisibleWall(133.5, 0.5f, 55.2, vec3{ 1 ,1 ,10 }, -60, vec3(0, 1, 0));
+	CreateInvisibleWall(142.7, 0.5f, 51, vec3{ 1 ,1 ,10 }, -70, vec3(0, 1, 0));
+	CreateInvisibleWall(148.2, 0.5f, 44.5, vec3{ 1 ,1 ,10 }, 0, vec3(0, 1, 0));
+	
+	CreateInvisibleWall(143, 0.5f, 38, vec3{ 1 ,1 ,10 }, 70, vec3(0, 1, 0));
+	CreateInvisibleWall(127.5, 0.5f, 30, vec3{ 1 ,1 ,25 }, 60, vec3(0, 1, 0));
+	CreateInvisibleWall(111, 0.5f, 18.8, vec3{ 1 ,1 ,15 }, 50, vec3(0, 1, 0));
+	CreateInvisibleWall(103, 0.5f, 10, vec3{ 1 ,1 ,10 }, 30, vec3(0, 1, 0));
+	
+	CreateInvisibleWall(100.5, 0.5f, -2.5, vec3{ 1 ,1 ,16 }, 0, vec3(0, 1, 0));
+	CreateInvisibleWall(106, 0.5f, -17.3, vec3{ 1 ,1 ,17 }, -40, vec3(0, 1, 0));
+	CreateInvisibleWall(121, 0.5f, -25, vec3{ 1 ,1 ,20 }, -80, vec3(0, 1, 0));
+	
+	
+	
+	CreateInvisibleWall(135.8, 0.5f, 68.5, vec3{ 1 ,1 ,10 }, -40, vec3(0, 1, 0));
+	CreateInvisibleWall(143.5, 0.5f, 62.2, vec3{ 1 ,1 ,10 }, -60, vec3(0, 1, 0));
+	CreateInvisibleWall(152.7, 0.5f, 58, vec3{ 1 ,1 ,10 }, -75, vec3(0, 1, 0));
+	CreateInvisibleWall(161, 0.5f, 52.5, vec3{ 1 ,1 ,10 }, -40, vec3(0, 1, 0));
+	CreateInvisibleWall(164.5, 0.5f, 43.3, vec3{ 1 ,1 ,10 }, 0, vec3(0, 1, 0));
+	CreateInvisibleWall(161.5, 0.5f, 34.5, vec3{ 1 ,1 ,10 }, 40, vec3(0, 1, 0));
+	CreateInvisibleWall(153.5, 0.5f, 29, vec3{ 1 ,1 ,10 }, 70, vec3(0, 1, 0));
+	
+	CreateInvisibleWall(143, 0.5f, 38, vec3{ 1 ,1 ,10 }, 70, vec3(0, 1, 0));
+	CreateInvisibleWall(144.3, 0.5f, 24.6, vec3{ 1 ,1 ,10 }, 60, vec3(0, 1, 0));
+	CreateInvisibleWall(129.5, 0.5f, 16, vec3{ 1 ,1 ,25 }, 60, vec3(0, 1, 0));
+	CreateInvisibleWall(115.5, 0.5f, 6, vec3{ 1 ,1 ,10 }, 40, vec3(0, 1, 0));
+	
+	CreateInvisibleWall(112.5, 0.5f, -3, vec3{ 1 ,1 ,10 }, 0, vec3(0, 1, 0));
+	CreateInvisibleWall(115.5, 0.5f, -12, vec3{ 1 ,1 ,10 }, -40, vec3(0, 1, 0));
+	CreateInvisibleWall(126.5, 0.5f, -17, vec3{ 1 ,1 ,15 }, -80, vec3(0, 1, 0));
+
+
 }
 void ModuleSceneIntro::CreateFarm()
 {
