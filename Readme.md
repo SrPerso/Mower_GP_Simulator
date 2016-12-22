@@ -35,7 +35,8 @@ have to go around the house what means more time to complete the lap and player 
 	R 		->Restart the position to start
 	O		->Put the player in Start position and radio music starts to play
  	
-	
+WARNING:
+When you open the visual studio project you need to change the Debugging working directory to Game.
 
 #This project is being developed by: 
 	
