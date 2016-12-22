@@ -5,7 +5,7 @@
 #include "PhysVehicle3D.h"
 #include "PhysBody3D.h"
 
-#define MAXTIME 90.0f
+
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
 {
 	turn = acceleration = brake = 0.0f;
@@ -122,7 +122,7 @@ bool ModulePlayer::CleanUp()
 update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
-
+	
 	if (App->scene_intro->playerTime.Read() == 10.0f) {
 		vehicle->SetPos(0, 0, -20);
 		vehicle->Brake(1200);
@@ -155,6 +155,19 @@ update_status ModulePlayer::Update(float dt)
 	{
 		RestartAll();		
 	}
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
+		MaxTime = 80.0f;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) {
+		MaxTime = 70.0f;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN) {
+		MaxTime = 60.0f;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN) {
+		MaxTime = 50.0f;
+	}
+
 
 	if (vehicle->GetPos().x >= 200 || vehicle->GetPos().x <= -200 || vehicle->GetPos().z > 200 || vehicle->GetPos().z < -200) {
 		vehicle->SetPos(0, 0, -20);
@@ -166,7 +179,7 @@ update_status ModulePlayer::Update(float dt)
 
 	vehicle->Render();
 	
-	if (thistime <MAXTIME) {		
+	if (thistime <MaxTime) {		
 
 	}
 	else {
@@ -181,7 +194,7 @@ update_status ModulePlayer::Update(float dt)
 		thistime = 0;
 	}
 	
-	sprintf_s(title, "%.1f Km/h, Time: %.2f, Less Time: %.2f ", vehicle->GetKmh(), thistime, lessScore);
+	sprintf_s(title, "%.1f Km/h, Time: %.2f, Less Time: %.2f ,MaxTime %0.2f", vehicle->GetKmh(), thistime, lessScore,MaxTime);
 	App->window->SetTitle(title);
 	losed = false;
 	//restart = false;
@@ -203,5 +216,7 @@ void ModulePlayer::RestartAll() {
 		App->scene_intro->checkpoints[i] = false;
 	}
 	App->scene_intro->kicked = false;
+	App->scene_intro->fxTurnOn.play();
+	App->scene_intro->fxMiddle.play(0);
 	
 }

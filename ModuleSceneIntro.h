@@ -47,7 +47,7 @@ public:
 	bool isCheckpoint = true;
 	bool checkpoints[8];
 	bool kicked = false;
-private:
+
 	// --- Audio
 	AudioMusic BSO;
 	AudioFX fxTurnOn;
@@ -57,6 +57,8 @@ private:
 	AudioMusic fxMiddle;
 	// --- Audio
 
+private:
+	
 
 	// --- car
 	PhysBody3D* pb_chassis;
