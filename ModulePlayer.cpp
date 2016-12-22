@@ -202,5 +202,6 @@ void ModulePlayer::RestartAll() {
 	for (uint i = 0; i <7; i++) {
 		App->scene_intro->checkpoints[i] = false;
 	}
-
+	App->scene_intro->kicked = false;
+	
 }
