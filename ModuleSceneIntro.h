@@ -8,7 +8,11 @@
 #include "Primitive.h"
 #include "p2List.h"
 
-#define MAX_SNAKE 2
+
+#define ORTHOGONAL 90
+#define PUTVERTICALzy 1,0,0
+#define PUTVERTICALxy 0,0,1
+#define PUTHORIZONALxz 0,1,0
 
 struct PhysBody3D;
 struct PhysMotor3D;
@@ -170,6 +174,7 @@ public:
 	void CreateObstacles();
 
 	void CheckBehaviour(int i);
+	void CreateExtras();
 };
 
 #endif // _SCENE_INTRO_

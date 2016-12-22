@@ -31,7 +31,17 @@ extern Color Green_Ground;
 extern Color Blue;
 extern Color Black;
 extern Color White;
+
 extern Color Brown;
 extern Color Brown2;
+extern Color Brown3;
+extern Color Brown4;
+extern Color Brown5;
+extern Color Brown6;
+
 extern Color Brown_way;
+
+extern Color Grey2;
+extern Color Yellow2;
+extern Color Yellow3;
 extern Color Yellow;
